@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react"
-import "./HomePage.css";
 // import { DialogDemo } from "@/components/DialogDemo";
 // import { TabsDemo } from "@/components/TabsDemo";
 
