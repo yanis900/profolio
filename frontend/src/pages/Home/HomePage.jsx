@@ -1,9 +1,17 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react"
 import "./HomePage.css";
 // import { DialogDemo } from "@/components/DialogDemo";
 // import { TabsDemo } from "@/components/TabsDemo";
 
 export function HomePage() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setLoggedIn(token !== null);
+  }, [loggedIn]);
+
   return (
     <div className="home">
       <h1>Welcome to Profolio!</h1>
@@ -11,6 +19,7 @@ export function HomePage() {
       <Link to="/login">Log In</Link>
       {/* <DialogDemo /> */}
       {/* <TabsDemo /> */}
+      {loggedIn ? <p>logged in</p> : ""}
     </div>
   );
 }

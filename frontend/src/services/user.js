@@ -1,0 +1,43 @@
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+export async function getUserById(token) {
+
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  let response = await fetch(`${BACKEND_URL}/users`, requestOptions);
+
+  if (response.status === 200) {
+    const data = await response.json()
+    return data
+  } else {
+    throw new Error(
+      `Received status ${response.status} when fetching user by id. Expected 200`
+    );
+  }
+}
+
+export async function getUserBySlug(token, userSlug) {
+
+  const requestOptions = {
+    method: "GET",
+    headers: {
+    Authorization: `Bearer ${token}`,
+    },
+  };
+
+  let response = await fetch(`${BACKEND_URL}/users/portfolio/${userSlug}`, requestOptions);
+
+  if (response.status === 200) {
+    const data = await response.json()
+    return data
+  } else {
+    throw new Error(
+      `Received status ${response.status} when fetching user by slug. Expected 200`
+    );
+  }
+}
