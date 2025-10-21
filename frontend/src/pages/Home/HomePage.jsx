@@ -17,7 +17,6 @@ export function HomePage() {
       <Link to="/signup">Sign Up</Link>
       <Link to="/login">Log In</Link>
       {/* <DialogDemo /> */}
-      {/* <TabsDemo /> */}
       {loggedIn ? <p>logged in</p> : ""}
     </div>
   );
