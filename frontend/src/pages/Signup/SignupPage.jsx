@@ -52,36 +52,6 @@ export function SignupPage() {
     <>
       <h2>Signup</h2>
       <form onSubmit={handleSubmit}>
-        {/* <label htmlFor="firstname">First Name:</label>
-        <input
-          id="firstname"
-          type="text"
-          value={firstname}
-          onChange={handleFirstNameChange}
-        />
-        <label htmlFor="lastname">Last Name:</label>
-        <input
-          id="lastname"
-          type="text"
-          value={lastname}
-          onChange={handleLastNameChange}
-        />
-        <label htmlFor="email">Email:</label>
-        <input
-          id="email"
-          type="text"
-          value={email}
-          onChange={handleEmailChange}
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          placeholder="Password"
-          id="password"
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <input role="submit-button" id="submit" type="submit" value="Submit" /> */}
         <label htmlFor="firstname">
         Firstname:
       </label>
