@@ -1,13 +1,20 @@
 import { Link } from "react-router-dom";
-
-import "./HomePage.css";
+import { useEffect, useState } from "react";
 
 export function HomePage() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setLoggedIn(token !== null);
+  }, [loggedIn]);
+
   return (
     <div className="home">
       <h1>Welcome to Profolio!</h1>
       <Link to="/signup">Sign Up</Link>
       <Link to="/login">Log In</Link>
+      {loggedIn ? <p>logged in</p> : ""}
     </div>
   );
 }
