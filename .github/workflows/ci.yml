@@ -41,7 +41,7 @@ jobs:
           
           # Set up environment variables
           echo 'VITE_BACKEND_URL="http://localhost:3000"' > frontend/.env
-          echo 'MONGODB_URL="mongodb://0.0.0.0/acebook"' > api/.env
+          echo 'MONGODB_URL="mongodb://0.0.0.0/profolio"' > api/.env
           echo 'NODE_ENV="development"' >> api/.env
           echo 'JWT_SECRET="secret"' >> api/.env
           
