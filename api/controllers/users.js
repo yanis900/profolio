@@ -1,10 +1,12 @@
 const User = require("../models/user");
 
 function create(req, res) {
+  const firstname = req.body.firstname;
+  const lastname = req.body.lastname;
   const email = req.body.email;
   const password = req.body.password;
 
-  const user = new User({ email, password });
+  const user = new User({ firstname, lastname, email, password });
   user
     .save()
     .then((user) => {
@@ -17,8 +19,51 @@ function create(req, res) {
     });
 }
 
+async function getUserById(req, res) {
+  const userId = req.user_id
+  console.log(userId)
+  if (!userId) {
+    return res.status(401).json({ message: "Not authenticated" });
+  }
+
+  const user = await User.findById(userId).select("-password");
+  console.log(user)
+   if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  res.status(200).json({
+    user: user
+  });
+}
+
+async function getUserBySlug(req, res) {
+  const slug = req.params.slug;
+  if (!slug) {
+    return res.status(401).json({ message: "Not authenticated" });
+  }
+  const query = slug.split("-");
+
+  const user = await User.findOne({
+    firstname: { $regex: query[0], $options: "i" },
+    lastname: { $regex: query[1], $options: "i" } 
+  }).select("-password");
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  if (query[2].length === 6 && user.id.endsWith(query[2])) {
+    res.status(200).json({ user: user });
+  } else {
+    return res.status(404).json({ message: "Id doesn't match" });
+  }
+}
+
 const UsersController = {
   create: create,
+  getUserById: getUserById,
+  getUserBySlug: getUserBySlug
 };
 
 module.exports = UsersController;
