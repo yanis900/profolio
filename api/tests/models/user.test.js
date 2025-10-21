@@ -29,6 +29,8 @@ describe("User model", () => {
 
   it("can save a user", async () => {
     const user = new User({
+      firstname: "auth", 
+      lastname: "test",
       email: "someone@example.com",
       password: "password",
     });
