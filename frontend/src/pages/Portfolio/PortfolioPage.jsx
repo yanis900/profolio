@@ -35,6 +35,11 @@ export function PortfolioPage() {
     }
   }, [userSlug]);
 
+async function refreshUser () {
+  const token = localStorage.getItem("token");
+  const data = await getUserBySlug(token, userSlug);
+  setUser(data.user);
+}
   // console.log(me)
   // console.log(user?.projects)
   return (
@@ -56,12 +61,12 @@ export function PortfolioPage() {
             </Card> */}
         </div>
         <div className="w-2/3">
-          <TabsDemo projects={user?.projects}/>
+          <TabsDemo projects={user?.projects} refreshUser={refreshUser}/>
         </div>
       </div>
 
-        { me ? (<p>This is me: {me.firstname}</p>) : '' }
-        { user ? (<p>This is them: {user.firstname}</p>) : '' }
+        {/* { me ? (<p>This is me: {me.firstname}</p>) : '' }
+        { user ? (<p>This is them: {user.firstname}</p>) : '' } */}
         <LogoutButton />
     </div>
   );

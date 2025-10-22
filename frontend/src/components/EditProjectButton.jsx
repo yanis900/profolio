@@ -33,13 +33,11 @@ export function EditProjectButton(props) {
         description: description,
         links: [github, website]
       }
-      const projectData = await editProject(token, project);
-      console.log(projectData)
+      await editProject(token, project);
+      props.refreshUser()
       setOpen(false);
-      // navigate("/login");
     } catch (err) {
       console.error(err);
-      // navigate("/signup");
     }
   }
 
@@ -66,10 +64,9 @@ export function EditProjectButton(props) {
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add Project</DialogTitle>
+            <DialogTitle>Edit Project</DialogTitle>
             <DialogDescription>
-              Add any project that you have worked on. Click save when you&apos;re
-              done.
+              Make changes to your project. Click save when you&apos;re done.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">

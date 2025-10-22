@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -9,48 +9,47 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { createProject } from '../services/projects'
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { createProject } from "../services/projects";
+import { Plus } from "lucide-react";
 
-export function AddProjectButton() {
-  const [open, setOpen] = useState(false)
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [github, setGithub] = useState('')
-  const [website, setWebsite] = useState('')
+export function AddProjectButton(props) {
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [github, setGithub] = useState("");
+  const [website, setWebsite] = useState("");
 
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem("token");
 
-   async function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     try {
       const project = {
         title: title,
         description: description,
-        links: [github, website]
-      }
-      const projectData = await createProject(token, project);
-      console.log(projectData)
+        links: [github, website],
+      };
+      await createProject(token, project);
+      props.refreshUser();
       setOpen(false);
-      // navigate("/login");
     } catch (err) {
       console.error(err);
-      // navigate("/signup");
     }
   }
 
-   function handleTitleChange(event) {
+  function handleTitleChange(event) {
     setTitle(event.target.value);
   }
-   function handleDescriptionChange(event) {
+  function handleDescriptionChange(event) {
     setDescription(event.target.value);
   }
-   function handleGithubChange(event) {
+  function handleGithubChange(event) {
     setGithub(event.target.value);
   }
-   function handleWebsiteChange(event) {
+  function handleWebsiteChange(event) {
     setWebsite(event.target.value);
   }
 
@@ -58,33 +57,56 @@ export function AddProjectButton() {
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline">+ Add Project</Button>
+          <Button variant="outline">
+            <Plus />
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Add Project</DialogTitle>
             <DialogDescription>
-              Add any project that you have worked on. Click save when you&apos;re
-              done.
+              Add any project that you have worked on. Click save when
+              you&apos;re done.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-3">
               <Label htmlFor="title">Title</Label>
-              <Input id="title" name="title" value={title} onChange={handleTitleChange}/>
+              <Input
+                id="title"
+                name="title"
+                value={title}
+                onChange={handleTitleChange}
+              />
             </div>
             <div className="grid gap-3">
               <Label htmlFor="description">Description</Label>
-              <Input id="description" name="description" value={description} onChange={handleDescriptionChange} required/>
+              <Input
+                id="description"
+                name="description"
+                value={description}
+                onChange={handleDescriptionChange}
+                required
+              />
             </div>
             <div className="flex gap-3">
               <div>
-              <Label htmlFor="github">Github</Label>
-              <Input id="github" name="github" value={github} onChange={handleGithubChange}/>
+                <Label htmlFor="github">Github</Label>
+                <Input
+                  id="github"
+                  name="github"
+                  value={github}
+                  onChange={handleGithubChange}
+                />
               </div>
               <div>
-              <Label htmlFor="website">Website</Label>
-              <Input id="website" name="website" value={website} onChange={handleWebsiteChange}/>
+                <Label htmlFor="website">Website</Label>
+                <Input
+                  id="website"
+                  name="website"
+                  value={website}
+                  onChange={handleWebsiteChange}
+                />
               </div>
             </div>
           </div>
@@ -92,10 +114,12 @@ export function AddProjectButton() {
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit" onClick={handleSubmit}>Save</Button>
+            <Button type="submit" onClick={handleSubmit}>
+              Save
+            </Button>
           </DialogFooter>
         </DialogContent>
       </form>
     </Dialog>
-  )
+  );
 }
