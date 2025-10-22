@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -10,9 +11,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DialogDemo } from "./DialogDemo";
-import { Trash } from "lucide-react";
+import { Link, Trash } from "lucide-react";
 import { deleteProject } from "../services/projects";
+import { AddProjectButton } from "./AddProjectButton";
+import { EditProjectButton } from "./EditProjectButton";
 
 export function TabsDemo(props) {
   const token = localStorage.getItem("token");
@@ -46,24 +48,40 @@ export function TabsDemo(props) {
                           <CardHeader>
                             <CardTitle>{project.title}</CardTitle>
                             <CardDescription>
-                              Description: {project.description}
+                              {project.description}
                             </CardDescription>
+                            <CardAction>
+                              <EditProjectButton project={project}/>
+                              <Button
+                                size={"icon"}
+                                variant={"destructive"}
+                                onClick={() => handleDelete(project._id)}
+                              >
+                                <Trash />
+                              </Button>
+                            </CardAction>
                           </CardHeader>
-                          Github: {project.links[0]}
-                          Website: {project.links[1]}
-                          <Button
-                            size={"icon"}
-                            variant={"destructive"}
-                            onClick={() => handleDelete(project._id)}
-                          >
-                            <Trash />
-                          </Button>
+                          <CardContent>
+                              
+                            {/* <Button size={"icon"}>
+                              <a href={project.links[0]}>
+                                <Link />
+                              </a>
+                            </Button>
+                            <Button size={"icon"}>
+                              <a href={project.links[1]}>
+                                <Link />
+                              </a>
+                            </Button> */}
+                          </CardContent>
                         </Card>
                       </>
                     );
                   })}
               </CardDescription>
-              <DialogDemo />
+              <CardAction>
+                <AddProjectButton />
+              </CardAction>
             </CardHeader>
             <CardContent className="grid gap-6"></CardContent>
             <CardFooter className="justify-end"></CardFooter>
