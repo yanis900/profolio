@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const User = require("../models/user");
 
 async function createProject(req, res) {
@@ -40,28 +41,33 @@ async function deleteProject(req, res) {
 
 async function editProject(req, res) {
     const userId = req.user_id;
-    const projectId = req.params.id
-    const title = req.body.title;
-    const description = req.body.description;
-    const links = req.body.links
+    const { id: projectId } = req.params;
+    const { title, description, links } = req.body;
+ 
+    const projectObjectId = mongoose.Types.ObjectId.isValid(projectId)
+        ? new mongoose.Types.ObjectId(projectId)
+        : projectId;
 
-    const user = await User.findByIdAndUpdate(
-        {userId, "projects._id": projectId },
+    const user = await User.findOneAndUpdate(
+        { _id: userId, "projects._id": projectObjectId },
         {
-                $set: {
-                    "projects.$.title": title,
-                    "projects.$.description": description,
-                    "projects.$.links": links
-                }
-            },
-        { new: true } )
+            $set: {
+                "projects.$.title": title,
+                "projects.$.description": description,
+                "projects.$.links": links
+            }
+        },
+        { new: true }
+    );
 
     if (!user) {
         return res.status(404).json({ message: "User not found" });
     }
-    console.log(user.projects)
+
+    console.log(user.projects);
     res.status(200).json({
-        project: user.projects, message: "Project edited successfully!"
+        project: user.projects,
+        message: "Project edited successfully!"
     });
 }
 
