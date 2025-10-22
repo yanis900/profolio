@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/tabs"
 import { DialogDemo } from "./DialogDemo"
 
-export function TabsDemo() {
+export function TabsDemo(props) {
   return (
     <div className="flex w-full flex-col gap-6">
       <Tabs defaultValue="portfolio">
@@ -31,7 +31,13 @@ export function TabsDemo() {
             <CardHeader>
               <CardTitle>Projects</CardTitle>
               <CardDescription>
-               
+                {props.projects && props.projects.map((project) => {
+                  return(
+                  <Card key = {project.title}> Title: {project.title} 
+                    <Card key ={project.description}> Description: {project.description} </Card>
+                    <Card key ={project.links}> Links: {project.links} </Card>
+                  </Card>)
+                })}
               </CardDescription>
               <DialogDemo/>
             </CardHeader>

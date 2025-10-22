@@ -24,6 +24,7 @@ export function PortfolioPage() {
       getUserBySlug(token, userSlug)
         .then((data) => {
           setUser(data.user);
+          // console.log(data.user.projects)
         })
         .catch((err) => {
           console.error(err);
@@ -31,8 +32,8 @@ export function PortfolioPage() {
     }
   }, [userSlug]);
 
-  console.log(me)
-
+  // console.log(me)
+  // console.log(user?.projects)
   return (
     <div className="w-screen h-screen flex flex-col gap-15 p-6">
       <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">My Portfolio</h1>
@@ -47,7 +48,7 @@ export function PortfolioPage() {
             </Card>
         </div>
         <div className="w-2/3">
-          <TabsDemo />
+          <TabsDemo projects={user?.projects}/>
         </div>
       </div>
     </div>
