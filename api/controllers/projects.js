@@ -40,9 +40,36 @@ async function deleteProject(req, res) {
     });
 }
 
+async function editProject(req, res) {
+    const userId = req.user_id;
+    const title = req.body.title;
+    const description = req.body.description;
+    const links = req.body.links
+
+    const user = await User.findByIdAndUpdate(
+        {userId, "projects._id": title },
+        {
+                $set: {
+                    "projects.$.title": title,
+                    "projects.$.description": description,
+                    "projects.$.links": links
+                }
+            },
+        { new: true } )
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+    console.log(user.projects)
+    res.status(200).json({
+        project: user.projects, message: "Project edited successfully!"
+    });
+}
+
 const ProjectsController = {
     createProject: createProject,
-    deleteProject: deleteProject
+    deleteProject: deleteProject,
+    editProject: editProject,
 };
 
 module.exports = ProjectsController;
