@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post("/", UsersController.create);
 router.get("/", tokenChecker, UsersController.getUserById)
+router.get("/email", UsersController.getUserByEmail)
 router.get("/portfolio/:slug", UsersController.getUserBySlug)
 
 module.exports = router;

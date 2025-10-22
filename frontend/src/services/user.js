@@ -1,5 +1,18 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
+export async function getUserByEmail(email) {
+
+  let response = await fetch(`${BACKEND_URL}/users/email?email=${email}`);
+
+  if (response.status === 200) {
+    const data = await response.json()
+    return data
+  } else {
+    throw new Error(
+      `Received status ${response.status} when fetching user by email. Expected 200`
+    );
+  }
+}
 export async function getUserById(token) {
 
   const requestOptions = {
