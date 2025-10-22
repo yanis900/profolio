@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import LogoutButton from "../../components/LogoutButton"
 
 import { getUserById, getUserBySlug } from '../../services/user'
 
@@ -33,6 +34,7 @@ const [user, setUser] = useState(null)
     <div>
         { me ? (<p>This is me: {me.firstname}</p>) : '' }
         { user ? (<p>This is them: {user.firstname}</p>) : '' }
+        <LogoutButton />
     </div>
   );
 }

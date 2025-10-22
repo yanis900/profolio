@@ -12,7 +12,7 @@ export function LoginPage() {
     try {
       const token = await login(email, password);
       localStorage.setItem("token", token);
-      navigate("/");
+      navigate("/portfolio/:userSlug");
     } catch (err) {
       console.error(err);
       navigate("/login");
