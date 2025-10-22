@@ -13,7 +13,9 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { createProject } from '../services/projects'
+
 export function DialogDemo() {
+  const [open, setOpen] = useState(false)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [github, setGithub] = useState('')
@@ -29,7 +31,9 @@ export function DialogDemo() {
         description: description,
         links: [github, website]
       }
-      await createProject(token, project);
+      const projectData = await createProject(token, project);
+      console.log(projectData)
+      setOpen(false);
       // navigate("/login");
     } catch (err) {
       console.error(err);
@@ -51,7 +55,7 @@ export function DialogDemo() {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
           <Button variant="outline">+ Add Project</Button>
