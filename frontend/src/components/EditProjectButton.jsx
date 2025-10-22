@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { editProject } from '../services/projects'
+import { Pencil } from 'lucide-react'
 
 export function EditProjectButton(props) {
   const [open, setOpen] = useState(false)
@@ -59,7 +60,9 @@ export function EditProjectButton(props) {
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline">+ Edit</Button>
+          <Button variant={"outline"} size={'icon'}>
+            <Pencil />
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
