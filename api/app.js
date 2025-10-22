@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
+const projectsRouter = require("./routes/projects");
 const usersRouter = require("./routes/users");
 const authenticationRouter = require("./routes/authentication");
 
@@ -16,6 +16,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // API Routes
+app.use("/projects", projectsRouter);
 app.use("/users", usersRouter);
 app.use("/tokens", authenticationRouter);
 

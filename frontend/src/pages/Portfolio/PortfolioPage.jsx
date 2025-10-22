@@ -32,6 +32,7 @@ export function PortfolioPage() {
   }, [userSlug]);
 
   console.log(me)
+
   return (
     <div className="border border-black w-screen h-screen flex flex-col gap-15 p-3">
       <h1>My Portfolio</h1>
