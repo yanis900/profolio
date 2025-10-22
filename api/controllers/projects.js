@@ -22,13 +22,11 @@ async function createProject(req, res) {
 
 async function deleteProject(req, res) {
     const userId = req.user_id;
-    const title = req.body.title;
-    const description = req.body.description;
-    const links = req.body.links
+    const projectId = req.params.id
 
     const user = await User.findByIdAndUpdate(
         userId, 
-        { $pull: { projects: { title, description, links: links} } }, 
+        { $pull: { projects: { _id: projectId } } }, 
         { new: true } )
 
     if (!user) {
@@ -42,12 +40,13 @@ async function deleteProject(req, res) {
 
 async function editProject(req, res) {
     const userId = req.user_id;
+    const projectId = req.params.id
     const title = req.body.title;
     const description = req.body.description;
     const links = req.body.links
 
     const user = await User.findByIdAndUpdate(
-        {userId, "projects._id": title },
+        {userId, "projects._id": projectId },
         {
                 $set: {
                     "projects.$.title": title,

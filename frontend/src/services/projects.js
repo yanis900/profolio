@@ -24,7 +24,7 @@ export async function createProject(token, project) {
   }
 }
 
-export async function deleteProject(token, project) {
+export async function deleteProject(token, id) {
 
   const requestOptions = {
     method: "DELETE",
@@ -32,11 +32,9 @@ export async function deleteProject(token, project) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-
-    body: JSON.stringify(project)
   };
 
-  let response = await fetch(`${BACKEND_URL}/projects/delete-one`, requestOptions);
+  let response = await fetch(`${BACKEND_URL}/projects/delete-one/${id}`, requestOptions);
 
   if (response.status === 200) {
     const data = await response.json()
