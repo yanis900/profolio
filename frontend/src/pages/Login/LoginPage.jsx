@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../services/authentication";
+import { getUserByEmail } from "../../services/user";
 
 export function LoginPage() {
   const [email, setEmail] = useState("");
@@ -11,14 +12,15 @@ export function LoginPage() {
     event.preventDefault();
     try {
       const token = await login(email, password);
+      const data = await getUserByEmail(email);
       localStorage.setItem("token", token);
-      navigate("/portfolio/:userSlug");
+      navigate(`/portfolio/${data.user.firstname}-${data.user.lastname}-${data.user._id.slice(-6)}`);
     } catch (err) {
       console.error(err);
       navigate("/login");
     }
   }
-
+  
   function handleEmailChange(event) {
     setEmail(event.target.value);
   }

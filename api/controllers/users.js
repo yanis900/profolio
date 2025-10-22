@@ -37,6 +37,22 @@ async function getUserById(req, res) {
   });
 }
 
+async function getUserByEmail(req, res) {
+  const email = req.query.email;
+
+  const user = await User.findOne({ email: email }, "_id firstname lastname");
+
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  const safeUser = user.toObject();
+  delete safeUser.password;
+
+  res.status(200).json({ user: safeUser });
+}
+
 async function getUserBySlug(req, res) {
   const slug = req.params.slug;
   if (!slug) {
@@ -63,7 +79,8 @@ async function getUserBySlug(req, res) {
 const UsersController = {
   create: create,
   getUserById: getUserById,
-  getUserBySlug: getUserBySlug
+  getUserBySlug: getUserBySlug,
+  getUserByEmail: getUserByEmail
 };
 
 module.exports = UsersController;
