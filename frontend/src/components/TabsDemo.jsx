@@ -10,68 +10,62 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import { DialogDemo } from "./DialogDemo"
 
-export function TabsDemo() {
+export function TabsDemo(props) {
   return (
-    <div className="flex w-full max-w-sm flex-col gap-6">
-      <Tabs defaultValue="account">
+    <div className="flex w-full flex-col gap-6">
+      <Tabs defaultValue="portfolio">
         <TabsList>
-          <TabsTrigger value="account">Account</TabsTrigger>
-          <TabsTrigger value="password">Password</TabsTrigger>
+          <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
         </TabsList>
-        <TabsContent value="account">
-          <Card>
+        <TabsContent value="portfolio">
+          <Card className='rounded-tl-none'>
             <CardHeader>
-              <CardTitle>Account</CardTitle>
+              <CardTitle>Projects</CardTitle>
               <CardDescription>
-                Make changes to your account here. Click save when you&apos;re
-                done.
+                {props.projects && props.projects.map((project) => {
+                  return(
+                    <>
+                    <Card className="m-20">
+                    <div>
+                      <Card key = {project.title}> Title: {project.title} </Card>
+                      <Card key ={project.description}> Description: {project.description} </Card>
+                      <Card key ={project.links}> Github: {project.links[0]} </Card>
+                      <Card key ={project.links}> Website: {project.links[1]} </Card>
+                    </div>
+                    </Card>
+                    </>
+                  )
+                })}
               </CardDescription>
+              <DialogDemo/>
             </CardHeader>
             <CardContent className="grid gap-6">
-              <div className="grid gap-3">
-                <Label htmlFor="tabs-demo-name">Name</Label>
-                <Input id="tabs-demo-name" defaultValue="Pedro Duarte" />
-              </div>
-              <div className="grid gap-3">
-                <Label htmlFor="tabs-demo-username">Username</Label>
-                <Input id="tabs-demo-username" defaultValue="@peduarte" />
-              </div>
             </CardContent>
-            <CardFooter>
-              <Button>Save changes</Button>
+            <CardFooter className='justify-end'>
+              
             </CardFooter>
           </Card>
         </TabsContent>
-        <TabsContent value="password">
-          <Card>
+        <TabsContent value="analytics">
+          <Card className='rounded-tl-none'>
             <CardHeader>
-              <CardTitle>Password</CardTitle>
+              <CardTitle></CardTitle>
               <CardDescription>
-                Change your password here. After saving, you&apos;ll be logged
-                out.
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-6">
-              <div className="grid gap-3">
-                <Label htmlFor="tabs-demo-current">Current password</Label>
-                <Input id="tabs-demo-current" type="password" />
-              </div>
-              <div className="grid gap-3">
-                <Label htmlFor="tabs-demo-new">New password</Label>
-                <Input id="tabs-demo-new" type="password" />
-              </div>
             </CardContent>
             <CardFooter>
-              <Button>Save password</Button>
+              <Button></Button>
             </CardFooter>
           </Card>
         </TabsContent>
