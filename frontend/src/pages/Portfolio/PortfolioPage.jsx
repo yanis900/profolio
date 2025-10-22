@@ -52,7 +52,7 @@ export function PortfolioPage() {
           <TabsDemo projects={user?.projects}/>
         </div>
       </div>
-    <div>
+
         { me ? (<p>This is me: {me.firstname}</p>) : '' }
         { user ? (<p>This is them: {user.firstname}</p>) : '' }
         <LogoutButton />
