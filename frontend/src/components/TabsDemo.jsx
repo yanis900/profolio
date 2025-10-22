@@ -40,30 +40,29 @@ export function TabsDemo(props) {
             <CardHeader>
               <CardTitle>Projects</CardTitle>
               <CardDescription>
-                {props.projects &&
-                  props.projects.map((project) => {
-                    return (
-                      <>
-                        <Card className="m-20" key={project._id}>
-                          <CardHeader>
-                            <CardTitle>{project.title}</CardTitle>
-                            <CardDescription>
-                              {project.description}
-                            </CardDescription>
-                            <CardAction>
-                              <EditProjectButton project={project}/>
-                              <Button
-                                size={"icon"}
-                                variant={"destructive"}
-                                onClick={() => handleDelete(project._id)}
-                              >
-                                <Trash />
-                              </Button>
-                            </CardAction>
-                          </CardHeader>
-                          <CardContent>
-                              
-                            {/* <Button size={"icon"}>
+                {props.projects && props.projects.length !== 0
+                  ? props.projects.map((project) => {
+                      return (
+                        <>
+                          <Card className="m-20" key={project._id}>
+                            <CardHeader>
+                              <CardTitle>{project.title}</CardTitle>
+                              <CardDescription>
+                                {project.description}
+                              </CardDescription>
+                              <CardAction className='flex gap-2'>
+                                <EditProjectButton project={project} />
+                                <Button
+                                  size={"icon"}
+                                  variant={"destructive"}
+                                  onClick={() => handleDelete(project._id)}
+                                >
+                                  <Trash />
+                                </Button>
+                              </CardAction>
+                            </CardHeader>
+                            <CardContent>
+                              {/* <Button size={"icon"}>
                               <a href={project.links[0]}>
                                 <Link />
                               </a>
@@ -73,11 +72,12 @@ export function TabsDemo(props) {
                                 <Link />
                               </a>
                             </Button> */}
-                          </CardContent>
-                        </Card>
-                      </>
-                    );
-                  })}
+                            </CardContent>
+                          </Card>
+                        </>
+                      );
+                    })
+                  : "You have no projects click + Add Project to display"}
               </CardDescription>
               <CardAction>
                 <AddProjectButton />
