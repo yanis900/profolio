@@ -4,7 +4,9 @@ import LogoutButton from "../../components/LogoutButton"
 
 import { getUserById, getUserBySlug } from "../../services/user";
 import { TabsDemo } from "@/components/TabsDemo";
-import { Card } from "@/components/ui/card";
+import { UserDialogDemo} from "@/components/UserDialogDemo";
+// import { Card } from "@/components/ui/card";
+import { UserInfoCard } from "@/components/UserInfoCard";
 
 export function PortfolioPage() {
   const { userSlug } = useParams();
@@ -40,13 +42,18 @@ export function PortfolioPage() {
       <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">My Portfolio</h1>
       <div className="flex gap-6">
         <div className="w-1/3">
-          <Card>
+          <UserDialogDemo/>
+          <UserInfoCard user={user}/>
+          {/* <Card>
             <p>{user?.firstname}</p>
             <p>{user?.lastname}</p>
             <p>{user?.email}</p>
             <p>{user?.bio}</p>
+            <p>{user?.jobtitle}</p>
+            <p>{user?.opentowork}</p>
+            <p>{user?.location}</p>
             <p>{user?.links}</p>
-            </Card>
+            </Card> */}
         </div>
         <div className="w-2/3">
           <TabsDemo projects={user?.projects}/>

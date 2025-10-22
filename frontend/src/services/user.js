@@ -34,6 +34,29 @@ export async function getUserById(token) {
   }
 }
 
+export async function editUser(token, user) {
+
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body:JSON.stringify(user)
+  };
+
+  let response = await fetch(`${BACKEND_URL}/users/edit`, requestOptions);
+
+  if (response.status === 200) {
+    const data = await response.json()
+    console.log(data)
+    return data
+  } else {
+    throw new Error(
+      `Received status ${response.status} when updating user. Expected 200`
+    );
+  }
+}
+
 export async function getUserBySlug(token, userSlug) {
 
   const requestOptions = {
