@@ -11,14 +11,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Link, Trash } from "lucide-react";
-import { deleteProject } from "../services/projects";
 import { AddProjectButton } from "./AddProjectButton";
 import { EditProjectButton } from "./EditProjectButton";
 import { DeleteProjectButton } from "./DeleteProjectButton";
 
 export function TabsDemo(props) {
-
   return (
     <div className="flex w-full flex-col gap-6">
       <Tabs defaultValue="portfolio">
@@ -31,23 +28,31 @@ export function TabsDemo(props) {
             <CardHeader>
               <CardTitle>Projects</CardTitle>
               <CardDescription>
-                {props.projects && props.projects.length !== 0
-                  ? props.projects.map((project) => {
-                      return (
-                        <>
-                          <Card className="m-20" key={project._id}>
-                            <CardHeader>
-                              <CardTitle>{project.title}</CardTitle>
-                              <CardDescription>
-                                {project.description}
-                              </CardDescription>
-                              <CardAction className='flex gap-2'>
-                                <EditProjectButton project={project} />
-                                <DeleteProjectButton project={project} />
-                              </CardAction>
-                            </CardHeader>
-                            <CardContent>
-                              {/* <Button size={"icon"}>
+                {props.projects && props.projects.length === 0
+                  ? "You have no projects click + Add Project to display"
+                  : ""}
+              </CardDescription>
+              <CardAction>
+                <AddProjectButton />
+              </CardAction>
+            </CardHeader>
+            <CardContent className="grid grid-cols-2 gap-6">
+              {props.projects && props.projects.map((project) => {
+                    return (
+                      <>
+                        <Card key={project._id}>
+                          <CardHeader>
+                            <CardTitle>{project.title}</CardTitle>
+                            <CardDescription>
+                              {project.description}
+                            </CardDescription>
+                            <CardAction className="flex gap-2">
+                              <EditProjectButton project={project} />
+                              <DeleteProjectButton project={project} />
+                            </CardAction>
+                          </CardHeader>
+                          <CardContent>
+                            {/* <Button size={"icon"}>
                               <a href={project.links[0]}>
                                 <Link />
                               </a>
@@ -57,18 +62,12 @@ export function TabsDemo(props) {
                                 <Link />
                               </a>
                             </Button> */}
-                            </CardContent>
-                          </Card>
-                        </>
-                      );
-                    })
-                  : "You have no projects click + Add Project to display"}
-              </CardDescription>
-              <CardAction>
-                <AddProjectButton />
-              </CardAction>
-            </CardHeader>
-            <CardContent className="grid gap-6"></CardContent>
+                          </CardContent>
+                        </Card>
+                      </>
+                    );
+                  })}
+            </CardContent>
             <CardFooter className="justify-end"></CardFooter>
           </Card>
         </TabsContent>
