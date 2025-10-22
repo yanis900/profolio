@@ -1,33 +1,37 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { vi } from "vitest";
+// 1. Import 'vi' and 'vi.mocked'
+import { vi, describe, test, expect, beforeEach, afterEach } from "vitest";
 
-import { useNavigate } from "react-router-dom";
+// 2. Import the *real* services you want to mock
 import { login } from "../../src/services/authentication";
+import { getUserByEmail } from "../../src/services/user";
 
 import { LoginPage } from "../../src/pages/Login/LoginPage";
 
-// Mocking React Router's useNavigate function
-vi.mock("react-router-dom", () => {
-  const navigateMock = vi.fn();
-  const useNavigateMock = () => navigateMock; // Create a mock function for useNavigate
-  return { useNavigate: useNavigateMock };
+// 3. Define the navigate mock (this one is different)
+const navigateMock = vi.fn();
+
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
+  return {
+    ...actual,
+    useNavigate: () => navigateMock,
+    useParams: () => ({ userSlug: "mock-test-slug" }),
+  };
 });
 
-// Mocking the login service
-vi.mock("../../src/services/authentication", () => {
-  const loginMock = vi.fn();
-  return { login: loginMock };
-});
+// 4. Auto-mock the service files.
+// This tells Vitest to replace all exports with vi.fn()
+vi.mock("../../src/services/authentication");
+vi.mock("../../src/services/user");
 
 // Reusable function for filling out login form
 async function completeLoginForm() {
   const user = userEvent.setup();
-
   const emailInputEl = screen.getByLabelText("Email:");
   const passwordInputEl = screen.getByLabelText("Password:");
   const submitButtonEl = screen.getByRole("submit-button");
-
   await user.type(emailInputEl, "test@email.com");
   await user.type(passwordInputEl, "1234");
   await user.click(submitButtonEl);
@@ -35,34 +39,53 @@ async function completeLoginForm() {
 
 describe("Login Page", () => {
   beforeEach(() => {
-    vi.resetAllMocks();
+    // 5. Use vi.restoreAllMocks() to clear mocks between tests
+    vi.restoreAllMocks();
+  });
+
+  afterEach(() => {
+    cleanup();
+    localStorage.clear();
   });
 
   test("allows a user to login", async () => {
     render(<LoginPage />);
+    
+    // 6. Use vi.mocked() to get the auto-mocked function
+    vi.mocked(getUserByEmail).mockResolvedValue({ 
+      user: { firstname: "test", lastname: "user", _id: "abc123456" } 
+    });
 
     await completeLoginForm();
-
-    expect(login).toHaveBeenCalledWith("test@email.com", "1234");
+    
+    // 7. Use vi.mocked() to check the call
+    expect(vi.mocked(login)).toHaveBeenCalledWith("test@email.com", "1234");
   });
 
-  test("navigates to /posts on successful login", async () => {
+  test("navigates to dynamic portfolio slug on successful login", async () => {
     render(<LoginPage />);
 
-    login.mockResolvedValue("secrettoken123");
-    const navigateMock = useNavigate();
-
+    vi.mocked(login).mockResolvedValue("secrettoken123");
+    
+    vi.mocked(getUserByEmail).mockResolvedValue({
+      user: {
+        firstname: "test",
+        lastname: "user",
+        _id: "a-very-long-id-string-123456"
+      }
+    });
+    
     await completeLoginForm();
 
-    expect(navigateMock).toHaveBeenCalledWith("/");
+    const expectedSlug = "/portfolio/test-user-123456";
+    expect(navigateMock).toHaveBeenCalledWith(expectedSlug);
   });
 
   test("navigates to /login on unsuccessful login", async () => {
     render(<LoginPage />);
-
-    login.mockRejectedValue(new Error("Error logging in"));
-    const navigateMock = useNavigate();
-
+    
+    vi.mocked(login).mockRejectedValue(new Error("Error logging in"));
+    
     await completeLoginForm();
 
     expect(navigateMock).toHaveBeenCalledWith("/login");
