@@ -15,18 +15,9 @@ import { Link, Trash } from "lucide-react";
 import { deleteProject } from "../services/projects";
 import { AddProjectButton } from "./AddProjectButton";
 import { EditProjectButton } from "./EditProjectButton";
+import { DeleteProjectButton } from "./DeleteProjectButton";
 
 export function TabsDemo(props) {
-  const token = localStorage.getItem("token");
-
-  async function handleDelete(id) {
-    try {
-      console.log(props.projects);
-      await deleteProject(token, id);
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   return (
     <div className="flex w-full flex-col gap-6">
@@ -52,13 +43,7 @@ export function TabsDemo(props) {
                               </CardDescription>
                               <CardAction className='flex gap-2'>
                                 <EditProjectButton project={project} />
-                                <Button
-                                  size={"icon"}
-                                  variant={"destructive"}
-                                  onClick={() => handleDelete(project._id)}
-                                >
-                                  <Trash />
-                                </Button>
+                                <DeleteProjectButton project={project} />
                               </CardAction>
                             </CardHeader>
                             <CardContent>
