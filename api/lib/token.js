@@ -7,10 +7,10 @@ const secret = process.env.JWT_SECRET;
  * Learn about JWTs: https://jwt.io/introduction
  * JWTs in 100 Seconds: https://www.youtube.com/watch?v=UBUNrFtufWo
  */
-function generateToken(user_id) {
-  const TEN_MINS_IN_SECS = 10 * 60;
+function generateToken(user_id, admin = false) {
+  const durationSecs = (admin ? 60 : 10) * 60;
   const issuedAtTime = Math.floor(Date.now() / 1000);
-  const expiryTime = issuedAtTime + TEN_MINS_IN_SECS;
+  const expiryTime = issuedAtTime + durationSecs;
 
   // Learn about different claims here:
   // https://datatracker.ietf.org/doc/html/rfc7519#section-4.1
