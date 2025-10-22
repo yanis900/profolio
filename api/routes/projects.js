@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.put("/new", tokenChecker, ProjectsController.createProject);
 router.delete("/delete-one", tokenChecker, ProjectsController.deleteProject);
-
+router.put("/edit", tokenChecker, ProjectsController.editProject);
 
 module.exports = router;
