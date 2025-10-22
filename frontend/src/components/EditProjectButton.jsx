@@ -12,14 +12,14 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { createProject } from '../services/projects'
+import { editProject } from '../services/projects'
 
-export function DialogDemo() {
+export function EditProjectButton(props) {
   const [open, setOpen] = useState(false)
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [github, setGithub] = useState('')
-  const [website, setWebsite] = useState('')
+  const [title, setTitle] = useState(props.project.title)
+  const [description, setDescription] = useState(props.project.description)
+  const [github, setGithub] = useState(props.project.links[0])
+  const [website, setWebsite] = useState(props.project.links[1])
 
   const token = localStorage.getItem('token')
 
@@ -27,11 +27,12 @@ export function DialogDemo() {
     event.preventDefault();
     try {
       const project = {
+        id: props.project._id,
         title: title,
         description: description,
         links: [github, website]
       }
-      const projectData = await createProject(token, project);
+      const projectData = await editProject(token, project);
       console.log(projectData)
       setOpen(false);
       // navigate("/login");
@@ -58,7 +59,7 @@ export function DialogDemo() {
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline">+ Add Project</Button>
+          <Button variant="outline">+ Edit</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
