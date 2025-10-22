@@ -17,8 +17,27 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import { DialogDemo } from "./DialogDemo"
+import { Trash } from "lucide-react"
+import { deleteProject } from "../services/projects"
 
 export function TabsDemo(props) {
+
+  const token = localStorage.getItem('token')
+
+  async function handleDelete(title, description, links) {
+    try {
+      console.log(props.projects)
+        const projects = {
+        title: title,
+        description: description,
+        links: links
+      }
+      await deleteProject(token, projects)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <div className="flex w-full flex-col gap-6">
       <Tabs defaultValue="portfolio">
@@ -41,12 +60,15 @@ export function TabsDemo(props) {
                       <Card key ={project.links}> Github: {project.links[0]} </Card>
                       <Card key ={project.links}> Website: {project.links[1]} </Card>
                     </div>
+                    <Button size={'icon'} variant={'destructive'} onClick={() => handleDelete(project.title, project.description, project.links)}>
+                      <Trash />
+                    </Button>
                     </Card>
                     </>
                   )
                 })}
               </CardDescription>
-              <DialogDemo/>
+              <DialogDemo />
             </CardHeader>
             <CardContent className="grid gap-6">
             </CardContent>
