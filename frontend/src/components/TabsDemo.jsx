@@ -33,10 +33,17 @@ export function TabsDemo(props) {
               <CardDescription>
                 {props.projects && props.projects.map((project) => {
                   return(
-                  <Card key = {project.title}> Title: {project.title} 
-                    <Card key ={project.description}> Description: {project.description} </Card>
-                    <Card key ={project.links}> Links: {project.links} </Card>
-                  </Card>)
+                    <>
+                    <Card className="m-20">
+                    <div>
+                      <Card key = {project.title}> Title: {project.title} </Card>
+                      <Card key ={project.description}> Description: {project.description} </Card>
+                      <Card key ={project.links}> Github: {project.links[0]} </Card>
+                      <Card key ={project.links}> Website: {project.links[1]} </Card>
+                    </div>
+                    </Card>
+                    </>
+                  )
                 })}
               </CardDescription>
               <DialogDemo/>
