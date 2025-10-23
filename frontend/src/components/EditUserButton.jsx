@@ -17,7 +17,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Pencil } from 'lucide-react'
 import { useNavigate } from "react-router-dom";
 
-export function UserDialogDemo(props) {
+export function EditUserButton(props) {
   const [open, setOpen] = useState(false)
   const [user, setUser] = useState(props.user)
 
@@ -81,9 +81,6 @@ export function UserDialogDemo(props) {
    function handleJobtitleChange(event) {
     setJobtitle(event.target.value);
   }
-//    function handleOpentoworkChange(event) {
-//     setOpentowork(event.target.value);
-//   }
    function handleLocationChange(event) {
     setLocation(event.target.value);
   }
@@ -132,7 +129,7 @@ export function UserDialogDemo(props) {
             </div>
             <div className="grid gap-3">
               <Label htmlFor="Opentowork">Opentowork</Label>
-              <Checkbox id="Opentowork" name="Opentowork" checked={opentowork} onCheckedChange={() => setOpentowork(true) }/>
+              <Checkbox id="Opentowork" name="Opentowork" checked={opentowork} onCheckedChange={(checked) => setOpentowork(checked)}/>
             </div>
             <div className="grid gap-3">
               <Label htmlFor="Location">Location</Label>
@@ -160,35 +157,5 @@ export function UserDialogDemo(props) {
         </DialogContent>
       </form>
     </Dialog>
-
-    // </>
-    //   <Card className='rounded-tl-none'>
-    //     <CardHeader>
-    //       <CardTitle>Projects</CardTitle>
-    //           <CardDescription>
-    //                 {props.projects && props.projects.map((project) => {
-    //                   return(
-    //                     <>
-    //                     <Card className="m-20">
-    //                     <div>
-    //                       <Card key = {project.title}> Title: {project.title} </Card>
-    //                       <Card key ={project.description}> Description: {project.description} </Card>
-    //                       <Card key ={project.links}> Github: {project.links[0]} </Card>
-    //                       <Card key ={project.links}> Website: {project.links[1]} </Card>
-    //                     </div>
-    //                     </Card>
-    //             </>
-    //           )
-    //         })}
-    //       </CardDescription>
-    //      <DialogDemo/>
-    //     </CardHeader>
-    //     <CardContent className="grid gap-6">
-    //     </CardContent>
-    //     <CardFooter className='justify-end'>
-                  
-    //    </CardFooter>
-    //  </Card>
-    // <>
   )
 }

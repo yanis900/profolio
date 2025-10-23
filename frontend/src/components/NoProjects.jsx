@@ -9,7 +9,7 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty"
 
-export function EmptyDemo() {
+export function NoProjects() {
   return (
     <Empty>
       <EmptyHeader>
