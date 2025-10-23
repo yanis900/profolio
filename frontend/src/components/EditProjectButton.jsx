@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { editProject } from '../services/projects'
 import { Pencil } from 'lucide-react'
+import { Textarea } from './ui/textarea'
 
 export function EditProjectButton(props) {
   const [open, setOpen] = useState(false)
@@ -76,7 +77,7 @@ export function EditProjectButton(props) {
             </div>
             <div className="grid gap-3">
               <Label htmlFor="description">Description</Label>
-              <Input id="description" name="description" value={description} onChange={handleDescriptionChange}/>
+              <Textarea id="description" name="description" value={description} onChange={handleDescriptionChange}/>
             </div>
             <div className="flex gap-3">
               <div>
