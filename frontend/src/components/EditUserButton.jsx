@@ -18,7 +18,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Pencil } from 'lucide-react'
 import { useNavigate } from "react-router-dom";
 
-export function UserDialogDemo(props) {
+export function EditUserButton(props) {
   const [open, setOpen] = useState(false)
   const [user, setUser] = useState(props.user)
   const [imagePreview, setImagePreview] = useState(null)
@@ -107,9 +107,6 @@ export function UserDialogDemo(props) {
    function handleJobtitleChange(event) {
     setJobtitle(event.target.value);
   }
-//    function handleOpentoworkChange(event) {
-//     setOpentowork(event.target.value);
-//   }
    function handleLocationChange(event) {
     setLocation(event.target.value);
   }
@@ -124,10 +121,6 @@ export function UserDialogDemo(props) {
   }
 
   return (
-    <>
-      {/* Profile Image & Upload */}
-
-
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
@@ -180,7 +173,7 @@ export function UserDialogDemo(props) {
             </div>
             <div className="grid gap-3">
               <Label htmlFor="Opentowork">Opentowork</Label>
-              <Checkbox id="Opentowork" name="Opentowork" checked={opentowork} onCheckedChange={() => setOpentowork(true) }/>
+              <Checkbox id="Opentowork" name="Opentowork" checked={opentowork} onCheckedChange={(checked) => setOpentowork(checked)}/>
             </div>
             <div className="grid gap-3">
               <Label htmlFor="Location">Location</Label>
@@ -208,6 +201,5 @@ export function UserDialogDemo(props) {
         </DialogContent>
       </form>
     </Dialog>
-  </>
   )
 }
