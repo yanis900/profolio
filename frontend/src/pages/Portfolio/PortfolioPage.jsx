@@ -18,7 +18,6 @@ export function PortfolioPage() {
       getUserById(token)
         .then((data) => {
           setMe(data.user);
-          console.log(data.user.firstname);
         })
         .catch((err) => {
           console.error(err);
@@ -26,8 +25,6 @@ export function PortfolioPage() {
       getUserBySlug(token, userSlug)
         .then((data) => {
           setUser(data.user);
-          // console.log(data.user.projects)
-          console.log(data.user.firstname);
         })
         .catch((err) => {
           console.error(err);
@@ -54,7 +51,7 @@ export function PortfolioPage() {
       </div>
       <div className="flex gap-6">
         <div className="w-1/3">
-          <UserView user={user} />
+          <UserView user={user} refreshUser={refreshUser}/>
         </div>
         <div className="w-2/3">
           <TabsDemo projects={user?.projects} refreshUser={refreshUser} />

@@ -8,13 +8,7 @@ import {
 } from "@/components/ui/card";
 import { CardAction } from "./ui/card";
 import { capitalise } from "../utils/capitalise";
-import {
-  AppWindow,
-  ChevronRight,
-  Github,
-  Linkedin,
-  Mail,
-} from "lucide-react";
+import { AppWindow, ChevronRight, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import {
@@ -24,6 +18,7 @@ import {
 } from "./ui/shadcn-io/dropzone";
 import { useState } from "react";
 import { EditUserButton } from "./EditUserButton";
+import { EditProfilePictureButton } from "./EditProfilePictureButton";
 
 export function UserView(props) {
   const [files, setFiles] = useState(null);
@@ -42,9 +37,9 @@ export function UserView(props) {
               <img
                 width={150}
                 height={150}
-                src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010"
+                src={props.user.image}
                 alt=""
-                className="rounded-full"
+                className="rounded-full border"
               />
               <div className="text-left">
                 <h3 className="text-xl">
@@ -58,7 +53,9 @@ export function UserView(props) {
           <CardDescription>
             <div className="mt-2 space-y-4 text-left">
               {props.user.opentowork ? (
-                <Badge variant={'outline'} className="border-2 border-blue-500">open to work</Badge>
+                <Badge variant={"outline"} className="border-2 border-blue-500">
+                  open to work
+                </Badge>
               ) : (
                 ""
               )}
@@ -66,12 +63,14 @@ export function UserView(props) {
               <p>📍 {props.user.location}</p>
             </div>
           </CardDescription>
-          <CardAction>
+          <CardAction className={"flex gap-2"}>
+            <EditProfilePictureButton user={props.user} refreshUser={props.refreshUser}/>
             <EditUserButton user={props.user} />
           </CardAction>
         </CardHeader>
         <CardContent className="grid place-items-center gap-6">
           <Dropzone
+            className={"border-2 border-purple-500"}
             accept={{ "image/*": [] }}
             maxFiles={10}
             maxSize={1024 * 1024 * 10}
@@ -105,7 +104,7 @@ export function UserView(props) {
           <p className="text-muted-foreground flex gap-1 items-center">
             For enquires and collaboration contact here <ChevronRight />
           </p>
-          <CardAction className={'border-2 border-purple-500'}>
+          <CardAction className={"border-2 border-purple-500"}>
             <Button variant={"outline"} size={"icon"}>
               <Mail />
             </Button>
