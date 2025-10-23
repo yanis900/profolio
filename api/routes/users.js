@@ -8,5 +8,6 @@ router.post("/", UsersController.create);
 router.get("/", tokenChecker, UsersController.getUserById)
 router.get("/email", UsersController.getUserByEmail)
 router.get("/portfolio/:slug", UsersController.getUserBySlug)
+router.put("/edit", tokenChecker,UsersController.editUser)
 
 module.exports = router;

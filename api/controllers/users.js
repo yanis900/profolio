@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const { link } = require("../routes/users");
 
 function create(req, res) {
   const firstname = req.body.firstname;
@@ -6,7 +7,8 @@ function create(req, res) {
   const email = req.body.email;
   const password = req.body.password;
 
-  const user = new User({ firstname, lastname, email, password });
+
+  const user = new User({ firstname, lastname, email, password});
   user
     .save()
     .then((user) => {
@@ -17,6 +19,29 @@ function create(req, res) {
       console.error(err);
       res.status(400).json({ message: "Something went wrong" });
     });
+}
+
+async function editUser(req, res) {
+  const userId = req.user_id;
+  const firstname = req.body.firstname;
+  const lastname = req.body.lastname;
+  const bio = req.body.bio;
+  const jobtitle = req.body.jobtitle;
+  const opentowork = req.body.opentowork
+  const location = req.body.location
+  const links = req.body.links
+
+  const user = await User.findByIdAndUpdate(userId, 
+    {firstname: firstname, lastname: lastname, bio:bio, jobtitle: jobtitle, opentowork: opentowork, location:location, links: links},
+    {new: true})
+  console.log(user)
+   if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  res.status(200).json({
+    user: user
+  });
 }
 
 async function getUserById(req, res) {
@@ -78,6 +103,7 @@ async function getUserBySlug(req, res) {
 
 const UsersController = {
   create: create,
+  editUser: editUser,
   getUserById: getUserById,
   getUserBySlug: getUserBySlug,
   getUserByEmail: getUserByEmail
