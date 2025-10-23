@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { editUser } from '../services/user'
+import { updateProfileImage } from '../services/upload'
 import { Checkbox } from "@/components/ui/checkbox"
 import { Pencil } from 'lucide-react'
 import { useNavigate } from "react-router-dom";
@@ -20,6 +21,8 @@ import { useNavigate } from "react-router-dom";
 export function EditUserButton(props) {
   const [open, setOpen] = useState(false)
   const [user, setUser] = useState(props.user)
+  const [imagePreview, setImagePreview] = useState(null)
+  const fileInputRef = useRef()
 
   const [firstname, setFirstname] = useState(props.user?.firstname)
   const [lastname, setLastname] = useState(props.user?.lastname)
@@ -48,6 +51,29 @@ export function EditUserButton(props) {
   }, [props.user])
 
   const token = localStorage.getItem('token')
+
+    // 🔹 Image file change
+  function handleFileChange(e) {
+    const file = e.target.files[0];
+    if (file) {
+      setImagePreview(URL.createObjectURL(file))
+    }
+  }
+  // 🔹 Upload image to backend
+  async function handleUpload() {
+    console.log("button clicked!")
+    const file = fileInputRef.current.files[0]
+    console.log("file", file)
+    if (!file) return
+
+    const formData = new FormData()
+    formData.append("image", file)
+    console.log("formdata", formData)
+
+    const res = await updateProfileImage(token, formData)
+    setUser(res.user)
+    setImagePreview(null) // clear preview after upload
+  }
 
    async function handleSubmit(event) {
     event.preventDefault();
@@ -111,6 +137,24 @@ export function EditUserButton(props) {
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
+                  <div className="flex items-center gap-4 mb-4">
+        <img 
+          src={imagePreview || user?.image} 
+          alt="Profile" 
+          className="w-24 h-24 rounded-full object-cover"
+        />
+        <div>
+          <input 
+            type="file" 
+            ref={fileInputRef} 
+            onChange={handleFileChange} 
+            accept="image/*"
+          />
+          <button onClick={handleUpload}>
+            Upload
+          </button>
+        </div>
+      </div>
             <div className="grid gap-3">
               <Label htmlFor="Firstname">Firstname</Label>
               <Input id="Firstname" name="Firstname" value={firstname} onChange={handleFirstnameChange}/>
