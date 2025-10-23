@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -14,18 +14,38 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { editUser } from '../services/user'
 import { Checkbox } from "@/components/ui/checkbox"
+import { Pencil } from 'lucide-react'
+import { useNavigate } from "react-router-dom";
 
-export function UserDialogDemo() {
+export function UserDialogDemo(props) {
   const [open, setOpen] = useState(false)
-  const [firstname, setFirstname] = useState('')
-  const [lastname, setLastname] = useState('')
-  const [bio, setBio] = useState('')
-  const [jobtitle, setJobtitle] = useState('')
-  const [opentowork, setOpentowork] = useState(false)
-  const [location, setLocation] = useState('')
-  const [linkedin, setLinkedin] = useState('')
-  const [github, setGithub] = useState('')
-  const [website, setWebsite] = useState('')
+  const [user, setUser] = useState(props.user)
+
+  const [firstname, setFirstname] = useState(props.user?.firstname)
+  const [lastname, setLastname] = useState(props.user?.lastname)
+  const [bio, setBio] = useState(props.user?.bio)
+  const [jobtitle, setJobtitle] = useState(props.user?.jobtitle)
+  const [opentowork, setOpentowork] = useState(props.user?.opentowork)
+  const [location, setLocation] = useState(props.user?.location)
+  const [linkedin, setLinkedin] = useState(props.user?.links[0])
+  const [github, setGithub] = useState(props.user?.links[1])
+  const [website, setWebsite] = useState(props.user?.links[2])
+  const navigate = useNavigate()
+
+   useEffect(() => {
+    if (props.user) {
+      setUser(props.user)
+      setFirstname(props.user.firstname || "")
+      setLastname(props.user.lastname || "")
+      setBio(props.user.bio || "")
+      setJobtitle(props.user.jobtitle || "")
+      setOpentowork(props.user.opentowork || false)
+      setLocation(props.user.location || "")
+      setLinkedin(props.user.links?.[0] || "")
+      setGithub(props.user.links?.[1] || "")
+      setWebsite(props.user.links?.[2] || "")
+    }
+  }, [props.user])
 
   const token = localStorage.getItem('token')
 
@@ -42,12 +62,10 @@ export function UserDialogDemo() {
         links: [linkedin, github, website]
       }
       await editUser(token, user);
-  
+      navigate(`/portfolio/${firstname}-${lastname}-${props.user._id.slice(-6)}`)
       setOpen(false);
-      // navigate("/login");
     } catch (err) {
       console.error(err);
-      // navigate("/signup");
     }
   }
 
@@ -83,7 +101,9 @@ export function UserDialogDemo() {
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline" className="flex flex-col gap-4">Edit Profile</Button>
+          <Button variant="outline" className="flex flex-col gap-4">
+            <Pencil />
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -112,7 +132,7 @@ export function UserDialogDemo() {
             </div>
             <div className="grid gap-3">
               <Label htmlFor="Opentowork">Opentowork</Label>
-              <Checkbox id="Opentowork" name="Opentowork" checked={opentowork} onCheckedChange={(checked)=> setOpentowork(checked === true) }/>
+              <Checkbox id="Opentowork" name="Opentowork" checked={opentowork} onCheckedChange={() => setOpentowork(true) }/>
             </div>
             <div className="grid gap-3">
               <Label htmlFor="Location">Location</Label>

@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import LogoutButton from "../../components/LogoutButton"
-
 import { getUserById, getUserBySlug } from "../../services/user";
 import { TabsDemo } from "@/components/TabsDemo";
-import { UserDialogDemo} from "@/components/UserDialogDemo";
-// import { Card } from "@/components/ui/card";
 import { UserInfoCard } from "@/components/UserInfoCard";
 
 export function PortfolioPage() {
@@ -20,6 +17,7 @@ export function PortfolioPage() {
       getUserById(token)
         .then((data) => {
           setMe(data.user);
+          console.log(data.user.firstname)
         })
         .catch((err) => {
           console.error(err);
@@ -28,6 +26,8 @@ export function PortfolioPage() {
         .then((data) => {
           setUser(data.user);
           // console.log(data.user.projects)
+          console.log(data.user.firstname)
+
         })
         .catch((err) => {
           console.error(err);
@@ -40,33 +40,18 @@ async function refreshUser () {
   const data = await getUserBySlug(token, userSlug);
   setUser(data.user);
 }
-  // console.log(me)
-  // console.log(user?.projects)
+
   return (
     <div className="w-screen h-screen flex flex-col gap-8 p-6">
       <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">My Portfolio</h1>
       <div className="flex gap-6">
         <div className="w-1/3">
-          <UserDialogDemo/>
-          <UserInfoCard user={user}/>
-          {/* <Card>
-            <p>{user?.firstname}</p>
-            <p>{user?.lastname}</p>
-            <p>{user?.email}</p>
-            <p>{user?.bio}</p>
-            <p>{user?.jobtitle}</p>
-            <p>{user?.opentowork}</p>
-            <p>{user?.location}</p>
-            <p>{user?.links}</p>
-            </Card> */}
+          <UserInfoCard user={user} />
         </div>
         <div className="w-2/3">
           <TabsDemo projects={user?.projects} refreshUser={refreshUser}/>
         </div>
       </div>
-
-        {/* { me ? (<p>This is me: {me.firstname}</p>) : '' }
-        { user ? (<p>This is them: {user.firstname}</p>) : '' } */}
         <LogoutButton />
     </div>
   );

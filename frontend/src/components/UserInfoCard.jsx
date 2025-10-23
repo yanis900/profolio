@@ -8,12 +8,13 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { UserDialogDemo } from "./UserDialogDemo"
+import { CardAction } from "./ui/card"
 
 export function UserInfoCard(props) {
     return (
             <Card className='rounded-tl-none'>
                 <CardHeader>
-                <CardTitle>Projects</CardTitle>
+                <CardTitle></CardTitle>
                 <CardDescription>
                     {props.user &&
                     (
@@ -35,7 +36,9 @@ export function UserInfoCard(props) {
                     )
                     }
                 </CardDescription>
-                <UserDialogDemo/>
+                <CardAction>
+                    <UserDialogDemo user={props.user} />
+                </CardAction>
                 </CardHeader>
                 <CardContent className="grid gap-6">
                 </CardContent>
