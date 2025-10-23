@@ -6,6 +6,9 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   bio: { type: String },
+  jobtitle: { type: String },
+  opentowork:{type: Boolean, default: false},
+  location:{type: String},
   links: { type: Array },
   projects: [
     {

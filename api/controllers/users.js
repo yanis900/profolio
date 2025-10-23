@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const { link } = require("../routes/users");
 
 function create(req, res) {
   const firstname = req.body.firstname;
@@ -19,21 +20,56 @@ function create(req, res) {
     });
 }
 
+async function editUser(req, res) {
+  const userId = req.user_id;
+  const firstname = req.body.firstname;
+  const lastname = req.body.lastname;
+  const bio = req.body.bio;
+  const jobtitle = req.body.jobtitle;
+  const opentowork = req.body.opentowork;
+  const location = req.body.location;
+  const links = req.body.links;
+
+  const user = await User.findOneAndUpdate(
+    { _id: userId },
+    {
+      $set: {
+        firstname: firstname,
+        lastname: lastname,
+        bio: bio,
+        jobtitle: jobtitle,
+        opentowork: opentowork,
+        location: location,
+        links: links,
+      },
+    },
+    { new: true }
+  );
+  console.log(user);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  res.status(200).json({
+    user: user,
+  });
+}
+
 async function getUserById(req, res) {
-  const userId = req.user_id
-  console.log(userId)
+  const userId = req.user_id;
+  console.log(userId);
   if (!userId) {
     return res.status(401).json({ message: "Not authenticated" });
   }
 
   const user = await User.findById(userId).select("-password");
-  console.log(user)
-   if (!user) {
+  console.log(user);
+  if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
 
   res.status(200).json({
-    user: user
+    user: user,
   });
 }
 
@@ -41,7 +77,6 @@ async function getUserByEmail(req, res) {
   const email = req.query.email;
 
   const user = await User.findOne({ email: email }, "_id firstname lastname");
-
 
   if (!user) {
     return res.status(404).json({ message: "User not found" });
@@ -59,10 +94,14 @@ async function getUserBySlug(req, res) {
     return res.status(401).json({ message: "Not authenticated" });
   }
   const query = slug.split("-");
+  const partialId = query[2].slice(-6);
 
   const user = await User.findOne({
-    firstname: { $regex: query[0], $options: "i" },
-    lastname: { $regex: query[1], $options: "i" } 
+    $and: [
+      { firstname: { $regex: query[0], $options: "i" } },
+      { lastname: { $regex: query[1], $options: "i" } },
+      { $expr: { $regexMatch: { input: { $toString: "$_id" }, regex: `${partialId}$` } } },
+    ],
   }).select("-password");
 
   if (!user) {
@@ -78,9 +117,10 @@ async function getUserBySlug(req, res) {
 
 const UsersController = {
   create: create,
+  editUser: editUser,
   getUserById: getUserById,
   getUserBySlug: getUserBySlug,
-  getUserByEmail: getUserByEmail
+  getUserByEmail: getUserByEmail,
 };
 
 module.exports = UsersController;
