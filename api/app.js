@@ -4,6 +4,7 @@ const cors = require("cors");
 const projectsRouter = require("./routes/projects");
 const usersRouter = require("./routes/users");
 const authenticationRouter = require("./routes/authentication");
+const uploadRouter = require("./routes/upload");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 app.use("/projects", projectsRouter);
 app.use("/users", usersRouter);
 app.use("/tokens", authenticationRouter);
+app.use("/upload", uploadRouter);
 
 // 404 Handler
 app.use((_req, res) => {

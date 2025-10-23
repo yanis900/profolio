@@ -49,7 +49,7 @@ async function refreshUser () {
           <UserInfoCard user={user} />
         </div>
         <div className="w-2/3">
-          <TabsDemo projects={user?.projects} refreshUser={refreshUser}/>
+          {/* <TabsDemo projects={user?.projects} refreshUser={refreshUser}/> */}
         </div>
       </div>
         <LogoutButton />
