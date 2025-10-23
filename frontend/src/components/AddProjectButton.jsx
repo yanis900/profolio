@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createProject } from "../services/projects";
 import { Plus } from "lucide-react";
+import { Textarea } from "./ui/textarea";
 
 export function AddProjectButton(props) {
   const [open, setOpen] = useState(false);
@@ -81,7 +82,7 @@ export function AddProjectButton(props) {
             </div>
             <div className="grid gap-3">
               <Label htmlFor="description">Description</Label>
-              <Input
+              <Textarea
                 id="description"
                 name="description"
                 value={description}
