@@ -12,14 +12,16 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { createProject } from '../services/projects'
+import { editProject } from '../services/projects'
+import { Pencil } from 'lucide-react'
+import { Textarea } from './ui/textarea'
 
-export function DialogDemo() {
+export function EditProjectButton(props) {
   const [open, setOpen] = useState(false)
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [github, setGithub] = useState('')
-  const [website, setWebsite] = useState('')
+  const [title, setTitle] = useState(props.project.title)
+  const [description, setDescription] = useState(props.project.description)
+  const [github, setGithub] = useState(props.project.links[0])
+  const [website, setWebsite] = useState(props.project.links[1])
 
   const token = localStorage.getItem('token')
 
@@ -27,17 +29,16 @@ export function DialogDemo() {
     event.preventDefault();
     try {
       const project = {
+        id: props.project._id,
         title: title,
         description: description,
         links: [github, website]
       }
-      const projectData = await createProject(token, project);
-      console.log(projectData)
+      await editProject(token, project);
+      props.refreshUser()
       setOpen(false);
-      // navigate("/login");
     } catch (err) {
       console.error(err);
-      // navigate("/signup");
     }
   }
 
@@ -58,14 +59,15 @@ export function DialogDemo() {
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline">+ Add Project</Button>
+          <Button variant={"outline"} size={'icon'}>
+            <Pencil />
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add Project</DialogTitle>
+            <DialogTitle>Edit Project</DialogTitle>
             <DialogDescription>
-              Add any project that you have worked on. Click save when you&apos;re
-              done.
+              Make changes to your project. Click save when you&apos;re done.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
@@ -75,7 +77,7 @@ export function DialogDemo() {
             </div>
             <div className="grid gap-3">
               <Label htmlFor="description">Description</Label>
-              <Input id="description" name="description" value={description} onChange={handleDescriptionChange}/>
+              <Textarea id="description" name="description" value={description} onChange={handleDescriptionChange}/>
             </div>
             <div className="flex gap-3">
               <div>

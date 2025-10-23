@@ -33,10 +33,15 @@ export function PortfolioPage() {
     }
   }, [userSlug]);
 
+async function refreshUser () {
+  const token = localStorage.getItem("token");
+  const data = await getUserBySlug(token, userSlug);
+  setUser(data.user);
+}
   // console.log(me)
   // console.log(user?.projects)
   return (
-    <div className="w-screen h-screen flex flex-col gap-15 p-6">
+    <div className="w-screen h-screen flex flex-col gap-8 p-6">
       <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">My Portfolio</h1>
       <div className="flex gap-6">
         <div className="w-1/3">
@@ -49,12 +54,12 @@ export function PortfolioPage() {
             </Card>
         </div>
         <div className="w-2/3">
-          <TabsDemo projects={user?.projects}/>
+          <TabsDemo projects={user?.projects} refreshUser={refreshUser}/>
         </div>
       </div>
 
-        { me ? (<p>This is me: {me.firstname}</p>) : '' }
-        { user ? (<p>This is them: {user.firstname}</p>) : '' }
+        {/* { me ? (<p>This is me: {me.firstname}</p>) : '' }
+        { user ? (<p>This is them: {user.firstname}</p>) : '' } */}
         <LogoutButton />
     </div>
   );
