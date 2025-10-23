@@ -12,37 +12,44 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AddProjectButton } from "./AddProjectButton";
 import { EditProjectButton } from "./EditProjectButton";
 import { DeleteProjectButton } from "./DeleteProjectButton";
-import { Link } from "lucide-react";
+import { AppWindow, Folder, Github } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "./ui/accordion";
+import { EmptyDemo } from "./EmptyDemo";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import { VisibilitySwitch } from "./VisibiltySwitch";
 
 export function TabsDemo(props) {
   return (
     <div className="flex w-full flex-col gap-6">
       <Tabs defaultValue="portfolio">
-        <TabsList>
-          <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-        </TabsList>
+        <div className="flex justify-between">
+          <TabsList>
+            <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
+            <TabsTrigger value="analytics">Analytics</TabsTrigger>
+          </TabsList>
+          <VisibilitySwitch />
+        </div>
         <TabsContent value="portfolio">
           <Card className="rounded-tl-none">
             <CardHeader>
-              <CardTitle>Projects</CardTitle>
-              <CardDescription>
+              <CardTitle>
+                <div className="flex gap-3 items-center justify-start"><Folder/>My Projects</div> </CardTitle>
+              {/* <CardDescription>
                 {props.projects && props.projects.length === 0
                   ? "You have no projects click + to add new project"
                   : ""}
-              </CardDescription>
+              </CardDescription> */}
               <CardAction>
                 <AddProjectButton refreshUser={props.refreshUser} />
               </CardAction>
             </CardHeader>
-            <CardContent className="grid grid-cols-2 gap-6">
-              {props.projects &&
+            <CardContent className="grid gap-6">
+              {props.projects && props.projects.length !== 0 ? (
                 props.projects.map((project) => {
                   return (
                     <>
@@ -65,19 +72,24 @@ export function TabsDemo(props) {
                         </CardHeader>
                         <CardContent>
                           <Accordion type="single" collapsible>
-                            <AccordionItem value="item-1">
-                              <AccordionTrigger>
-                                more
-                              </AccordionTrigger>
-                              <AccordionContent>
-                                <Button size={"icon"} variant={"link"}>
-                                  <a href={project.links[0]}>
-                                    <Link />
-                                  </a>
-                                </Button>
-                                <Button size={"icon"} variant={"link"}>
+                            <AccordionItem value={project._id}>
+                              <AccordionTrigger>more</AccordionTrigger>
+                              <AccordionContent className="flex justify-end gap-3">
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Button size={"icon"} variant={"outline"}>
+                                      <a href={project.links[0]}>
+                                        <Github />
+                                      </a>
+                                    </Button>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p>Add to library</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                                <Button size={"icon"} variant={"outline"}>
                                   <a href={project.links[1]}>
-                                    <Link />
+                                    <AppWindow />
                                   </a>
                                 </Button>
                               </AccordionContent>
@@ -87,7 +99,10 @@ export function TabsDemo(props) {
                       </Card>
                     </>
                   );
-                })}
+                })
+              ) : (
+                <EmptyDemo />
+              )}
             </CardContent>
             <CardFooter className="justify-end"></CardFooter>
           </Card>

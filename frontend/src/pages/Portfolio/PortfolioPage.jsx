@@ -41,7 +41,7 @@ async function refreshUser () {
   // console.log(me)
   // console.log(user?.projects)
   return (
-    <div className="w-screen h-screen flex flex-col gap-15 p-6">
+    <div className="w-screen h-screen flex flex-col gap-8 p-6">
       <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">My Portfolio</h1>
       <div className="flex gap-6">
         <div className="w-1/3">
