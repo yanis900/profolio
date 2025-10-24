@@ -44,4 +44,26 @@ export async function uploadCV(token, formData) {
     );
   }
 }
+
+export async function uploadThumbnail(token, projectId, formData) {
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+    Authorization: `Bearer ${token}`,
+    },
+    body: formData
+  };
+
+  let response = await fetch(`${BACKEND_URL}/upload/thumbnail/${projectId}`, requestOptions);
+
+  if (response.status === 200) {
+    const data = await response.json()
+    return data
+  } else {
+    throw new Error(
+      `Received status ${response.status} when uploading project thumbnail. Expected 200`
+    );
+  }
+}
  

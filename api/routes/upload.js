@@ -11,5 +11,6 @@ router.put(
 );
 
 router.post("/cv", tokenChecker, UploadController.upload.single("file"), UploadController.uploadCV);
+router.post("/thumbnail/:id", tokenChecker, UploadController.upload.single("image"), UploadController.uploadThumbnail);
 
 module.exports = router;
