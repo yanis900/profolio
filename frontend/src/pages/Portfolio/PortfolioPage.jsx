@@ -5,11 +5,14 @@ import { getUserById, getUserBySlug } from "../../services/user";
 import { TabsDemo } from "@/components/TabsDemo";
 import BackButton from "@/components/BackButton";
 import { UserView } from "@/components/UserView";
+import { updateViewCount } from "@/services/analytics";
+import { getViewCount } from "@/services/analytics";
 
 export function PortfolioPage() {
   const { userSlug } = useParams();
   const [me, setMe] = useState(null);
   const [user, setUser] = useState(null);
+  const [views, setViews] = useState(null)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -25,6 +28,20 @@ export function PortfolioPage() {
       getUserBySlug(token, userSlug)
         .then((data) => {
           setUser(data.user);
+        })
+        .catch((err) => {
+          console.error(err);
+        });  
+      updateViewCount(token, userSlug)
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      getViewCount(token, userSlug)
+        .then((data) => {
+          setViews(data);
         })
         .catch((err) => {
           console.error(err);
@@ -54,7 +71,7 @@ export function PortfolioPage() {
           <UserView user={user} refreshUser={refreshUser}/>
         </div>
         <div className="w-2/3">
-          <TabsDemo projects={user?.projects} refreshUser={refreshUser} />
+          <TabsDemo projects={user?.projects} views={views} refreshUser={refreshUser} />
         </div>
       </div>
     </div>
