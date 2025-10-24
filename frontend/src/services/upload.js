@@ -22,4 +22,26 @@ export async function updateProfileImage(token, formData) {
     );
   }
 }
+
+export async function uploadCV(token, formData) {
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+    Authorization: `Bearer ${token}`,
+    },
+    body: formData
+  };
+
+  let response = await fetch(`${BACKEND_URL}/upload/cv`, requestOptions);
+
+  if (response.status === 200) {
+    const data = await response.json()
+    return data
+  } else {
+    throw new Error(
+      `Received status ${response.status} when uploading cv. Expected 200`
+    );
+  }
+}
  
