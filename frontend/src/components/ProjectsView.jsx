@@ -2,12 +2,6 @@ import { AddProjectButton } from "./AddProjectButton";
 import { EditProjectButton } from "./EditProjectButton";
 import { DeleteProjectButton } from "./DeleteProjectButton";
 import { AppWindow, Folder, Github } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "./ui/accordion";
 import { TabsContent } from "./ui/tabs";
 import {
   Card,

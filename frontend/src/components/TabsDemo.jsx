@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { VisibilitySwitch } from "./VisibiltySwitch";
 import { ProjectsView } from "./ProjectsView";
+import { ViewsChart } from "./ViewsChart";
 
 export function TabsDemo(props) {
   return (
@@ -31,7 +32,10 @@ export function TabsDemo(props) {
               <CardTitle></CardTitle>
               <CardDescription></CardDescription>
             </CardHeader>
-            <CardContent className="grid gap-6"></CardContent>
+            <CardContent className="grid gap-6">
+
+              <ViewsChart />
+            </CardContent>
             <CardFooter>
               <Button></Button>
             </CardFooter>
