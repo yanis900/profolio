@@ -59,7 +59,7 @@ async function updateViewCount(req, res) {
 async function getViewCount(req, res) {
   const slug = req.params.slug;
 
-   if (!slug) {
+  if (!slug) {
     return res.status(400).json({ message: "Invalid page" });
   }
 
@@ -76,23 +76,22 @@ async function getViewCount(req, res) {
         },
       },
     ],
-  }, "views");
+  });
 
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
+  console.log(user);
 
   res.status(200).json({
     totalViews: user.analytics.views.length,
-    desktop: user.analytics.views.filter((view) => view.device === 'Desktop'),
-    mobile: user.analytics.views.filter((view) => view.device === 'Mobile')
+    views: user.analytics.views
   });
-
 }
 
 const AnalyticsController = {
   updateViewCount: updateViewCount,
-  getViewCount: getViewCount
+  getViewCount: getViewCount,
 };
 
 module.exports = AnalyticsController;

@@ -1,17 +1,7 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VisibilitySwitch } from "./VisibiltySwitch";
 import { ProjectsView } from "./ProjectsView";
-import { ViewsChart } from "./ViewsChart";
+import { AnalyticsView } from "./AnalyticsView";
 
 export function TabsDemo(props) {
   return (
@@ -25,23 +15,7 @@ export function TabsDemo(props) {
           <VisibilitySwitch />
         </div>
         <ProjectsView refreshUser={props.refreshUser} projects={props.projects}/>
-
-        <TabsContent value="analytics">
-          <Card className="rounded-tl-none">
-            <CardHeader>
-              <CardTitle></CardTitle>
-              <CardDescription></CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-6">
-
-              <ViewsChart />
-            </CardContent>
-            <CardFooter>
-              <Button></Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-        
+        <AnalyticsView views={props.views}/>
       </Tabs>
     </div>
   );
