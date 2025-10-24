@@ -5,6 +5,7 @@ import { getUserById, getUserBySlug } from "../../services/user";
 import { TabsDemo } from "@/components/TabsDemo";
 import BackButton from "@/components/BackButton";
 import { UserView } from "@/components/UserView";
+import { updateViewCount } from "@/services/analytics";
 
 export function PortfolioPage() {
   const { userSlug } = useParams();
@@ -25,6 +26,13 @@ export function PortfolioPage() {
       getUserBySlug(token, userSlug)
         .then((data) => {
           setUser(data.user);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+        updateViewCount(token, userSlug)
+        .then((data) => {
+          console.log(data);
         })
         .catch((err) => {
           console.error(err);
