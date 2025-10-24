@@ -5,7 +5,7 @@ const User = require("../models/user");
 
 // Multer config — store files in memory
 const storage = multer.memoryStorage();
-const upload = multer({ storage }).single("image");
+const upload = multer({ storage });
 
 // Debug log for environment variables (masked for safety)
 console.log("🧩 AWS CONFIG:");
@@ -121,9 +121,93 @@ async function uploadProfileImage(req, res) {
   }
 }
 
+async function uploadCV(req, res) {
+  // console.log("📥 Incoming uploadCV request...");
+
+  try {
+    const userId = req.user_id;
+    // console.log("🆔 User ID from request:", userId);
+
+    const file = req.file;
+    if (!file) {
+      console.warn("⚠️ No file uploaded in request.");
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    // console.log("📸 File received:");
+    // console.log(" - Original name:", file.originalname);
+    // console.log(" - Mime type:", file.mimetype);
+    // console.log(" - Size:", file.size, "bytes");
+
+    if (!process.env.AWS_S3_BUCKET) {
+      console.error("❌ Missing AWS_S3_BUCKET environment variable!");
+      return res.status(500).json({ message: "Server misconfigured" });
+    }
+
+    const key = `${userId}/cv`;
+    const uploadParams = {
+      Bucket: process.env.AWS_S3_BUCKET,
+      Key: key,
+      Body: file.buffer,
+      // ACL: "public-read",
+      ContentType: file.mimetype,
+    };
+
+    // console.log("🚀 Starting upload to S3...");
+    // console.log("   Bucket:", uploadParams.Bucket);
+    // console.log("   Key:", uploadParams.Key);
+
+    const parallelUpload = new Upload({
+      client: s3,
+      params: uploadParams,
+    });
+
+    // Optional progress listener
+    parallelUpload.on("httpUploadProgress", (progress) => {
+      console.log(
+        `📤 Uploading... ${progress.loaded}/${progress.total || "?"} bytes`
+      );
+    });
+
+    const result = await parallelUpload.done();
+    console.log("✅ Upload complete!");
+    console.log("🌐 S3 URL:", result.Location);
+
+    console.log("🧾 Updating MongoDB user document...");
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { cv: result.Location },
+      { new: true }
+    );
+
+    if (!user) {
+      console.warn("⚠️ No user found with that ID:", userId);
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    console.log("✅ MongoDB user updated successfully.");
+
+    return res.status(200).json({
+      message: "CV uploaded successfully!",
+      imageUrl: result.Location,
+      user,
+    });
+  } catch (error) {
+    console.error("💥 Error uploading image:", error);
+    return res.status(500).json({
+      message: "Error uploading image",
+      error: error.message,
+    });
+  }
+}
+
+
+
+
 const UploadController = {
   upload,
   uploadProfileImage,
+  uploadCV,
 };
 
 module.exports = UploadController;

@@ -80,7 +80,7 @@ export function EditProfilePictureButton(props) {
           <DialogHeader>
             <DialogTitle>Update Profile Picture</DialogTitle>
             <DialogDescription>
-              Add any project that you have worked on. Click save when
+              Add your profile picture. Click save when
               you&apos;re done.
             </DialogDescription>
           </DialogHeader>
