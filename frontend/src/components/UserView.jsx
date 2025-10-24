@@ -118,7 +118,13 @@ export function UserView(props) {
           <Button onClick={handleCvUpload} disabled={!cvFile}>
             Upload CV
           </Button>
-
+          <div className="flex gap-3 mt-2">
+            {props.user.cv && (
+              <Button variant="outline" size="sm" onClick={() => window.open(props.user.cv, "_blank")}>
+                View CV
+              </Button>
+            )}
+          </div>
           <div className="flex gap-3">
             <Button variant={"outline"} size={"icon"}>
               <a href={props.user.links[0]} target="_blank" rel="noreferrer">
