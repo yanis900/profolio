@@ -33,6 +33,10 @@ async function updateViewCount(req, res) {
     return res.status(404).json({ message: "User not found" });
   }
 
+  if (viewerId.toString() === user._id.toString()) {
+  return res.status(400).json({ message: "You can't view your own profile." });
+}
+
   const alreadyViewed = user.analytics.views.find(
     (view) => view.userId?.toString() === viewerId
   );
