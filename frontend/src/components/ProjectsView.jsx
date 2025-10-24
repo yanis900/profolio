@@ -59,6 +59,18 @@ export function ProjectsView(props) {
                           <CardDescription>
                             {project.description}
                           </CardDescription>
+                          <div className="space-x-2">
+                            <Button size={"icon"} variant={"link"}>
+                              <a href={project.links[0]}>
+                                <Github />
+                              </a>
+                            </Button>
+                            <Button size={"icon"} variant={"link"}>
+                              <a href={project.links[1]}>
+                                <AppWindow />
+                              </a>
+                            </Button>
+                          </div>
                         </div>
                       </div>
                       <CardAction className="flex gap-2">
@@ -72,28 +84,6 @@ export function ProjectsView(props) {
                         />
                       </CardAction>
                     </CardHeader>
-                    {/* <CardContent>
-                      <Accordion type="single" collapsible>
-                        <AccordionItem value={project._id}>
-                          <AccordionTrigger></AccordionTrigger>
-                          <AccordionContent className="flex justify-end gap-3"></AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
-                    </CardContent> */}
-                    <CardFooter className={"justify-end"}>
-                      <CardAction className={'space-x-2'}>
-                        <Button size={"icon"} variant={"outline"}>
-                          <a href={project.links[0]}>
-                            <Github />
-                          </a>
-                        </Button>
-                        <Button size={"icon"} variant={"outline"}>
-                          <a href={project.links[1]}>
-                            <AppWindow />
-                          </a>
-                        </Button>
-                      </CardAction>
-                    </CardFooter>
                   </Card>
                 </>
               );

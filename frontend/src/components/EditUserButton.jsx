@@ -14,9 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { editUser } from "../services/user";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Pencil } from "lucide-react";
+import { UserRoundPen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Card } from "./ui/card";
 
 export function EditUserButton(props) {
   const [open, setOpen] = useState(false);
@@ -85,7 +84,7 @@ export function EditUserButton(props) {
       <form>
         <DialogTrigger asChild>
           <Button variant="outline" className="flex flex-col gap-4">
-            <Pencil />
+            <UserRoundPen />
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">

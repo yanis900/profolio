@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { updateProfileImage } from "../services/upload";
-import { UserRoundPen } from "lucide-react";
+import { Camera } from "lucide-react";
 import {
   Dropzone,
   DropzoneContent,
@@ -73,7 +73,7 @@ export function EditProfilePictureButton(props) {
       <form>
         <DialogTrigger asChild>
           <Button variant="outline" className="flex flex-col gap-4">
-            <UserRoundPen />
+            <Camera />
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">

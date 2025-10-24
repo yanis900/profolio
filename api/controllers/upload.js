@@ -64,7 +64,7 @@ async function uploadProfileImage(req, res) {
       return res.status(500).json({ message: "Server misconfigured" });
     }
 
-    const key = `${userId}/${Date.now()}`;
+    const key = `${userId}/profile-picture`;
     const uploadParams = {
       Bucket: process.env.AWS_S3_BUCKET,
       Key: key,
