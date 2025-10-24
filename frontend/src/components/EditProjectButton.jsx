@@ -52,7 +52,10 @@ export function EditProjectButton(props) {
     if (!files || files.length === 0) return
     try {
       const image = files[0]
-      await uploadThumbnail(token, projectId, image)
+      const formData = new FormData();
+      formData.append("image", image);
+
+      await uploadThumbnail(token, projectId, formData)
       console.log("Thumbnail uploaded successfully!")
     } catch (err) {
       console.error("Error uploading thumbnail:", err)
@@ -66,10 +69,10 @@ export function EditProjectButton(props) {
         id: props.project._id,
         title: title,
         description: description,
-        links: [github, website]
+        links: [github, website],
       }
-      await editProject(token, project);
       await handleThumbnailUpload(props.project._id)
+      await editProject(token, project);
       props.refreshUser()
       setOpen(false);
     } catch (err) {
@@ -125,15 +128,17 @@ export function EditProjectButton(props) {
               </div>
             </div>
 
-            <div className="mt-4">
+            <div className="grid gap-3">
               <Label>Project Thumbnail</Label>
+              <div className="flex children:flex-1">
+
               <Dropzone
                 accept={{ "image/*": [".png", ".jpg", ".jpeg"] }}
                 onDrop={handleDrop}
                 onError={console.error}
                 src={files}
                 ref={fileInputRef}
-              >
+                >
                 <DropzoneEmptyState />
                 <DropzoneContent>
                   {imagePreview && (
@@ -142,11 +147,12 @@ export function EditProjectButton(props) {
                         alt="Preview"
                         className="absolute top-0 left-0 h-full w-full object-contain"
                         src={imagePreview}
-                      />
+                        />
                     </div>
                   )}
                 </DropzoneContent>
               </Dropzone>
+                  </div>
             </div>
           </div>
 

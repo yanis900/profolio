@@ -16,7 +16,7 @@ import {
   DropzoneContent,
   DropzoneEmptyState,
 } from "./ui/shadcn-io/dropzone";
-import { useState, useRef} from "react";
+import { useState } from "react";
 import { EditUserButton } from "./EditUserButton";
 import { EditProfilePictureButton } from "./EditProfilePictureButton";
 import { uploadCV } from "../services/upload";

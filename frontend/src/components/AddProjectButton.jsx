@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,6 +15,12 @@ import { Label } from "@/components/ui/label";
 import { createProject } from "../services/projects";
 import { Plus } from "lucide-react";
 import { Textarea } from "./ui/textarea";
+import {
+  Dropzone,
+  DropzoneContent,
+  DropzoneEmptyState,
+} from "./ui/shadcn-io/dropzone";
+import { uploadThumbnail } from "../services/upload";
 
 export function AddProjectButton(props) {
   const [open, setOpen] = useState(false);
@@ -23,8 +29,38 @@ export function AddProjectButton(props) {
   const [github, setGithub] = useState("");
   const [website, setWebsite] = useState("");
 
+  const [files, setFiles] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const fileInputRef = useRef();
+
   const token = localStorage.getItem("token");
 
+  function handleDrop(files) {
+    setFiles(files);
+    if (files.length > 0) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (typeof e.target?.result === "string") {
+          setImagePreview(e.target.result);
+        }
+      };
+      reader.readAsDataURL(files[0]);
+    }
+  }
+
+  async function handleThumbnailUpload(projectId) {
+    if (!files || files.length === 0) return;
+    try {
+      const image = files[0];
+      const formData = new FormData();
+      formData.append("image", image);
+
+      await uploadThumbnail(token, projectId, formData);
+      console.log("Thumbnail uploaded successfully!");
+    } catch (err) {
+      console.error("Error uploading thumbnail:", err);
+    }
+  }
   async function handleSubmit(event) {
     event.preventDefault();
     try {
@@ -33,6 +69,7 @@ export function AddProjectButton(props) {
         description: description,
         links: [github, website],
       };
+      await handleThumbnailUpload(props.project._id);
       await createProject(token, project);
       props.refreshUser();
       setOpen(false);
@@ -108,6 +145,31 @@ export function AddProjectButton(props) {
                   value={website}
                   onChange={handleWebsiteChange}
                 />
+              </div>
+            </div>
+            <div className="grid gap-3">
+              <Label>Project Thumbnail</Label>
+              <div className="flex children:flex-1">
+                <Dropzone
+                  accept={{ "image/*": [".png", ".jpg", ".jpeg"] }}
+                  onDrop={handleDrop}
+                  onError={console.error}
+                  src={files}
+                  ref={fileInputRef}
+                >
+                  <DropzoneEmptyState />
+                  <DropzoneContent>
+                    {imagePreview && (
+                      <div className="h-[102px] w-full">
+                        <img
+                          alt="Preview"
+                          className="absolute top-0 left-0 h-full w-full object-contain"
+                          src={imagePreview}
+                        />
+                      </div>
+                    )}
+                  </DropzoneContent>
+                </Dropzone>
               </div>
             </div>
           </div>

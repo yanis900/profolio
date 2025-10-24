@@ -48,9 +48,7 @@ export function ProjectsView(props) {
                         <img
                           width={150}
                           height={150}
-                          src={
-                            "https://profile-image-software-dev-project3.s3.eu-west-2.amazonaws.com/default+profile.png"
-                          }
+                          src={project.thumbnail}
                           // alt={project.title}
                           className="w-32 h-32 rounded-xl border object-cover"
                         />

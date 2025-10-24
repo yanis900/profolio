@@ -109,8 +109,6 @@ async function uploadProfileImage(req, res) {
 
     return res.status(200).json({
       message: "Profile image uploaded successfully!",
-      imageUrl: result.Location,
-      user,
     });
   } catch (error) {
     console.error("💥 Error uploading image:", error);

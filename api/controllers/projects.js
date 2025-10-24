@@ -54,7 +54,7 @@ async function editProject(req, res) {
             $set: {
                 "projects.$.title": title,
                 "projects.$.description": description,
-                "projects.$.links": links
+                "projects.$.links": links,
             }
         },
         { new: true }
