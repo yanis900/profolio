@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import LogoutButton from "../../components/LogoutButton"
+import LogoutButton from "../../components/LogoutButton";
 import { getUserById, getUserBySlug } from "../../services/user";
 import { TabsDemo } from "@/components/TabsDemo";
-import { UserInfoCard } from "@/components/UserInfoCard";
+import BackButton from "@/components/BackButton";
+import { UserView } from "@/components/UserView";
 
 export function PortfolioPage() {
   const { userSlug } = useParams();
@@ -17,7 +18,6 @@ export function PortfolioPage() {
       getUserById(token)
         .then((data) => {
           setMe(data.user);
-          console.log(data.user.firstname)
         })
         .catch((err) => {
           console.error(err);
@@ -25,9 +25,6 @@ export function PortfolioPage() {
       getUserBySlug(token, userSlug)
         .then((data) => {
           setUser(data.user);
-          // console.log(data.user.projects)
-          console.log(data.user.firstname)
-
         })
         .catch((err) => {
           console.error(err);
@@ -35,24 +32,31 @@ export function PortfolioPage() {
     }
   }, [userSlug]);
 
-async function refreshUser () {
-  const token = localStorage.getItem("token");
-  const data = await getUserBySlug(token, userSlug);
-  setUser(data.user);
-}
+  async function refreshUser() {
+    const token = localStorage.getItem("token");
+    const data = await getUserBySlug(token, userSlug);
+    setUser(data.user);
+  }
 
+  console.log(me);
   return (
     <div className="w-screen h-screen flex flex-col gap-8 p-6">
-      <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">My Portfolio</h1>
+      <div className="flex items-center justify-between">
+        <BackButton />
+        <h2 className="scroll-m-20 text-center text-3xl font-bold tracking-tight text-balance">
+          My Portfolio
+        </h2>
+
+        <LogoutButton />
+      </div>
       <div className="flex gap-6">
         <div className="w-1/3">
-          <UserInfoCard user={user} />
+          <UserView user={user} refreshUser={refreshUser}/>
         </div>
         <div className="w-2/3">
-          <TabsDemo projects={user?.projects} refreshUser={refreshUser}/>
+          <TabsDemo projects={user?.projects} refreshUser={refreshUser} />
         </div>
       </div>
-        <LogoutButton />
     </div>
   );
 }

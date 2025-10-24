@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
 
 function LogoutButton() {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ function LogoutButton() {
     navigate("/");
   }
 
-  return <button onClick={logOut}>Log out</button>;
+  return <Button variant={'link'} onClick={logOut}>Log out</Button>;
 }
 
 export default LogoutButton;
