@@ -10,12 +10,14 @@ export function TabsDemo(props) {
         <div className="flex justify-between">
           <TabsList>
             <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
-            <TabsTrigger value="analytics" className='border-2 border-purple-500'>Analytics</TabsTrigger>
+            {props.isOwner && (
+              <TabsTrigger value="analytics" className='border-2 border-purple-500'>Analytics</TabsTrigger>
+            )}
           </TabsList>
-          <VisibilitySwitch />
+          {props.isOwner && <VisibilitySwitch user={props.user} refreshUser={props.refreshUser} />}
         </div>
-        <ProjectsView refreshUser={props.refreshUser} projects={props.projects}/>
-        <AnalyticsView views={props.views}/>
+        <ProjectsView refreshUser={props.refreshUser} projects={props.projects} isOwner={props.isOwner} />
+        {props.isOwner && <AnalyticsView views={props.views}/>}
       </Tabs>
     </div>
   );

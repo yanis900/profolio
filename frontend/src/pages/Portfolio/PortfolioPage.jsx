@@ -56,22 +56,26 @@ export function PortfolioPage() {
   }
 
   console.log(me);
+
+  // Check if the logged-in user is viewing their own portfolio
+  const isOwner = me?._id === user?._id;
+
   return (
     <div className="w-screen h-screen flex flex-col gap-8 p-6">
       <div className="flex items-center justify-between">
         <BackButton />
         <h2 className="scroll-m-20 text-center text-3xl font-bold tracking-tight text-balance">
-          My Portfolio
+          {isOwner ? "My Portfolio" : `${user?.firstname}'s Portfolio`}
         </h2>
 
         <LogoutButton />
       </div>
       <div className="flex gap-6">
         <div className="w-1/3">
-          <UserView user={user} refreshUser={refreshUser}/>
+          <UserView user={user} refreshUser={refreshUser} isOwner={isOwner} />
         </div>
         <div className="w-2/3">
-          <TabsDemo projects={user?.projects} views={views} refreshUser={refreshUser} />
+          <TabsDemo user={user} projects={user?.projects} views={views} refreshUser={refreshUser} isOwner={isOwner} />
         </div>
       </div>
     </div>

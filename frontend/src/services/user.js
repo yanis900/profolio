@@ -1,12 +1,11 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export async function getUserByEmail(email) {
-
   let response = await fetch(`${BACKEND_URL}/users/email?email=${email}`);
 
   if (response.status === 200) {
-    const data = await response.json()
-    return data
+    const data = await response.json();
+    return data;
   } else {
     throw new Error(
       `Received status ${response.status} when fetching user by email. Expected 200`
@@ -14,7 +13,6 @@ export async function getUserByEmail(email) {
   }
 }
 export async function getUserById(token) {
-
   const requestOptions = {
     method: "GET",
     headers: {
@@ -25,8 +23,8 @@ export async function getUserById(token) {
   let response = await fetch(`${BACKEND_URL}/users`, requestOptions);
 
   if (response.status === 200) {
-    const data = await response.json()
-    return data
+    const data = await response.json();
+    return data;
   } else {
     throw new Error(
       `Received status ${response.status} when fetching user by id. Expected 200`
@@ -35,22 +33,21 @@ export async function getUserById(token) {
 }
 
 export async function editUser(token, user) {
-
   const requestOptions = {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(user)
+    body: JSON.stringify(user),
   };
-  console.log(user)
+  console.log(user);
   let response = await fetch(`${BACKEND_URL}/users/edit`, requestOptions);
-  console.log(response)
+  console.log(response);
   if (response.status === 200) {
-    const data = await response.json()
-    console.log(data)
-    return data
+    const data = await response.json();
+    console.log(data);
+    return data;
   } else {
     throw new Error(
       `Received status ${response.status} when updating user. Expected 200`
@@ -59,22 +56,60 @@ export async function editUser(token, user) {
 }
 
 export async function getUserBySlug(token, userSlug) {
-
   const requestOptions = {
     method: "GET",
     headers: {
-    Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   };
 
-  let response = await fetch(`${BACKEND_URL}/users/portfolio/${userSlug}`, requestOptions);
+  let response = await fetch(
+    `${BACKEND_URL}/users/portfolio/${userSlug}`,
+    requestOptions
+  );
 
   if (response.status === 200) {
-    const data = await response.json()
-    return data
+    const data = await response.json();
+    return data;
   } else {
     throw new Error(
       `Received status ${response.status} when fetching user by slug. Expected 200`
+    );
+  }
+}
+
+export async function getUserByName(name) {
+  const response = await fetch(`${BACKEND_URL}/users/search?name=${name}`);
+
+  if (response.status !== 200 && response.status !== 404) {
+    throw new Error("Server error");
+  }
+  if (response.status === 404) {
+    return null;
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+export async function toggleVisibility(token, visibility) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ visibility }),
+  };
+
+  let response = await fetch(`${BACKEND_URL}/users/visibility`, requestOptions);
+
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
+  } else {
+    throw new Error(
+      `Received status ${response.status} when updating visibility. Expected 200`
     );
   }
 }

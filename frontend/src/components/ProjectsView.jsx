@@ -23,13 +23,15 @@ export function ProjectsView(props) {
           <CardTitle>
             <div className="flex gap-3 items-center justify-start">
               <Folder />
-              My Projects
+              {props.isOwner ? "My Projects" : "Projects"}
             </div>{" "}
           </CardTitle>
           <CardDescription></CardDescription>
-          <CardAction>
-            <AddProjectButton refreshUser={props.refreshUser} />
-          </CardAction>
+          {props.isOwner && (
+            <CardAction>
+              <AddProjectButton refreshUser={props.refreshUser} />
+            </CardAction>
+          )}
         </CardHeader>
         <CardContent className="grid gap-6">
           {props.projects && props.projects.length !== 0 ? (
@@ -65,16 +67,18 @@ export function ProjectsView(props) {
                           </div>
                         </div>
                       </div>
-                      <CardAction className="flex gap-2">
-                        <EditProjectButton
-                          project={project}
-                          refreshUser={props.refreshUser}
-                        />
-                        <DeleteProjectButton
-                          project={project}
-                          refreshUser={props.refreshUser}
-                        />
-                      </CardAction>
+                      {props.isOwner && (
+                        <CardAction className="flex gap-2">
+                          <EditProjectButton
+                            project={project}
+                            refreshUser={props.refreshUser}
+                          />
+                          <DeleteProjectButton
+                            project={project}
+                            refreshUser={props.refreshUser}
+                          />
+                        </CardAction>
+                      )}
                     </CardHeader>
                   </Card>
                 </>

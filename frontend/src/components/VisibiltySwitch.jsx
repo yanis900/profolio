@@ -1,5 +1,8 @@
+import { useState, useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { toggleVisibility } from "@/services/user";
+import { toast } from "sonner";
 
 import {
   AlertDialog,
@@ -13,25 +16,60 @@ import {
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
 
-export function VisibilitySwitch() {
+export function VisibilitySwitch({ user, refreshUser }) {
+  const [isVisible, setIsVisible] = useState(user?.visibility ?? true);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(user?.visibility ?? true);
+  }, [user]);
+
+  async function handleToggle() {
+    const newVisibility = !isVisible;
+
+    try {
+      const token = localStorage.getItem("token");
+      await toggleVisibility(token, newVisibility);
+      setIsVisible(newVisibility);
+      setOpen(false);
+
+      if (refreshUser) {
+        refreshUser();
+      }
+
+      toast.success(
+        newVisibility
+          ? "Portfolio is now visible to others"
+          : "Portfolio is now hidden from search"
+      );
+    } catch (error) {
+      console.error("Error toggling visibility:", error);
+      toast.error("Failed to update visibility");
+    }
+  }
+
   return (
-    <AlertDialog>
-      <AlertDialogTrigger className="flex items-center space-x-2 mr-2 border-2 border-purple-500">
-        <Switch id="visibilty" />
-        <Label htmlFor="visibilty">Visibilty</Label>
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogTrigger className="flex items-center space-x-2 mr-2 border-2 border-purple-500 p-2 rounded">
+        <Switch id="visibility" checked={isVisible} />
+        <Label htmlFor="visibility">Visibility</Label>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>
+            {isVisible ? "Hide your portfolio?" : "Make your portfolio visible?"}
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            This will allow other users to see your portfolio.
+            {isVisible
+              ? "Your portfolio will be hidden from search results. Only people with a direct link can view it."
+              : "Your portfolio will appear in search results and be visible to all users."}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
-            className={"bg-destructive hover:bg-destructive/90"}
-            onClick={() => ""}
+            className={isVisible ? "bg-destructive hover:bg-destructive/90" : ""}
+            onClick={handleToggle}
           >
             Continue
           </AlertDialogAction>

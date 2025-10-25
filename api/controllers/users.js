@@ -1,5 +1,5 @@
 const User = require("../models/user");
-const { link } = require("../routes/users");
+const { link, get } = require("../routes/users");
 
 function create(req, res) {
   const firstname = req.body.firstname;
@@ -100,7 +100,11 @@ async function getUserBySlug(req, res) {
     $and: [
       { firstname: { $regex: query[0], $options: "i" } },
       { lastname: { $regex: query[1], $options: "i" } },
-      { $expr: { $regexMatch: { input: { $toString: "$_id" }, regex: `${partialId}$` } } },
+      {
+        $expr: {
+          $regexMatch: { input: { $toString: "$_id" }, regex: `${partialId}$` },
+        },
+      },
     ],
   }).select("-password");
 
@@ -115,12 +119,57 @@ async function getUserBySlug(req, res) {
   }
 }
 
+async function getUserByName(req, res) {
+  const name = req.query.name;
+
+  const users = await User.find({
+    $and: [
+      {
+        $or: [
+          { firstname: { $regex: name, $options: "i" } },
+          { lastname: { $regex: name, $options: "i" } },
+        ],
+      },
+      { visibility: true },
+    ],
+  }).select("-password");
+
+  if (users.length === 0) {
+    return res.status(404).json({ message: "No user found with this name" });
+  }
+
+  res.status(200).json({ users: users });
+}
+
+async function toggleVisibility(req, res) {
+  const userId = req.user_id;
+  const visibility = req.body.visibility;
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $set: { visibility: visibility } },
+      { new: true }
+    ).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ user: user, message: "Visibility updated" });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating visibility" });
+  }
+}
+
 const UsersController = {
   create: create,
   editUser: editUser,
   getUserById: getUserById,
   getUserBySlug: getUserBySlug,
   getUserByEmail: getUserByEmail,
+  getUserByName: getUserByName,
+  toggleVisibility: toggleVisibility,
 };
 
 module.exports = UsersController;
