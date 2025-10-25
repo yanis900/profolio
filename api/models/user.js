@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
   bio: { type: String },
   jobtitle: { type: String },
   opentowork: { type: Boolean, default: false },
+  visibility: { type: Boolean, default: true },
   location: { type: String },
   links: { type: Array },
   image: { type: String, default: "https://profolio-project-dev-project-3.s3.eu-west-2.amazonaws.com/default+profile.png"},

@@ -90,34 +90,40 @@ export function UserView(props) {
               <p>📍 {props.user.location}</p>
             </div>
           </CardDescription>
-          <CardAction className={"flex gap-2"}>
-            <EditProfilePictureButton user={props.user} refreshUser={props.refreshUser}/>
-            <EditUserButton user={props.user} />
-          </CardAction>
+          {props.isOwner && (
+            <CardAction className={"flex gap-2"}>
+              <EditProfilePictureButton user={props.user} refreshUser={props.refreshUser}/>
+              <EditUserButton user={props.user} />
+            </CardAction>
+          )}
         </CardHeader>
         <CardContent className="grid place-items-center gap-6">
-          <Dropzone
-            className={"border-2 border-purple-500"}
-            accept={{ "application/pdf": [".pdf"], "application/msword": [".doc"],"application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],"text/plain": [".txt"] }}
-            maxFiles={10}
-            maxSize={1024 * 1024 * 10}
-            minSize={1024}
-            onDrop={handleCvDrop}
-            onError={console.error}
-            src={cvFile ? [cvFile] : []}
-          >
-              <DropzoneEmptyState>
-                {cvPreview ? (
-                  <p>Selected file: {cvPreview}</p>
-                ) : (
-                  <p>Drag & drop your CV here, or click to select</p>
-                )}
-              </DropzoneEmptyState>
-            <DropzoneContent />
-          </Dropzone>
-          <Button onClick={handleCvUpload} disabled={!cvFile}>
-            Upload CV
-          </Button>
+          {props.isOwner && (
+            <>
+              <Dropzone
+                className={"border-2 border-purple-500"}
+                accept={{ "application/pdf": [".pdf"], "application/msword": [".doc"],"application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],"text/plain": [".txt"] }}
+                maxFiles={10}
+                maxSize={1024 * 1024 * 10}
+                minSize={1024}
+                onDrop={handleCvDrop}
+                onError={console.error}
+                src={cvFile ? [cvFile] : []}
+              >
+                  <DropzoneEmptyState>
+                    {cvPreview ? (
+                      <p>Selected file: {cvPreview}</p>
+                    ) : (
+                      <p>Drag & drop your CV here, or click to select</p>
+                    )}
+                  </DropzoneEmptyState>
+                <DropzoneContent />
+              </Dropzone>
+              <Button onClick={handleCvUpload} disabled={!cvFile}>
+                Upload CV
+              </Button>
+            </>
+          )}
           <div className="flex gap-3 mt-2">
             {props.user.cv && (
               <Button variant="outline" size="sm" onClick={() => window.open(props.user.cv, "_blank")}>
