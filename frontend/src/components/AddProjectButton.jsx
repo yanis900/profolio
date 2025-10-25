@@ -61,16 +61,21 @@ export function AddProjectButton(props) {
       console.error("Error uploading thumbnail:", err);
     }
   }
+
   async function handleSubmit(event) {
     event.preventDefault();
     try {
+      console.log('heeloo')
       const project = {
         title: title,
         description: description,
         links: [github, website],
       };
-      await handleThumbnailUpload(props.project._id);
-      await createProject(token, project);
+      console.log('project', project)
+
+      // console.log(props?.project?._id ?? 'no project id');
+      const data = await createProject(token, project);
+      await handleThumbnailUpload(data.project._id);
       props.refreshUser();
       setOpen(false);
     } catch (err) {

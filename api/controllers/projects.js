@@ -15,7 +15,7 @@ async function createProject(req, res) {
     if (!user) {
         return res.status(404).json({ message: "User not found" });
     }
-    console.log(user.projects)
+
     res.status(201).json({
         project: user.projects[user.projects.length -1], message: "Project created successfully!"
     });
