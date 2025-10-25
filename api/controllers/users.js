@@ -29,6 +29,7 @@ async function editUser(req, res) {
   const opentowork = req.body.opentowork;
   const location = req.body.location;
   const links = req.body.links;
+  const github = req.body.github
 
   const user = await User.findOneAndUpdate(
     { _id: userId },
@@ -41,6 +42,7 @@ async function editUser(req, res) {
         opentowork: opentowork,
         location: location,
         links: links,
+        github: github
       },
     },
     { new: true }
