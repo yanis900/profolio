@@ -11,63 +11,25 @@ import { capitalise } from "../utils/capitalise";
 import { AppWindow, ChevronRight, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import {
-  Dropzone,
-  DropzoneContent,
-  DropzoneEmptyState,
-} from "./ui/shadcn-io/dropzone";
-import { useState } from "react";
 import { EditUserButton } from "./EditUserButton";
 import { EditProfilePictureButton } from "./EditProfilePictureButton";
-import { uploadCV } from "../services/upload";
+import { EditCvButton } from "./EditCvButton";
+import { ContributionsButton } from "./ContributionsButton";
 
 export function UserView(props) {
-  const [cvFile, setCvFile] = useState(null);
-  const [cvPreview, setCvPreview] = useState(null);
-
-  // const handleDrop = (files) => {
-  //   console.log(files);
-  //   setFiles(files);
-  // };
-  const handleCvDrop = (files) => {
-    if (files.length > 0) {
-      setCvFile(files[0]);
-      setCvPreview(files[0].name); // or just show file name
-    }
-  };
-
-  async function handleCvUpload() {
-    if (!cvFile) return;
-
-    try {
-      const token = localStorage.getItem("token");
-      const formData = new FormData();
-      formData.append("file", cvFile); // make sure backend expects 'file'
-
-      await uploadCV(token, formData); // call your backend service
-      setCvFile(null);
-      setCvPreview(null);
-      props.refreshUser(); // refresh user to show updated CV link if needed
-      alert("CV uploaded successfully!");
-    } catch (err) {
-      console.error("Error uploading CV:", err);
-      alert("Failed to upload CV");
-    }
-  }
-
   return (
     props.user && (
       <Card className="rounded-tl-none">
         <CardHeader>
           <CardTitle>
-            <div className="flex gap-5 items-center">
-              <img
-                width={150}
-                height={150}
-                src={props.user.image}
-                alt=""
-                className="rounded-full border"
-              />
+            <div className="flex items-center space-x-4">
+              <div className="w-[150px] h-[150px] rounded-full border overflow-hidden">
+                <img
+                  src={props.user.image}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <div className="text-left">
                 <h3 className="text-xl">
                   {capitalise(props.user.firstname)}{" "}
@@ -88,45 +50,36 @@ export function UserView(props) {
               )}
               <p>{props.user.bio}</p>
               <p>📍 {props.user.location}</p>
+              <div>
+                {props.contributions ? (
+                  <ContributionsButton contributions={props.contributions} />
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           </CardDescription>
           {props.isOwner && (
-            <CardAction className={"flex gap-2"}>
-              <EditProfilePictureButton user={props.user} refreshUser={props.refreshUser}/>
+            <CardAction className={"grid grid-cols-2 gap-2"}>
+              <EditProfilePictureButton
+                user={props.user}
+                refreshUser={props.refreshUser}
+              />
               <EditUserButton user={props.user} />
+              <div className="col-start-2">
+                <EditCvButton refreshUser={props.refreshUser} />
+              </div>
             </CardAction>
           )}
         </CardHeader>
         <CardContent className="grid place-items-center gap-6">
-          {props.isOwner && (
-            <>
-              <Dropzone
-                className={"border-2 border-purple-500"}
-                accept={{ "application/pdf": [".pdf"], "application/msword": [".doc"],"application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],"text/plain": [".txt"] }}
-                maxFiles={10}
-                maxSize={1024 * 1024 * 10}
-                minSize={1024}
-                onDrop={handleCvDrop}
-                onError={console.error}
-                src={cvFile ? [cvFile] : []}
-              >
-                  <DropzoneEmptyState>
-                    {cvPreview ? (
-                      <p>Selected file: {cvPreview}</p>
-                    ) : (
-                      <p>Drag & drop your CV here, or click to select</p>
-                    )}
-                  </DropzoneEmptyState>
-                <DropzoneContent />
-              </Dropzone>
-              <Button onClick={handleCvUpload} disabled={!cvFile}>
-                Upload CV
-              </Button>
-            </>
-          )}
           <div className="flex gap-3 mt-2">
             {props.user.cv && (
-              <Button variant="outline" size="sm" onClick={() => window.open(props.user.cv, "_blank")}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => window.open(props.user.cv, "_blank")}
+              >
                 View CV
               </Button>
             )}

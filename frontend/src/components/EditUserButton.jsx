@@ -16,6 +16,7 @@ import { editUser } from "../services/user";
 import { Checkbox } from "@/components/ui/checkbox";
 import { UserRoundPen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Textarea } from "./ui/textarea";
 
 export function EditUserButton(props) {
   const [open, setOpen] = useState(false);
@@ -28,6 +29,8 @@ export function EditUserButton(props) {
   const [linkedin, setLinkedin] = useState(props.user?.links[0]);
   const [github, setGithub] = useState(props.user?.links[1]);
   const [website, setWebsite] = useState(props.user?.links[2]);
+  const [githubUsername, setGithubUsername] = useState(props.user?.github);
+
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
@@ -43,6 +46,7 @@ export function EditUserButton(props) {
         opentowork: opentowork,
         location: location,
         links: [linkedin, github, website],
+        github: githubUsername
       };
       await editUser(token, user);
       navigate(
@@ -78,6 +82,9 @@ export function EditUserButton(props) {
   function handleWebsiteChange(event) {
     setWebsite(event.target.value);
   }
+  function handleGithubUsernameChange(event) {
+    setGithubUsername(event.target.value);
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -96,6 +103,8 @@ export function EditUserButton(props) {
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
+            <div className="flex gap-3">
+
             <div className="grid gap-3">
               <Label htmlFor="Firstname">Firstname</Label>
               <Input
@@ -114,9 +123,10 @@ export function EditUserButton(props) {
                 onChange={handleLastnameChange}
               />
             </div>
+            </div>
             <div className="grid gap-3">
               <Label htmlFor="Bio">Bio</Label>
-              <Input
+              <Textarea
                 id="Bio"
                 name="Bio"
                 value={bio}
@@ -148,6 +158,15 @@ export function EditUserButton(props) {
                 name="Location"
                 value={location}
                 onChange={handleLocationChange}
+              />
+            </div>
+            <div className="grid gap-3">
+              <Label htmlFor="GithubUsername">Github Username</Label>
+              <Input
+                id="GithubUsername"
+                name="GithubUsername"
+                value={githubUsername}
+                onChange={handleGithubUsernameChange}
               />
             </div>
             <div className="flex gap-3">

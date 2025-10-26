@@ -21,6 +21,7 @@ import {
   DropzoneContent,
   DropzoneEmptyState,
 } from "./ui/shadcn-io/dropzone";
+import { toast } from 'sonner'
 
 export function EditProjectButton(props) {
   const [open, setOpen] = useState(false)
@@ -73,10 +74,16 @@ export function EditProjectButton(props) {
       }
       await handleThumbnailUpload(props.project._id)
       await editProject(token, project);
+      toast.success(
+        "Project edited successfully"
+      );
       props.refreshUser()
       setOpen(false);
     } catch (err) {
       console.error(err);
+      toast.error(
+        "Failed to edit the project"
+      );
     }
   }
 

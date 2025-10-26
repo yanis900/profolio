@@ -12,6 +12,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
+import { toast } from "sonner";
 
 export function DeleteProjectButton(props) {
   const token = localStorage.getItem("token");
@@ -19,9 +20,11 @@ export function DeleteProjectButton(props) {
   async function handleDelete(id) {
     try {
       await deleteProject(token, id);
+      toast.success("Project deleted successfully");
       props.refreshUser();
     } catch (error) {
       console.error(error);
+      toast.error("Failed to delete the project");
     }
   }
   return (
@@ -42,7 +45,10 @@ export function DeleteProjectButton(props) {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction className={'bg-destructive hover:bg-destructive/90'} onClick={() => handleDelete(props.project._id)}>
+            <AlertDialogAction
+              className={"bg-destructive hover:bg-destructive/90"}
+              onClick={() => handleDelete(props.project._id)}
+            >
               Continue
             </AlertDialogAction>
           </AlertDialogFooter>

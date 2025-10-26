@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -23,7 +22,6 @@ export function AnalyticsView(props) {
               <ViewsChart views={props.views}/>
             </CardContent>
             <CardFooter>
-              <Button></Button>
             </CardFooter>
           </Card>
         </TabsContent>
