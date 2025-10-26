@@ -62,7 +62,7 @@ export function EditCvButton(props) {
           <DialogHeader>
             <DialogTitle>Update CV</DialogTitle>
             <DialogDescription>
-              Add your CV only .PDF is accepted. Click save when
+              Upload your CV in PDF format only. Click save when
               you&apos;re done.
             </DialogDescription>
           </DialogHeader>

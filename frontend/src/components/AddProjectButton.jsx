@@ -21,6 +21,7 @@ import {
   DropzoneEmptyState,
 } from "./ui/shadcn-io/dropzone";
 import { uploadThumbnail } from "../services/upload";
+import { toast } from "sonner";
 
 export function AddProjectButton(props) {
   const [open, setOpen] = useState(false);
@@ -65,21 +66,23 @@ export function AddProjectButton(props) {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      console.log('heeloo')
+      console.log("heeloo");
       const project = {
         title: title,
         description: description,
         links: [github, website],
       };
-      console.log('project', project)
+      console.log("project", project);
 
       // console.log(props?.project?._id ?? 'no project id');
       const data = await createProject(token, project);
       await handleThumbnailUpload(data.project._id);
+      toast.success("Project Added successfully");
       props.refreshUser();
       setOpen(false);
     } catch (err) {
       console.error(err);
+      toast.error("Failed to add project");
     }
   }
 
