@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validatePassword } from "../../utils/password";
-
 import { signup } from "../../services/authentication";
 import {
   Card,
@@ -66,7 +65,7 @@ export function SignupPage() {
   return (
     <>
       <div className="w-screen h-screen border border-black flex">
-        <div className="w-1/2 h-full"></div>
+        <div className="w-1/2 h-full border border-black"></div>
         <div className="w-1/2 p-10">
         <Card>
           <CardHeader>
@@ -161,7 +160,7 @@ export function SignupPage() {
                       Create Account
                     </Button>
                     <FieldDescription className="px-6 text-center">
-                      Already have an account? <a href="#">Sign in</a>
+                            Already have an account? <Button variant={'link'} onClick={() => navigate('/login')}>Log in</Button>
                     </FieldDescription>
                   </Field>
                 </FieldGroup>
