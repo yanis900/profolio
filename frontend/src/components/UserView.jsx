@@ -8,18 +8,11 @@ import {
 } from "@/components/ui/card";
 import { CardAction } from "./ui/card";
 import { capitalise } from "../utils/capitalise";
-import {
-  AppWindow,
-  ChevronRight,
-  Github,
-  Linkedin,
-  Mail,
-} from "lucide-react";
+import { AppWindow, ChevronRight, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { EditUserButton } from "./EditUserButton";
 import { EditProfilePictureButton } from "./EditProfilePictureButton";
-import { GithubContributions } from "./GithubContributions";
 import { EditCvButton } from "./EditCvButton";
 import { ContributionsButton } from "./ContributionsButton";
 
@@ -59,7 +52,7 @@ export function UserView(props) {
               <p>📍 {props.user.location}</p>
               <div>
                 {props.contributions ? (
-                  <ContributionsButton contributions={props.contributions}/>
+                  <ContributionsButton contributions={props.contributions} />
                 ) : (
                   ""
                 )}

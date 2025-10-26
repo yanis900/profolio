@@ -34,7 +34,10 @@ export function ContributionsButton(props) {
           <div className="flex items-center justify-center gap-4">
             <GithubContributions contributions={props.contributions} />
           </div>
-          <DialogFooter>
+          <DialogFooter className="flex items-center gap-3">
+            <DialogDescription>
+              last 6 months
+            </DialogDescription>
             <DialogClose asChild>
               <Button variant="outline">Close</Button>
             </DialogClose>

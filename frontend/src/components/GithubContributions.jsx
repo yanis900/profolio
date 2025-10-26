@@ -1,8 +1,15 @@
 export function GithubContributions(props) {
   if (!props.contributions?.weeks) return null;
 
+  const today = new Date();
+  const sixMonthsAgo = new Date();
+  sixMonthsAgo.setMonth(today.getMonth() - 6);
 
-  const days = props.contributions.weeks.flatMap((week) => week.contributionDays);
+  // Flatten all days
+  const allDays = props.contributions.weeks.flatMap((week) => week.contributionDays);
+
+  // Filter to last 6 months
+  const days = allDays.filter((day) => new Date(day.date) >= sixMonthsAgo);
 
   const getLevelClass = (count) => {
     if (count > 6) return "bg-[#216e39] border-[#1a562e]";
