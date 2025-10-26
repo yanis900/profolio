@@ -102,6 +102,8 @@ export function EditUserButton(props) {
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
+            <div className="flex gap-3">
+
             <div className="grid gap-3">
               <Label htmlFor="Firstname">Firstname</Label>
               <Input
@@ -119,6 +121,7 @@ export function EditUserButton(props) {
                 value={lastname}
                 onChange={handleLastnameChange}
               />
+            </div>
             </div>
             <div className="grid gap-3">
               <Label htmlFor="Bio">Bio</Label>
