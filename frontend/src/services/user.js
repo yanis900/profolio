@@ -1,4 +1,5 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN
 
 export async function getUserByEmail(email) {
   let response = await fetch(`${BACKEND_URL}/users/email?email=${email}`);
@@ -110,6 +111,47 @@ export async function toggleVisibility(token, visibility) {
   } else {
     throw new Error(
       `Received status ${response.status} when updating visibility. Expected 200`
+    );
+  }
+}
+
+export async function getGithubContributions(username) {
+
+  const query = `
+  {
+    user(login: "${username}") {
+      contributionsCollection {
+        contributionCalendar {
+          totalContributions
+          weeks {
+            contributionDays {
+              contributionCount
+              weekday
+              date
+            }
+          }
+        }
+      }
+    }
+  }`;
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${GITHUB_TOKEN}`,
+    },
+    body: JSON.stringify({query})
+  };
+
+  let response = await fetch('https://api.github.com/graphql', requestOptions);
+
+  if (response.status === 200) {
+    const data = await response.json();
+    console.log(data)
+    return data.data.user.contributionsCollection.contributionCalendar
+  } else {
+    throw new Error(
+      `Received status ${response.status} when fetching github contributions. Expected 200`
     );
   }
 }

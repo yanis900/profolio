@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import LogoutButton from "../../components/LogoutButton";
-import { getUserById, getUserBySlug } from "../../services/user";
+import {
+  getGithubContributions,
+  getUserById,
+  getUserBySlug,
+} from "../../services/user";
 import { TabsDemo } from "@/components/TabsDemo";
 import BackButton from "@/components/BackButton";
 import { UserView } from "@/components/UserView";
@@ -12,7 +16,8 @@ export function PortfolioPage() {
   const { userSlug } = useParams();
   const [me, setMe] = useState(null);
   const [user, setUser] = useState(null);
-  const [views, setViews] = useState(null)
+  const [views, setViews] = useState(null);
+ const [contributions, setContributions] = useState(null)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -31,7 +36,7 @@ export function PortfolioPage() {
         })
         .catch((err) => {
           console.error(err);
-        });  
+        });
       updateViewCount(token, userSlug)
         .then((data) => {
           console.log(data);
@@ -47,15 +52,25 @@ export function PortfolioPage() {
           console.error(err);
         });
     }
-  }, [userSlug]);
+  }, [userSlug,]);
+
+  useEffect(() => {
+    if (user && user.github) {
+      getGithubContributions(user.github)
+        .then((data) => {
+          setContributions(data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [user]);
 
   async function refreshUser() {
     const token = localStorage.getItem("token");
     const data = await getUserBySlug(token, userSlug);
     setUser(data.user);
   }
-
-  console.log(me);
 
   // Check if the logged-in user is viewing their own portfolio
   const isOwner = me?._id === user?._id;
@@ -72,10 +87,16 @@ export function PortfolioPage() {
       </div>
       <div className="flex gap-6">
         <div className="w-1/3">
-          <UserView user={user} refreshUser={refreshUser} isOwner={isOwner} />
+          <UserView user={user} refreshUser={refreshUser} isOwner={isOwner} contributions={contributions} />
         </div>
         <div className="w-2/3">
-          <TabsDemo user={user} projects={user?.projects} views={views} refreshUser={refreshUser} isOwner={isOwner} />
+          <TabsDemo
+            user={user}
+            projects={user?.projects}
+            views={views}
+            refreshUser={refreshUser}
+            isOwner={isOwner}
+          />
         </div>
       </div>
     </div>
