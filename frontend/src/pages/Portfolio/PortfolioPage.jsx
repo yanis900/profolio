@@ -1,15 +1,23 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import LogoutButton from "../../components/LogoutButton"
-
-import { getUserById, getUserBySlug } from "../../services/user";
+import LogoutButton from "../../components/LogoutButton";
+import {
+  getGithubContributions,
+  getUserById,
+  getUserBySlug,
+} from "../../services/user";
 import { TabsDemo } from "@/components/TabsDemo";
-import { Card } from "@/components/ui/card";
+import BackButton from "@/components/BackButton";
+import { UserView } from "@/components/UserView";
+import { updateViewCount } from "@/services/analytics";
+import { getViewCount } from "@/services/analytics";
 
 export function PortfolioPage() {
   const { userSlug } = useParams();
   const [me, setMe] = useState(null);
   const [user, setUser] = useState(null);
+  const [views, setViews] = useState(null);
+ const [contributions, setContributions] = useState(null)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -25,42 +33,72 @@ export function PortfolioPage() {
       getUserBySlug(token, userSlug)
         .then((data) => {
           setUser(data.user);
-          // console.log(data.user.projects)
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      updateViewCount(token, userSlug)
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      getViewCount(token, userSlug)
+        .then((data) => {
+          setViews(data);
         })
         .catch((err) => {
           console.error(err);
         });
     }
-  }, [userSlug]);
+  }, [userSlug,]);
 
-async function refreshUser () {
-  const token = localStorage.getItem("token");
-  const data = await getUserBySlug(token, userSlug);
-  setUser(data.user);
-}
-  // console.log(me)
-  // console.log(user?.projects)
+  useEffect(() => {
+    if (user && user.github) {
+      getGithubContributions(user.github)
+        .then((data) => {
+          setContributions(data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [user]);
+
+  async function refreshUser() {
+    const token = localStorage.getItem("token");
+    const data = await getUserBySlug(token, userSlug);
+    setUser(data.user);
+  }
+
+  // Check if the logged-in user is viewing their own portfolio
+  const isOwner = me?._id === user?._id;
+
   return (
-    <div className="w-screen h-screen flex flex-col gap-15 p-6">
-      <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">My Portfolio</h1>
+    <div className="w-screen h-screen flex flex-col gap-8 p-6">
+      <div className="flex items-center justify-between">
+        <BackButton />
+        <h2 className="scroll-m-20 text-center text-3xl font-bold tracking-tight text-balance">
+          {isOwner ? "My Portfolio" : `${user?.firstname}'s Portfolio`}
+        </h2>
+
+        <LogoutButton />
+      </div>
       <div className="flex gap-6">
         <div className="w-1/3">
-          <Card>
-            <p>{user?.firstname}</p>
-            <p>{user?.lastname}</p>
-            <p>{user?.email}</p>
-            <p>{user?.bio}</p>
-            <p>{user?.links}</p>
-            </Card>
+          <UserView user={user} refreshUser={refreshUser} isOwner={isOwner} contributions={contributions} />
         </div>
         <div className="w-2/3">
-          <TabsDemo projects={user?.projects} refreshUser={refreshUser}/>
+          <TabsDemo
+            user={user}
+            projects={user?.projects}
+            views={views}
+            refreshUser={refreshUser}
+            isOwner={isOwner}
+          />
         </div>
       </div>
-
-        {/* { me ? (<p>This is me: {me.firstname}</p>) : '' }
-        { user ? (<p>This is them: {user.firstname}</p>) : '' } */}
-        <LogoutButton />
     </div>
   );
 }

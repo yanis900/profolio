@@ -1,11 +1,15 @@
+const useragent = require("express-useragent")
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const projectsRouter = require("./routes/projects");
 const usersRouter = require("./routes/users");
 const authenticationRouter = require("./routes/authentication");
+const uploadRouter = require("./routes/upload");
+const analyticsRouter = require("./routes/analytics");
 
 const app = express();
+app.use(useragent.express());
 
 // Allow requests from any client
 // docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
@@ -19,6 +23,8 @@ app.use(bodyParser.json());
 app.use("/projects", projectsRouter);
 app.use("/users", usersRouter);
 app.use("/tokens", authenticationRouter);
+app.use("/upload", uploadRouter);
+app.use("/analytics", analyticsRouter);
 
 // 404 Handler
 app.use((_req, res) => {
