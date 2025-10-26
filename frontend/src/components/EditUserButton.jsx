@@ -16,6 +16,7 @@ import { editUser } from "../services/user";
 import { Checkbox } from "@/components/ui/checkbox";
 import { UserRoundPen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Textarea } from "./ui/textarea";
 
 export function EditUserButton(props) {
   const [open, setOpen] = useState(false);
@@ -125,7 +126,7 @@ export function EditUserButton(props) {
             </div>
             <div className="grid gap-3">
               <Label htmlFor="Bio">Bio</Label>
-              <Input
+              <Textarea
                 id="Bio"
                 name="Bio"
                 value={bio}
