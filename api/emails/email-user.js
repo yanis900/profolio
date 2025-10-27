@@ -26,9 +26,9 @@ function EmailUser(_ref) {
     className: "mx-0 my-[30px] p-0 text-center font-normal text-[24px] text-black"
   }, /*#__PURE__*/React.createElement("strong", null, (user === null || user === void 0 ? void 0 : user.firstname.charAt(0).toUpperCase()) + (user === null || user === void 0 ? void 0 : user.firstname.slice(1).toLowerCase()) || 'User'), ",", /*#__PURE__*/React.createElement("br", null), "you have a new message!"), /*#__PURE__*/React.createElement(_components.Text, {
     className: "text-[14px] text-black leading-6"
-  }, /*#__PURE__*/React.createElement("strong", null, "From:"), " ", (email === null || email === void 0 ? void 0 : email.name) || 'Anonymous', ","), /*#__PURE__*/React.createElement(_components.Text, {
+  }, /*#__PURE__*/React.createElement("strong", null, "From:"), " ", (email === null || email === void 0 ? void 0 : email.name) || 'Anonymous'), /*#__PURE__*/React.createElement(_components.Text, {
     className: "text-[14px] text-black leading-6"
-  }, /*#__PURE__*/React.createElement("strong", null, "Subject:"), " ", (email === null || email === void 0 ? void 0 : email.subject) || 'None', ","), /*#__PURE__*/React.createElement(_components.Text, {
+  }, /*#__PURE__*/React.createElement("strong", null, "Subject:"), " ", (email === null || email === void 0 ? void 0 : email.subject) || 'None'), /*#__PURE__*/React.createElement(_components.Text, {
     className: "text-[14px] text-black leading-6"
   }, /*#__PURE__*/React.createElement("strong", null, "Message:")), /*#__PURE__*/React.createElement("code", {
     style: code
