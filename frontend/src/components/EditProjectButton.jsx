@@ -22,6 +22,7 @@ import {
   DropzoneEmptyState,
 } from "./ui/shadcn-io/dropzone";
 import { toast } from 'sonner'
+import { SimpleTagsInput } from "./SimpleTagsInput";
 
 export function EditProjectButton(props) {
   const [open, setOpen] = useState(false)
@@ -29,6 +30,7 @@ export function EditProjectButton(props) {
   const [description, setDescription] = useState(props.project.description)
   const [github, setGithub] = useState(props.project.links[0])
   const [website, setWebsite] = useState(props.project.links[1])
+  const [selectedTags, setSelectedTags] = useState(props.project.tags || [])
 
   const [files, setFiles] = useState(null)
   const [imagePreview, setImagePreview] = useState(null)
@@ -71,6 +73,7 @@ export function EditProjectButton(props) {
         title: title,
         description: description,
         links: [github, website],
+        tags: selectedTags,
       }
       await handleThumbnailUpload(props.project._id)
       await editProject(token, project);
@@ -123,6 +126,13 @@ export function EditProjectButton(props) {
             <div className="grid gap-3">
               <Label htmlFor="description">Description</Label>
               <Textarea id="description" name="description" value={description} onChange={handleDescriptionChange}/>
+            </div>
+            <div className="grid gap-3">
+              <Label htmlFor="tags">Tags</Label>
+              <SimpleTagsInput
+                selectedTags={selectedTags}
+                setSelectedTags={setSelectedTags}
+              />
             </div>
             <div className="flex gap-3">
               <div>

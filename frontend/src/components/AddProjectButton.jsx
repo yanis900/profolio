@@ -22,6 +22,7 @@ import {
 } from "./ui/shadcn-io/dropzone";
 import { uploadThumbnail } from "../services/upload";
 import { toast } from "sonner";
+import { SimpleTagsInput } from "./SimpleTagsInput";
 
 export function AddProjectButton(props) {
   const [open, setOpen] = useState(false);
@@ -33,7 +34,7 @@ export function AddProjectButton(props) {
   const [files, setFiles] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef();
-
+  const [selectedTags, setSelectedTags] = useState([]);
   const token = localStorage.getItem("token");
 
   function handleDrop(files) {
@@ -71,6 +72,7 @@ export function AddProjectButton(props) {
         title: title,
         description: description,
         links: [github, website],
+        tags: selectedTags,
       };
       console.log("project", project);
 
@@ -133,6 +135,13 @@ export function AddProjectButton(props) {
                 value={description}
                 onChange={handleDescriptionChange}
                 required
+              />
+            </div>
+            <div className="grid gap-3">
+              <Label htmlFor="tags">Tags</Label>
+              <SimpleTagsInput
+                selectedTags={selectedTags}
+                setSelectedTags={setSelectedTags}
               />
             </div>
             <div className="flex gap-3">

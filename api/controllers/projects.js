@@ -5,11 +5,12 @@ async function createProject(req, res) {
     const userId = req.user_id;
     const title = req.body.title;
     const description = req.body.description;
-    const links = req.body.links
+    const links = req.body.links;
+    const tags = req.body.tags || [];
 
     const user = await User.findByIdAndUpdate(
-        userId, 
-        { $push: { projects: { title, description, links: links} } }, 
+        userId,
+        { $push: { projects: { title, description, links: links, tags: tags} } },
         { new: true } )
 
     if (!user) {
@@ -42,8 +43,8 @@ async function deleteProject(req, res) {
 async function editProject(req, res) {
     const userId = req.user_id;
     const { id: projectId } = req.params;
-    const { title, description, links } = req.body;
- 
+    const { title, description, links, tags } = req.body;
+
     const projectObjectId = mongoose.Types.ObjectId.isValid(projectId)
         ? new mongoose.Types.ObjectId(projectId)
         : projectId;
@@ -55,6 +56,7 @@ async function editProject(req, res) {
                 "projects.$.title": title,
                 "projects.$.description": description,
                 "projects.$.links": links,
+                "projects.$.tags": tags || [],
             }
         },
         { new: true }
