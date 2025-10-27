@@ -104,12 +104,18 @@ export function UserView(props) {
           </div>
         </CardContent>
         <CardFooter className="justify-end flex items-center gap-3">
+          {!props.isOwner && 
+          (
+          <>
           <p className="text-muted-foreground flex gap-1 items-center">
             For enquires and collaboration contact here <ChevronRight />
           </p>
           <CardAction className={"border-2 border-purple-500"}>
             <SendEmailButton />
           </CardAction>
+          </>
+          )
+          }
         </CardFooter>
       </Card>
     )

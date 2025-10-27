@@ -16,6 +16,7 @@ import { sendEmail } from "../services/user";
 import { Mail } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { Textarea } from "./ui/textarea";
+import { toast } from "sonner";
 
 export function SendEmailButton() {
   const { userSlug } = useParams()
@@ -36,9 +37,11 @@ export function SendEmailButton() {
       console.log(emailData)
       console.log(userSlug)
       await sendEmail(userSlug , emailData);
+      toast.success('Email sent successfully')
       setOpen(false);
     } catch (err) {
       console.error(err);
+      toast.error('Email failed to send')
     }
   }
 
