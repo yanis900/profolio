@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const { link, get } = require("../routes/users");
+const { Resend } = require('resend');
 
 function create(req, res) {
   const firstname = req.body.firstname;
@@ -116,6 +117,7 @@ async function getUserBySlug(req, res) {
 
   if (query[2].length === 6 && user.id.endsWith(query[2])) {
     res.status(200).json({ user: user });
+
   } else {
     return res.status(404).json({ message: "Id doesn't match" });
   }
@@ -164,6 +166,44 @@ async function toggleVisibility(req, res) {
   }
 }
 
+async function sendEmail(req, res) {
+  try {
+    const slug = req.params.slug;
+
+  if (!slug) {
+    return res.status(404).json({ message: "Portfolio does not exist" });
+  }
+
+  const query = slug.split("-");
+  const partialId = query[2].slice(-6);
+
+  const user = await User.findOne({
+    $and: [
+      { firstname: { $regex: query[0], $options: "i" } },
+      { lastname: { $regex: query[1], $options: "i" } },
+      {
+        $expr: {
+          $regexMatch: { input: { $toString: "$_id" }, regex: `${partialId}$` },
+        },
+      },
+    ],
+  }).select("-password");
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
+
+  resend.emails.send({
+    from: 'onboarding@resend.dev',
+    to: user.email,
+    subject: 'Hello World',
+    html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
+  });
+
+  res.status(200).json({ message: "Email send succesfully" })
+  } catch(error) {
+    res.status(400).json({ message: "Failed to send email" })
+  }
+}
+
 const UsersController = {
   create: create,
   editUser: editUser,
@@ -172,6 +212,7 @@ const UsersController = {
   getUserByEmail: getUserByEmail,
   getUserByName: getUserByName,
   toggleVisibility: toggleVisibility,
+  sendEmail: sendEmail
 };
 
 module.exports = UsersController;
