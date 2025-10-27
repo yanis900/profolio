@@ -56,18 +56,8 @@ export async function editUser(token, user) {
   }
 }
 
-export async function getUserBySlug(token, userSlug) {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  let response = await fetch(
-    `${BACKEND_URL}/users/portfolio/${userSlug}`,
-    requestOptions
-  );
+export async function getUserBySlug(userSlug) {
+  let response = await fetch(`${BACKEND_URL}/users/portfolio/${userSlug}`);
 
   if (response.status === 200) {
     const data = await response.json();
