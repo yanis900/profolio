@@ -145,3 +145,23 @@ export async function getGithubContributions(username) {
     );
   }
 }
+
+export async function getUserBadge(token) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  let response = await fetch(`${BACKEND_URL}/users/badge`, requestOptions);
+
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
+  } else {
+    throw new Error(
+      `Received status ${response.status} when fetching user badge. Expected 200`
+    );
+  }
+}

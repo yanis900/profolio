@@ -11,5 +11,6 @@ router.get("/portfolio/:slug", UsersController.getUserBySlug);
 router.put("/edit", tokenChecker, UsersController.editUser);
 router.put("/visibility", tokenChecker, UsersController.toggleVisibility);
 router.get("/search", UsersController.getUserByName);
+router.get("/badge", tokenChecker, UsersController.getUserBadge);
 
 module.exports = router;

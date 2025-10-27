@@ -9,15 +9,18 @@ import {
 import { TabsDemo } from "@/components/TabsDemo";
 import BackButton from "@/components/BackButton";
 import { UserView } from "@/components/UserView";
+import { UserBadge} from "@/components/UserBadge";
 import { updateViewCount } from "@/services/analytics";
 import { getViewCount } from "@/services/analytics";
+
 
 export function PortfolioPage() {
   const { userSlug } = useParams();
   const [me, setMe] = useState(null);
   const [user, setUser] = useState(null);
   const [views, setViews] = useState(null);
- const [contributions, setContributions] = useState(null)
+  const [contributions, setContributions] = useState(null)
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -88,7 +91,15 @@ export function PortfolioPage() {
       </div>
       <div className="flex gap-6">
         <div className="w-1/3">
-          <UserView user={user} refreshUser={refreshUser} isOwner={isOwner} contributions={contributions} />
+          {/* <UserView user={user} refreshUser={refreshUser} isOwner={isOwner} contributions={contributions} {token && <UserBadge token={token} />} /> */}
+          <UserView
+            user={user}
+            refreshUser={refreshUser}
+            isOwner={isOwner}
+            contributions={contributions}
+          >
+            <UserBadge token={token} />
+          </UserView>
         </div>
         <div className="w-2/3">
           <TabsDemo

@@ -164,6 +164,39 @@ async function toggleVisibility(req, res) {
   }
 }
 
+
+async function getUserBadge(req, res) {
+  const userId = req.user_id;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Compute badges on the fly
+    const totalViews = user.analytics.views.length;
+    const badges = [];
+
+    if (totalViews >= 100) badges.push("100_views");
+    if (totalViews >= 200) badges.push("200_views");
+    // if (user.emailsSent >= 10) badges.push("10_emails");
+    if (user.projects.length >= 5) badges.push("5_projects");
+    if (user.cv) badges.push("cv_uploaded");
+
+    // Return badges
+    res.status(200).json({ badges });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+}
+
+module.exports = { getUserBadge };
+
+
+
+
 const UsersController = {
   create: create,
   editUser: editUser,
@@ -172,6 +205,7 @@ const UsersController = {
   getUserByEmail: getUserByEmail,
   getUserByName: getUserByName,
   toggleVisibility: toggleVisibility,
+  getUserBadge: getUserBadge,
 };
 
 module.exports = UsersController;

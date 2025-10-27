@@ -15,6 +15,7 @@ import { EditUserButton } from "./EditUserButton";
 import { EditProfilePictureButton } from "./EditProfilePictureButton";
 import { EditCvButton } from "./EditCvButton";
 import { ContributionsButton } from "./ContributionsButton";
+import { UserBadge } from "./UserBadge";
 
 export function UserView(props) {
   return (
@@ -83,6 +84,9 @@ export function UserView(props) {
                 View CV
               </Button>
             )}
+          </div>
+          <div>
+            <UserBadge> </UserBadge>
           </div>
           <div className="flex gap-3">
             <Button variant={"outline"} size={"icon"}>
