@@ -86,7 +86,7 @@ export function UserView(props) {
             )}
           </div>
           <div>
-            <UserBadge token={props.token} />
+            <UserBadge token={props.token} user={props.user} />
           </div>
           <div className="flex gap-3">
             <Button variant={"outline"} size={"icon"}>
