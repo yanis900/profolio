@@ -8,11 +8,12 @@ import {
 } from "@/components/ui/card";
 import { CardAction } from "./ui/card";
 import { capitalise } from "../utils/capitalise";
-import { AppWindow, ChevronRight, Github, Linkedin, Mail } from "lucide-react";
+import { AppWindow, ChevronRight, Github, Linkedin } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { EditUserButton } from "./EditUserButton";
 import { EditProfilePictureButton } from "./EditProfilePictureButton";
+import { SendEmailButton } from "./SendEmailButton";
 import { EditCvButton } from "./EditCvButton";
 import { ContributionsButton } from "./ContributionsButton";
 
@@ -103,14 +104,18 @@ export function UserView(props) {
           </div>
         </CardContent>
         <CardFooter className="justify-end flex items-center gap-3">
+          {!props.isOwner && 
+          (
+          <>
           <p className="text-muted-foreground flex gap-1 items-center">
             For enquires and collaboration contact here <ChevronRight />
           </p>
           <CardAction className={"border-2 border-purple-500"}>
-            <Button variant={"outline"} size={"icon"}>
-              <Mail />
-            </Button>
+            <SendEmailButton />
           </CardAction>
+          </>
+          )
+          }
         </CardFooter>
       </Card>
     )
