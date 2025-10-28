@@ -168,7 +168,60 @@ async function toggleVisibility(req, res) {
   }
 }
 
-async function sendEmail(req, res) {
+
+async function getUserBadge(req, res) {
+  const slug = req.params.slug;
+    try {
+
+
+
+
+  if (!slug) {
+    return res.status(401).json({ message: "Not authenticated" });
+  }
+  const query = slug.split("-");
+  const partialId = query[2].slice(-6);
+
+  const user = await User.findOne({
+    $and: [
+      { firstname: { $regex: query[0], $options: "i" } },
+      { lastname: { $regex: query[1], $options: "i" } },
+      {
+        $expr: {
+          $regexMatch: { input: { $toString: "$_id" }, regex: `${partialId}$` },
+        },
+      },
+    ],
+  }).select("-password");
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  
+
+    // Compute badges on the fly
+    const totalViews = user.analytics.views.length;
+    const totalEmails = user.analytics.emails.length;
+    const badges = [];
+
+    if (totalViews >= 100) badges.push("100_views");
+    if (totalViews >= 200) badges.push("200_views");
+    if (totalEmails >= 1) badges.push("10_emails");
+    if (user.projects.length >= 5) badges.push("5_projects");
+    if (user.cv) badges.push("cv_uploaded");
+
+    // Return badges
+    res.status(200).json({ badges });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+}
+
+
+
+
+    async function sendEmail(req, res) {
   try {
     const slug = req.params.slug;
     const { name, subject, message } = req.body
@@ -230,6 +283,7 @@ const UsersController = {
   getUserByEmail: getUserByEmail,
   getUserByName: getUserByName,
   toggleVisibility: toggleVisibility,
+  getUserBadge: getUserBadge,
   sendEmail: sendEmail
 };
 

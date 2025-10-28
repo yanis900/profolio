@@ -146,6 +146,18 @@ export async function getGithubContributions(username) {
   }
 }
 
+export async function getUserBadge(slug) {
+  let response = await fetch(`${BACKEND_URL}/users/badge/${slug}`);
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
+  } else {
+    throw new Error(
+      `Received status ${response.status} when fetching user badge. Expected 200`
+    );
+  }
+}
+
 export async function sendEmail(slug, emailData) {
   const requestOptions = {
     method: "POST",
@@ -156,7 +168,6 @@ export async function sendEmail(slug, emailData) {
   };
 
   let response = await fetch(`${BACKEND_URL}/users/email/${slug}`, requestOptions);
-
   if (response.status === 200) {
     const data = await response.json();
     return data;
@@ -166,3 +177,4 @@ export async function sendEmail(slug, emailData) {
     );
   }
 }
+

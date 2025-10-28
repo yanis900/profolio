@@ -22,6 +22,7 @@ import { EditProfilePictureButton } from "./EditProfilePictureButton";
 import { SendEmailButton } from "./SendEmailButton";
 import { EditCvButton } from "./EditCvButton";
 import { ContributionsButton } from "./ContributionsButton";
+import { UserBadge } from "./UserBadge";
 
 export function UserView(props) {
   return (
@@ -93,6 +94,9 @@ export function UserView(props) {
                 View CV
               </Button>
             )}
+          </div>
+          <div>
+            <UserBadge token={props.token} user={props.user} />
           </div>
           <div className="flex gap-3">
             <Button variant={"outline"} size={"icon"}>
