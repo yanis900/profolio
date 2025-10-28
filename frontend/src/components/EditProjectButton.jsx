@@ -111,19 +111,19 @@ export function EditProjectButton(props) {
             <Pencil />
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-4xl">
           <DialogHeader>
             <DialogTitle>Edit Project</DialogTitle>
             <DialogDescription>
               Make changes to your project. Click save when you&apos;re done.
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4">
-            <div className="grid gap-3">
+          <div className="grid grid-cols-2 gap-6">
+            <div className="grid gap-2">
               <Label htmlFor="title">Title</Label>
               <Input id="title" name="title" value={title} onChange={handleTitleChange}/>
             </div>
-            <div className="grid gap-3">
+            <div className="grid gap-2">
               <Label htmlFor="description">Description</Label>
               <Textarea id="description" name="description" value={description} onChange={handleDescriptionChange}/>
             </div>
@@ -132,9 +132,9 @@ export function EditProjectButton(props) {
               <SimpleTagsInput
                 selectedTags={selectedTags}
                 setSelectedTags={setSelectedTags}
-              />
+                />
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-3 col-span-2">
               <div>
               <Label htmlFor="github">Github</Label>
               <Input id="github" name="github" value={github} onChange={handleGithubChange}/>
@@ -145,7 +145,7 @@ export function EditProjectButton(props) {
               </div>
             </div>
 
-            <div className="grid gap-3">
+            <div className="grid gap-3 col-span-2">
               <Label>Project Thumbnail</Label>
               <div className="flex children:flex-1">
 

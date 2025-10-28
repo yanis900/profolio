@@ -8,11 +8,18 @@ import {
 } from "@/components/ui/card";
 import { CardAction } from "./ui/card";
 import { capitalise } from "../utils/capitalise";
-import { AppWindow, ChevronRight, Github, Linkedin, Mail } from "lucide-react";
+import {
+  AppWindow,
+  ChevronRight,
+  Github,
+  Linkedin,
+  MapPin,
+} from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { EditUserButton } from "./EditUserButton";
 import { EditProfilePictureButton } from "./EditProfilePictureButton";
+import { SendEmailButton } from "./SendEmailButton";
 import { EditCvButton } from "./EditCvButton";
 import { ContributionsButton } from "./ContributionsButton";
 import { UserBadge } from "./UserBadge";
@@ -50,7 +57,10 @@ export function UserView(props) {
                 ""
               )}
               <p>{props.user.bio}</p>
-              <p>📍 {props.user.location}</p>
+              <p className="flex gap-1 items-center">
+                <MapPin />
+                {props.user.location}
+              </p>
               <div>
                 {props.contributions ? (
                   <ContributionsButton contributions={props.contributions} />
@@ -107,14 +117,16 @@ export function UserView(props) {
           </div>
         </CardContent>
         <CardFooter className="justify-end flex items-center gap-3">
-          <p className="text-muted-foreground flex gap-1 items-center">
-            For enquires and collaboration contact here <ChevronRight />
-          </p>
-          <CardAction className={"border-2 border-purple-500"}>
-            <Button variant={"outline"} size={"icon"}>
-              <Mail />
-            </Button>
-          </CardAction>
+          {!props.isOwner && (
+            <>
+              <p className="text-muted-foreground flex gap-1 items-center">
+                For enquires and collaboration contact here <ChevronRight />
+              </p>
+              <CardAction>
+                <SendEmailButton />
+              </CardAction>
+            </>
+          )}
         </CardFooter>
       </Card>
     )

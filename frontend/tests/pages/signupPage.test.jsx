@@ -30,11 +30,11 @@ vi.mock("../../src/services/users", () => {
 async function completeSignupForm() {
   const user = userEvent.setup();
 
-  const firstnameInputEl = screen.getByLabelText("Firstname:");
-  const lastnameInputEl = screen.getByLabelText("Lastname:");
-  const emailInputEl = screen.getByLabelText("Email:");
-  const passwordInputEl = screen.getByLabelText("Password:");
-  const confirmPasswordInputEl = screen.getByLabelText("Confirm Password:");
+  const firstnameInputEl = screen.getByLabelText("First Name");
+  const lastnameInputEl = screen.getByLabelText("Last Name");
+  const emailInputEl = screen.getByLabelText("Email");
+  const passwordInputEl = screen.getByLabelText("Password");
+  const confirmPasswordInputEl = screen.getByLabelText("Confirm Password");
   const submitButtonEl = screen.getByRole("submit-button");
 
   await user.type(firstnameInputEl, "John");

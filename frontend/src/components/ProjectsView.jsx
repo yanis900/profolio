@@ -38,7 +38,7 @@ export function ProjectsView(props) {
             props.projects.map((project) => {
               return (
                 <>
-                  <Card key={project._id}>
+                  <Card key={project._id} style={{ boxShadow: 'rgba(0, 0, 0, 1) 5px 5px' }}>
                     <CardHeader>
                       <div className="flex gap-3">
                         <img

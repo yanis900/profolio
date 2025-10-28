@@ -1,5 +1,8 @@
 const User = require("../models/user");
 const { link, get } = require("../routes/users");
+const { Resend } = require("resend");
+const { EmailUser } = require("../emails/email-user.js");
+const { render } = require("@react-email/render");
 
 function create(req, res) {
   const firstname = req.body.firstname;
@@ -116,6 +119,7 @@ async function getUserBySlug(req, res) {
 
   if (query[2].length === 6 && user.id.endsWith(query[2])) {
     res.status(200).json({ user: user });
+
   } else {
     return res.status(404).json({ message: "Id doesn't match" });
   }
@@ -170,10 +174,6 @@ async function getUserBadge(req, res) {
 
   try {
     const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
     // Compute badges on the fly
     const totalViews = user.analytics.views.length;
     const badges = [];
@@ -192,9 +192,61 @@ async function getUserBadge(req, res) {
   }
 }
 
-module.exports = { getUserBadge };
 
 
+
+    async function sendEmail(req, res) {
+  try {
+    const slug = req.params.slug;
+    const { name, subject, message } = req.body
+    
+    if (!slug) {
+      return res.status(404).json({ message: "Portfolio does not exist" });
+    }
+
+    const query = slug.split("-");
+    const partialId = query[2]?.slice(-6);
+
+    const user = await User.findOne({
+      $and: [
+        { firstname: { $regex: query[0], $options: "i" } },
+        { lastname: { $regex: query[1], $options: "i" } },
+        {
+          $expr: {
+            $regexMatch: { input: { $toString: "$_id" }, regex: `${partialId}$` },
+          },
+        },
+      ],
+    }).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    const emailData = {
+      name,
+      subject,
+      message,
+    };
+
+    const emailHtml = render(EmailUser({ user, email: emailData }));
+    const data = await emailHtml
+
+    await resend.emails.send({
+      from: "noreply@yanait.com",
+      to: user.email,
+      subject: emailData.subject,
+      html: data,
+    });
+
+    res.status(200).json({ message: "Email sent successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ message: "Failed to send email" });
+  }
+}
 
 
 const UsersController = {
@@ -206,6 +258,7 @@ const UsersController = {
   getUserByName: getUserByName,
   toggleVisibility: toggleVisibility,
   getUserBadge: getUserBadge,
+  sendEmail: sendEmail
 };
 
 module.exports = UsersController;
