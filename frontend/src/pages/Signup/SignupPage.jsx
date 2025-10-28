@@ -79,7 +79,7 @@ export function SignupPage() {
             <form onSubmit={handleSubmit}>
               <FieldGroup>
                 <Field>
-                  <FieldLabel htmlFor="name">First Name</FieldLabel>
+                  <FieldLabel htmlFor="firstname">First Name</FieldLabel>
                   <Input
                     placeholder="Enter Your Firstname"
                     id="firstname"
@@ -90,7 +90,7 @@ export function SignupPage() {
                   />
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="name">Last Name</FieldLabel>
+                  <FieldLabel htmlFor="lastname">Last Name</FieldLabel>
                   <Input
                     placeholder="Enter Your Lastname"
                     id="lastname"
@@ -140,7 +140,7 @@ export function SignupPage() {
                   </FieldLabel>
                   <Input
                     placeholder="Enter Your Confirm Password"
-                    id="confirm"
+                    id="confirm-password"
                     type="password"
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
