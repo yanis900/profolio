@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import LogoutButton from "../../components/LogoutButton";
 import {
   getGithubContributions,
   getUserById,
@@ -11,6 +10,7 @@ import BackButton from "@/components/BackButton";
 import { UserView } from "@/components/UserView";
 import { updateViewCount } from "@/services/analytics";
 import { getViewCount } from "@/services/analytics";
+import { PublicNavbar } from "../../components/PublicNavbar";
 
 export function PortfolioPage() {
   const { userSlug } = useParams();
@@ -82,15 +82,23 @@ export function PortfolioPage() {
   const isOwner = me?._id === user?._id;
 
   return (
+    <>
+    <PublicNavbar />
+    <div className="home px-6 pt-15 pb-1"> </div> 
     <div className="w-screen h-screen flex flex-col gap-8 p-6">
-      <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-2">
         <BackButton />
-        <h2 className="scroll-m-20 text-center text-3xl font-bold tracking-tight text-balance">
-          {isOwner ? "My Portfolio" : `${user?.firstname}'s Portfolio`}
-        </h2>
-
-        <LogoutButton />
       </div>
+
+      <h2 className="text-center text-3xl font-bold tracking-tight text-balance flex-1">
+        {isOwner ? "My Portfolio" : `${user?.firstname}'s Portfolio`}
+      </h2>
+
+      <div className="flex items-center gap-2">
+        {/* Right buttons, e.g., Logout */}
+      </div>
+    </div>
       <div className="flex gap-6">
         <div className="w-1/3">
           <UserView
@@ -112,5 +120,6 @@ export function PortfolioPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

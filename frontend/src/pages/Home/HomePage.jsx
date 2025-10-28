@@ -17,6 +17,7 @@ export function HomePage() {
     <>
     <PublicNavbar />
     <div className="home">
+      <div className="home px-6 pt-20 pb-10"> </div> 
       <h1>Welcome to Profolio!</h1>
       <Link to="/signup">Sign Up</Link>
       <Link to="/login">Log In</Link>
