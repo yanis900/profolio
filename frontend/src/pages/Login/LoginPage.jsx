@@ -50,10 +50,15 @@ export function LoginPage() {
 
   return (
     <>
-      <div className="w-screen h-screen border border-black flex">
-        <div className="w-1/2 h-full border border-black"></div>
-        <div className="w-1/2 p-10">
-          <Card>
+      <div className="w-screen h-screen flex items-center justify-center">
+        <div className="max-w-3xl w-full relative">
+          <div className="absolute -left-2 -top-2 w-full h-full border rounded-xl bg-[#AEE938] -z-10"></div>
+
+          <Card
+            style={{
+              boxShadow: "10px 10px 0 rgba(0, 0, 0, 1)",
+            }}
+          >
             <CardHeader>
               <CardTitle>Login to your account</CardTitle>
               <CardDescription>
