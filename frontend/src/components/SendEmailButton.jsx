@@ -17,6 +17,7 @@ import { Mail } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { Textarea } from "./ui/textarea";
 import { toast } from "sonner";
+import { updateEmailCount } from "../services/analytics";
 
 export function SendEmailButton() {
   const { userSlug } = useParams()
@@ -25,6 +26,7 @@ export function SendEmailButton() {
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
+  const token = localStorage.getItem('token')
   
   async function handleSubmit(event) {
     event.preventDefault();
@@ -37,6 +39,7 @@ export function SendEmailButton() {
       console.log(emailData)
       console.log(userSlug)
       await sendEmail(userSlug , emailData);
+      await updateEmailCount(token, userSlug)
       toast.success('Email sent successfully')
       setOpen(false);
     } catch (err) {

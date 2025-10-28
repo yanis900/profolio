@@ -39,3 +39,43 @@ export async function getViewCount(token, slug) {
     );
   }
 }
+
+export async function updateEmailCount(token, slug) {
+    const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  let response = await fetch(`${BACKEND_URL}/analytics/email/${slug}`, requestOptions);
+
+  if (response.status === 200) {
+    const data = await response.json()
+    return data
+  } else {
+    throw new Error(
+      `Received status ${response.status} when updating emails. Expected 201`
+    );
+  }
+}
+
+export async function getEmailCount(token, slug) {
+    const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  let response = await fetch(`${BACKEND_URL}/analytics/email/${slug}`, requestOptions);
+
+  if (response.status === 200) {
+    const data = await response.json()
+    return data
+  } else {
+    throw new Error(
+      `Received status ${response.status} when fetching emails. Expected 201`
+    );
+  }
+}

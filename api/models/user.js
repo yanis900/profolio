@@ -35,6 +35,12 @@ const UserSchema = new mongoose.Schema({
         },
       },
     ],
+    emails: [
+      {
+        userId: { type: mongoose.Schema.Types.Mixed },
+        sentAt: { type: Date, default: Date.now },
+      }
+    ]
   },
 });
 

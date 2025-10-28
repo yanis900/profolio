@@ -208,7 +208,7 @@ async function sendEmail(req, res) {
     const data = await emailHtml
 
     await resend.emails.send({
-      from: "onboarding@resend.dev",
+      from: "noreply@yanait.com",
       to: user.email,
       subject: emailData.subject,
       html: data,

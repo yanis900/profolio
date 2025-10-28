@@ -11,12 +11,14 @@ import BackButton from "@/components/BackButton";
 import { UserView } from "@/components/UserView";
 import { updateViewCount } from "@/services/analytics";
 import { getViewCount } from "@/services/analytics";
+import { getEmailCount } from "@/services/analytics";
 
 export function PortfolioPage() {
   const { userSlug } = useParams();
   const [me, setMe] = useState(null);
   const [user, setUser] = useState(null);
   const [views, setViews] = useState(null);
+  const [emails, setEmails] = useState(null);
  const [contributions, setContributions] = useState(null)
 
   useEffect(() => {
@@ -53,6 +55,13 @@ export function PortfolioPage() {
         .catch((err) => {
           console.error(err);
         });
+        getEmailCount(token, userSlug)
+        .then((data) => {
+          setEmails(data)
+        })
+        .catch((err) => {
+          console.error(err);
+        })
     }
   }, [userSlug]);
 
@@ -95,6 +104,7 @@ export function PortfolioPage() {
             user={user}
             projects={user?.projects}
             views={views}
+            emails={emails}
             refreshUser={refreshUser}
             isOwner={isOwner}
           />
