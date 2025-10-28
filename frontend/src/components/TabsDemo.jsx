@@ -17,7 +17,7 @@ export function TabsDemo(props) {
           {props.isOwner && <VisibilitySwitch user={props.user} refreshUser={props.refreshUser} />}
         </div>
         <ProjectsView refreshUser={props.refreshUser} projects={props.projects} isOwner={props.isOwner} />
-        {props.isOwner && <AnalyticsView views={props.views}/>}
+        {props.isOwner && <AnalyticsView views={props.views} emails={props.emails}/>}
       </Tabs>
     </div>
   );
