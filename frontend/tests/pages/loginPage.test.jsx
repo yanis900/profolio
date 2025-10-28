@@ -29,8 +29,8 @@ vi.mock("../../src/services/user");
 // Reusable function for filling out login form
 async function completeLoginForm() {
   const user = userEvent.setup();
-  const emailInputEl = screen.getByLabelText("Email:");
-  const passwordInputEl = screen.getByLabelText("Password:");
+  const emailInputEl = screen.getByLabelText("Email");
+  const passwordInputEl = screen.getByLabelText("Password");
   const submitButtonEl = screen.getByRole("submit-button");
   await user.type(emailInputEl, "test@email.com");
   await user.type(passwordInputEl, "1234");

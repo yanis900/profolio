@@ -1,8 +1,22 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validatePassword } from "../../utils/password";
-
 import { signup } from "../../services/authentication";
+import {
+  Card,
+  CardTitle,
+  CardHeader,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 
 export function SignupPage() {
   const [firstname, setFirstname] = useState("");
@@ -44,89 +58,119 @@ export function SignupPage() {
   function handlePasswordChange(event) {
     setPassword(event.target.value);
   }
-    function handleConfirmPasswordChange(event) {
+  function handleConfirmPasswordChange(event) {
     setConfirmPassword(event.target.value);
   }
 
   return (
     <>
-      <h2>Signup</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="firstname">
-        Firstname:
-      </label>
-      <input
-        placeholder="Enter Your Firstname"
-        id="firstname"
-        type="text"
-        value={firstname}
-        onChange={handleFirstNameChange}
-        required
-      />
-      <label htmlFor="lastname">
-        Lastname:
-      </label>
-      <input
-        placeholder="Enter Your Lastname"
-        id="lastname"
-        type="text"
-        value={lastname}
-        onChange={handleLastNameChange}
-        required
-      />
-      <label htmlFor="email">
-        Email:
-      </label>
-      <input
-        placeholder="Enter Your Email"
-        id="email"
-        type="email"
-        value={email}
-        onChange={handleEmailChange}
-        required
-      />
-      <label htmlFor="password">
-        Password:
-      </label>
-      <input
-        placeholder="Enter Your Password"
-        id="password"
-        type="password"
-        value={password}
-        onChange={handlePasswordChange}
-        minLength={8}
-        maxLength={16}
-        required
-      />
-      <label htmlFor="confirm">
-        Confirm Password:
-      </label>
-      <input
-        placeholder="Enter Your Confirm Password"
-        id="confirm"
-        type="password"
-        value={confirmPassword}
-        onChange={handleConfirmPasswordChange}
-        required
-      />
-      <div className="card-body border border-white-300 rounded-box my-2 p-4 max-w-[19.5rem] h-25">
-      <h4 className="card-title text-sm m-0.5">Password Requirements:</h4>
-      <ul className="list-disc list-outside text-xs pl-4 m-0.5 text-left">
-        <li>Minimum 8 characters, maximum 16 characters</li>
-        <li>At least 1 capital letter</li>
-        <li>At least 1 number</li>
-        <li>At least 1 special character</li>
-      </ul>
-      </div> 
-      <div className="flex justify-center mt-4">
-          <input
-            role="submit-button"
-            id="submit"
-            type="submit"
-            value="Submit"
-          />
-        </div>
-      </form>
+      <div className="w-screen h-screen flex items-center justify-center">
+        <div className="max-w-3xl w-full relative">
+          <div className="absolute -left-2 -top-2 w-full h-full border rounded-xl bg-[#AEE938] -z-10"></div>
+
+        <Card style={{ boxShadow: 'rgba(0, 0, 0, 1) 10px 10px' }}>
+          <CardHeader>
+            <CardTitle>Create an account</CardTitle>
+            <CardDescription>
+              Enter your information below to create your account
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit}>
+              <FieldGroup>
+                <Field>
+                  <FieldLabel htmlFor="firstname">First Name</FieldLabel>
+                  <Input
+                    placeholder="Enter Your Firstname"
+                    id="firstname"
+                    type="text"
+                    value={firstname}
+                    onChange={handleFirstNameChange}
+                    required
+                  />
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="lastname">Last Name</FieldLabel>
+                  <Input
+                    placeholder="Enter Your Lastname"
+                    id="lastname"
+                    type="text"
+                    value={lastname}
+                    onChange={handleLastNameChange}
+                    required
+                  />
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="email">Email</FieldLabel>
+                  <Input
+                    placeholder="Enter Your Email"
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    required
+                  />
+                  <FieldDescription>
+                    We&apos;ll use this to contact you. We will not share your
+                    email with anyone else.
+                  </FieldDescription>
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="password">Password</FieldLabel>
+                  <Input
+                    placeholder="Enter Your Password"
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    minLength={8}
+                    maxLength={16}
+                    required
+                  />
+                  <FieldDescription className="grid">
+                    <p>Minimum 8 characters, maximum 16 characters.</p>
+                    <p>At least 1 capital letter.</p>
+                    <p>At least 1 number.</p>
+                    <p>At least 1 special character.</p>
+                  </FieldDescription>
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="confirm-password">
+                    Confirm Password
+                  </FieldLabel>
+                  <Input
+                    placeholder="Enter Your Confirm Password"
+                    id="confirm-password"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={handleConfirmPasswordChange}
+                    required
+                  />
+                  <FieldDescription>
+                    Please confirm your password.
+                  </FieldDescription>
+                </Field>
+                <FieldGroup>
+                  <Field>
+                    <Button
+                      role="submit-button"
+                      id="submit"
+                      type="submit"
+                      value="Submit"
+                    >
+                      Create Account
+                    </Button>
+                    <FieldDescription className="px-6 text-center">
+                            Already have an account? <Button variant={'link'} onClick={() => navigate('/login')}>Log in</Button>
+                    </FieldDescription>
+                  </Field>
+                </FieldGroup>
+              </FieldGroup>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+      </div>
     </>
   );
 }
