@@ -11,7 +11,7 @@ export function TabsDemo(props) {
           <TabsList>
             <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
             {props.isOwner && (
-              <TabsTrigger value="analytics" className='border-2 border-purple-500'>Analytics</TabsTrigger>
+              <TabsTrigger value="analytics">Analytics</TabsTrigger>
             )}
           </TabsList>
           {props.isOwner && <VisibilitySwitch user={props.user} refreshUser={props.refreshUser} />}

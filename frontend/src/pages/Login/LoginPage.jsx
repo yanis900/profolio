@@ -17,6 +17,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import "../../App.css";
 
 export function LoginPage() {
   const [email, setEmail] = useState("");
@@ -50,14 +51,15 @@ export function LoginPage() {
 
   return (
     <>
-      <div className="w-screen h-screen flex items-center justify-center">
-        <div className="max-w-3xl w-full relative">
-          <div className="absolute -left-2 -top-2 w-full h-full border rounded-xl bg-[#AEE938] -z-10"></div>
+      <div className="w-screen h-screen flex items-center justify-center background">
+        <div className="max-w-3xl w-full relative z-0">
+          <div className="absolute -left-2 -top-2 w-full h-full border rounded-xl bg-[#FFD300] z-0"></div>
 
           <Card
             style={{
-              boxShadow: "10px 10px 0 rgba(0, 0, 0, 1)",
+              boxShadow: "10px 10px 0 #043368",
             }}
+            className='z-10 relative'
           >
             <CardHeader>
               <CardTitle>Login to your account</CardTitle>
@@ -99,6 +101,7 @@ export function LoginPage() {
                         id="submit"
                         type="submit"
                         value="Submit"
+                        className='bg-[#043368] hover:opacity-90 hover:bg-[#043368]'
                       >
                         Login
                       </Button>

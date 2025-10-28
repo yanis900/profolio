@@ -17,6 +17,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import '../../App.css'
 
 export function SignupPage() {
   const [firstname, setFirstname] = useState("");
@@ -64,7 +65,7 @@ export function SignupPage() {
 
   return (
     <>
-      <div className="w-screen h-screen flex items-center justify-center">
+      <div className="w-screen h-screen flex items-center justify-center background">
         <div className="max-w-3xl w-full relative">
           <div className="absolute -left-2 -top-2 w-full h-full border rounded-xl bg-[#AEE938] -z-10"></div>
 
@@ -111,8 +112,8 @@ export function SignupPage() {
                     required
                   />
                   <FieldDescription>
-                    We&apos;ll use this to contact you. We will not share your
-                    email with anyone else.
+                    {/* We&apos;ll use this to contact you. We will not share your
+                    email with anyone else. */}
                   </FieldDescription>
                 </Field>
                 <Field>
@@ -128,10 +129,10 @@ export function SignupPage() {
                     required
                   />
                   <FieldDescription className="grid">
-                    <p>Minimum 8 characters, maximum 16 characters.</p>
+                    {/* <p>Minimum 8 characters, maximum 16 characters.</p>
                     <p>At least 1 capital letter.</p>
                     <p>At least 1 number.</p>
-                    <p>At least 1 special character.</p>
+                    <p>At least 1 special character.</p> */}
                   </FieldDescription>
                 </Field>
                 <Field>
