@@ -118,7 +118,7 @@ export function UserView(props) {
               <p className="text-muted-foreground flex gap-1 items-center">
                 For enquires and collaboration contact here <ChevronRight />
               </p>
-              <CardAction className={"border-2 border-purple-500"}>
+              <CardAction>
                 <SendEmailButton />
               </CardAction>
             </>
