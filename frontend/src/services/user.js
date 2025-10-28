@@ -146,15 +146,8 @@ export async function getGithubContributions(username) {
   }
 }
 
-export async function getUserBadge(token) {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  let response = await fetch(`${BACKEND_URL}/users/badge`, requestOptions);
+export async function getUserBadge(slug) {
+  let response = await fetch(`${BACKEND_URL}/users/badge/${slug}`);
   if (response.status === 200) {
     const data = await response.json();
     return data;

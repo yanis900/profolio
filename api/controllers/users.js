@@ -170,17 +170,43 @@ async function toggleVisibility(req, res) {
 
 
 async function getUserBadge(req, res) {
-  const userId = req.user_id;
+  const slug = req.params.slug;
+    try {
 
-  try {
-    const user = await User.findById(userId);
+
+
+
+  if (!slug) {
+    return res.status(401).json({ message: "Not authenticated" });
+  }
+  const query = slug.split("-");
+  const partialId = query[2].slice(-6);
+
+  const user = await User.findOne({
+    $and: [
+      { firstname: { $regex: query[0], $options: "i" } },
+      { lastname: { $regex: query[1], $options: "i" } },
+      {
+        $expr: {
+          $regexMatch: { input: { $toString: "$_id" }, regex: `${partialId}$` },
+        },
+      },
+    ],
+  }).select("-password");
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  
+
     // Compute badges on the fly
     const totalViews = user.analytics.views.length;
+    const totalEmails = user.analytics.emails.length;
     const badges = [];
 
     if (totalViews >= 100) badges.push("100_views");
     if (totalViews >= 200) badges.push("200_views");
-    // if (user.emailsSent >= 10) badges.push("10_emails");
+    if (totalEmails >= 1) badges.push("10_emails");
     if (user.projects.length >= 5) badges.push("5_projects");
     if (user.cv) badges.push("cv_uploaded");
 
@@ -222,7 +248,7 @@ async function getUserBadge(req, res) {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    
+
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const emailData = {

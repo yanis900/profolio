@@ -3,6 +3,7 @@ import { Mail, Trophy, Sparkles, Star, Zap, Award, Crown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getUserBadge } from "../services/user";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
+import { useParams } from "react-router-dom";
 
 export const BADGE_CONFIG = {
   "100_views": {
@@ -203,21 +204,22 @@ function Badge({
   return badgeContent;
 }
 
-export function UserBadge({ token, user }) {
+export function UserBadge({ user }) {
   const [badges, setBadges] = useState([]);
+  const {userSlug} = useParams();
 
   useEffect(() => {
     async function fetchBadge() {
       try {
-        const data = await getUserBadge(token);
+        const data = await getUserBadge(userSlug);
         setBadges(data.badges);
       } catch (err) {
         console.error("Failed to fetch badges:", err);
       }
     }
 
-    if (token) fetchBadge();
-  }, [token, user]);
+    fetchBadge();
+  }, [userSlug, user]);
 
   const allBadges = [
     "100_views",
