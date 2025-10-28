@@ -53,6 +53,18 @@ export function ProjectsView(props) {
                           <CardDescription>
                             {project.description}
                           </CardDescription>
+                          {project.tags && project.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-1 pt-2">
+                              {project.tags.map((tag, index) => (
+                                <span
+                                  key={index}
+                                  className="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10"
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          )}
                           <div className="space-x-2">
                             <Button size={"icon"} variant={"link"}>
                               <a href={project.links[0]}>

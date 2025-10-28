@@ -19,6 +19,7 @@ const UserSchema = new mongoose.Schema({
       title: { type: String },
       description: { type: String },
       links: { type: Array },
+      tags: { type: [String], default: [] },
       thumbnail: {type: String, default: "https://profolio-project-dev-project-3.s3.eu-west-2.amazonaws.com/default+thumbnail.png"}
     },
   ],

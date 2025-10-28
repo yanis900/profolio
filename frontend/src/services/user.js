@@ -56,18 +56,8 @@ export async function editUser(token, user) {
   }
 }
 
-export async function getUserBySlug(token, userSlug) {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  let response = await fetch(
-    `${BACKEND_URL}/users/portfolio/${userSlug}`,
-    requestOptions
-  );
+export async function getUserBySlug(userSlug) {
+  let response = await fetch(`${BACKEND_URL}/users/portfolio/${userSlug}`);
 
   if (response.status === 200) {
     const data = await response.json();
@@ -152,6 +142,27 @@ export async function getGithubContributions(username) {
   } else {
     throw new Error(
       `Received status ${response.status} when fetching github contributions. Expected 200`
+    );
+  }
+}
+
+export async function sendEmail(slug, emailData) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(emailData),
+  };
+
+  let response = await fetch(`${BACKEND_URL}/users/email/${slug}`, requestOptions);
+
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
+  } else {
+    throw new Error(
+      `Received status ${response.status} when sending email. Expected 200`
     );
   }
 }

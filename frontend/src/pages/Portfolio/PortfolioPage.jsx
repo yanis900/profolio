@@ -22,17 +22,19 @@ export function PortfolioPage() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const loggedIn = token !== null;
+
+    getUserBySlug(userSlug)
+      .then((data) => {
+        setUser(data.user);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
     if (loggedIn) {
       getUserById(token)
         .then((data) => {
           setMe(data.user);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-      getUserBySlug(token, userSlug)
-        .then((data) => {
-          setUser(data.user);
         })
         .catch((err) => {
           console.error(err);
@@ -52,7 +54,7 @@ export function PortfolioPage() {
           console.error(err);
         });
     }
-  }, [userSlug,]);
+  }, [userSlug]);
 
   useEffect(() => {
     if (user && user.github) {
@@ -67,8 +69,7 @@ export function PortfolioPage() {
   }, [user]);
 
   async function refreshUser() {
-    const token = localStorage.getItem("token");
-    const data = await getUserBySlug(token, userSlug);
+    const data = await getUserBySlug(userSlug);
     setUser(data.user);
   }
 
