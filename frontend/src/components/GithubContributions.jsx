@@ -1,15 +1,24 @@
-export function GithubContributions(props) {
-  if (!props.contributions?.weeks) return null;
+import { useEffect, useRef } from "react";
+import { Card } from "./ui/card";
 
-  const today = new Date();
-  const sixMonthsAgo = new Date();
-  sixMonthsAgo.setMonth(today.getMonth() - 6);
+export function GithubContributions({ contributions }) {
+  const scrollRef = useRef(null);
 
-  // Flatten all days
-  const allDays = props.contributions.weeks.flatMap((week) => week.contributionDays);
+  // Auto-scroll to end on mount
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (el) {
+      // small delay to ensure the grid renders
+      setTimeout(() => {
+        el.scrollLeft = el.scrollWidth;
+      }, 50);
+    }
+  }, [contributions]);
 
-  // Filter to last 6 months
-  const days = allDays.filter((day) => new Date(day.date) >= sixMonthsAgo);
+  if (!contributions?.weeks) return null;
+
+  // Flatten all days for the whole year
+  const allDays = contributions.weeks.flatMap((week) => week.contributionDays);
 
   const getLevelClass = (count) => {
     if (count > 6) return "bg-[#216e39] border-[#1a562e]";
@@ -21,33 +30,38 @@ export function GithubContributions(props) {
 
   return (
     <div
+      ref={scrollRef}
       className="
-        grid p-2 gap-[2px] bg-white
-        [grid-template-columns:repeat(auto-fill,10px)]
-        [grid-template-rows:repeat(7,10px)]
+        w-full max-w-sm overflow-x-auto overflow-y-hidden
+        scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent
       "
+      style={{ scrollBehavior: "smooth" }}
     >
-      {days.map((day, index) => {
-        const gridRowStart = day.weekday + 1;
-        const gridColumnStart = Math.floor(index / 7) + 1;
+      <Card
+        className="
+          inline-grid p-3 gap-0.5
+          grid-rows-[repeat(7,10px)]
+          grid-flow-col
+        "
+      >
+        {allDays.map((day) => {
+          const gridRowStart = day.weekday + 1;
 
-        return (
-          <div
-            key={day.date}
-            title={`${day.date}: ${day.contributionCount} contributions`}
-            className={`
-              w-[10px] h-[10px] border rounded-[2px]
-              transition-transform duration-200
-              hover:scale-200
-              ${getLevelClass(day.contributionCount)}
-            `}
-            style={{
-              gridRowStart,
-              gridColumnStart,
-            }}
-          />
-        );
-      })}
+          return (
+            <div
+              key={day.date}
+              title={`${day.date}: ${day.contributionCount} contributions`}
+              className={`
+                w-2.5 h-2.5 border rounded-[2px]
+                transition-transform duration-200
+                hover:scale-200
+                ${getLevelClass(day.contributionCount)}
+              `}
+              style={{ gridRowStart }}
+            />
+          );
+        })}
+      </Card>
     </div>
   );
 }

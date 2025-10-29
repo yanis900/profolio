@@ -21,8 +21,8 @@ import { EditUserButton } from "./EditUserButton";
 import { EditProfilePictureButton } from "./EditProfilePictureButton";
 import { SendEmailButton } from "./SendEmailButton";
 import { EditCvButton } from "./EditCvButton";
-import { ContributionsButton } from "./ContributionsButton";
 import { UserBadge } from "./UserBadge";
+import { GithubContributions } from "./GithubContributions";
 
 export function UserView(props) {
   return (
@@ -63,7 +63,13 @@ export function UserView(props) {
               </p>
               <div>
                 {props.contributions ? (
-                  <ContributionsButton contributions={props.contributions} />
+                  <div className="flex flex-col gap-2">
+                  Github Contributions:
+                   {/* <ContributionsButton contributions={props.contributions} /> */}
+                              <GithubContributions contributions={props.contributions} />
+                  </div>
+                  
+
                 ) : (
                   ""
                 )}
