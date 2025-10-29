@@ -173,9 +173,6 @@ async function getUserBadge(req, res) {
   const slug = req.params.slug;
     try {
 
-
-
-
   if (!slug) {
     return res.status(401).json({ message: "Not authenticated" });
   }
@@ -198,7 +195,6 @@ async function getUserBadge(req, res) {
     return res.status(404).json({ message: "User not found" });
   }
   
-
     // Compute badges on the fly
     const totalViews = user.analytics.views.length;
     const totalEmails = user.analytics.emails.length;
@@ -217,9 +213,6 @@ async function getUserBadge(req, res) {
     res.status(500).json({ message: "Server error" });
   }
 }
-
-
-
 
     async function sendEmail(req, res) {
   try {

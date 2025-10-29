@@ -69,3 +69,17 @@ export async function deleteProject(token, id) {
     );
   }
 }
+
+export async function getProjectByTags(tags) {
+  const response = await fetch(`${BACKEND_URL}/projects/search?tags=${tags}`);
+
+  if (response.status !== 200 && response.status !== 404) {
+    throw new Error("Server error");
+  }
+  if (response.status === 404) {
+    return null;
+  }
+
+  const data = await response.json();
+  return data;
+}

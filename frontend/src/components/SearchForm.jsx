@@ -4,20 +4,25 @@ import { Search } from "lucide-react";
 
 export function SearchForm({ searchQuery, setSearchQuery, handleSearch }) {
   return (
-    <form onSubmit={handleSearch} className="flex gap-3 w-full max-w-2xl">
-      <Input
-        name="search"
-        type="search"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="Search for users by name..."
-        className="border-2"
-        required
-      />
+    <form
+      onSubmit={handleSearch}
+      className="flex gap-2 w-full items-center"
+    >
+      <div className="flex w-full min-h-[42px] p-2 rounded-md bg-background border">
+        <Input
+          name="search"
+          type="search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Enter a name"
+          className="flex-1 border-none shadow-none focus-visible:ring-0 min-w-[120px] p-0 h-auto"
+          required
+        />
+      </div>
       <Button
         type="submit"
         disabled={!searchQuery.trim()}
-        className="flex gap-2 items-center"
+        className="flex gap-2 items-center min-h-[42px]"
       >
         <Search size={18} />
         Search
