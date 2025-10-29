@@ -65,7 +65,7 @@ export function SignupPage() {
 
   return (
     <>
-      <div className="w-screen h-screen flex items-center justify-center background">
+      <div className="w-screen h-screen flex items-center justify-center signup-background">
         <div className="max-w-3xl w-full relative">
           <div className="absolute -left-2 -top-2 w-full h-full border rounded-xl bg-[#AEE938] -z-10"></div>
 

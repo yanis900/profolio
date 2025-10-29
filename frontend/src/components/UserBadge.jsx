@@ -242,7 +242,7 @@ export function UserBadge({ user }) {
   }
 
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <div className="flex flex-wrap gap-3 justify-center">
       {allBadges.map((badgeType) => (
         <Badge
           key={badgeType}

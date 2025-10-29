@@ -25,13 +25,15 @@ import { UserBadge } from "./UserBadge";
 import { GithubContributions } from "./GithubContributions";
 
 export function UserView(props) {
+  if (!props.user) return null;
+
   return (
-    props.user && (
+    <>
       <Card className="rounded-tl-none">
         <CardHeader>
           <CardTitle>
             <div className="flex items-center space-x-4">
-              <div className="w-[150px] h-[150px] rounded-full border overflow-hidden">
+              <div className="w-[200px] h-[200px] rounded-full border overflow-hidden">
                 <img
                   src={props.user.image}
                   alt=""
@@ -101,23 +103,32 @@ export function UserView(props) {
               </Button>
             )}
           </div>
-          <div>
-            <UserBadge token={props.token} user={props.user} />
-          </div>
-          <div className="flex gap-3">
-            <Button variant={"outline"} size={"icon"}>
+          <div className="flex gap-4">
+            <Button
+              variant={"outline"}
+              size={"icon"}
+              className="h-12 w-12 rounded-full hover:bg-blue-50 hover:border-blue-500 transition-all hover:scale-110"
+            >
               <a href={props.user.links[0]} target="_blank" rel="noreferrer">
-                <Linkedin />
+                <Linkedin className="h-5 w-5 text-blue-600" />
               </a>
             </Button>
-            <Button variant={"outline"} size={"icon"}>
+            <Button
+              variant={"outline"}
+              size={"icon"}
+              className="h-12 w-12 rounded-full hover:bg-gray-900 hover:border-gray-900 transition-all hover:scale-110"
+            >
               <a href={props.user.links[1]} target="_blank" rel="noreferrer">
-                <Github />
+                <Github className="h-5 w-5 hover:text-white" />
               </a>
             </Button>
-            <Button variant={"outline"} size={"icon"}>
+            <Button
+              variant={"outline"}
+              size={"icon"}
+              className="h-12 w-12 rounded-full hover:bg-purple-50 hover:border-purple-500 transition-all hover:scale-110"
+            >
               <a href={props.user.links[2]} target="_blank" rel="noreferrer">
-                <AppWindow />
+                <AppWindow className="h-5 w-5 text-purple-600" />
               </a>
             </Button>
           </div>
@@ -135,6 +146,15 @@ export function UserView(props) {
           )}
         </CardFooter>
       </Card>
-    )
+      {/* Badges in separate card */}
+      <Card className="mt-4">
+        <CardHeader>
+          <CardTitle className="text-lg">Achievements</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <UserBadge token={props.token} user={props.user} />
+        </CardContent>
+      </Card>
+    </>
   );
 }
