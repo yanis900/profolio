@@ -5,7 +5,6 @@ function SignupButton() {
   const navigate = useNavigate();
 
   function signUp() {
-    localStorage.removeItem("token");
     navigate("/signup");
   }
 

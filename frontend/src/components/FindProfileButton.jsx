@@ -5,7 +5,6 @@ function FindProfileButton() {
   const navigate = useNavigate();
 
   function FindProfile() {
-    localStorage.removeItem("token");
     navigate("/search");
   }
 

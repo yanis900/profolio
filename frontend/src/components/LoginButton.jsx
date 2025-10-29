@@ -5,7 +5,6 @@ function LoginButton() {
   const navigate = useNavigate();
 
   function logIn() {
-    localStorage.removeItem("token");
     navigate("/login");
   }
 
