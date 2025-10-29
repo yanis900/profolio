@@ -12,15 +12,29 @@ const UserSchema = new mongoose.Schema({
   location: { type: String },
   github: { type: String },
   links: { type: Array },
-  image: { type: String, default: "https://profolio-project-dev-project-3.s3.eu-west-2.amazonaws.com/default+profile.png"},
-  cv: {type: String},
+  image: {
+    type: String,
+    default:
+      "https://profolio-project-dev-project-3.s3.eu-west-2.amazonaws.com/default+profile.png",
+  },
+  cv: { type: String },
   projects: [
     {
       title: { type: String },
       description: { type: String },
       links: { type: Array },
       tags: { type: [String], default: [] },
-      thumbnail: {type: String, default: "https://profolio-project-dev-project-3.s3.eu-west-2.amazonaws.com/default+thumbnail.png"}
+      states: {
+        type: String,
+        required: true,
+        enum: ["In Progress", "Completed (Not Deployed)", "Completed & Deployed"],
+        default: "In Progress"
+      },
+      thumbnail: {
+        type: String,
+        default:
+          "https://profolio-project-dev-project-3.s3.eu-west-2.amazonaws.com/default+thumbnail.png",
+      },
     },
   ],
   analytics: {
@@ -39,8 +53,8 @@ const UserSchema = new mongoose.Schema({
       {
         userId: { type: mongoose.Schema.Types.Mixed },
         sentAt: { type: Date, default: Date.now },
-      }
-    ]
+      },
+    ],
   },
 });
 

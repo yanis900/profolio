@@ -23,6 +23,7 @@ import {
 } from "./ui/shadcn-io/dropzone";
 import { toast } from 'sonner'
 import { SimpleTagsInput } from "./SimpleTagsInput";
+import { ProjectStates } from "./ProjectStates";
 
 export function EditProjectButton(props) {
   const [open, setOpen] = useState(false)
@@ -31,6 +32,7 @@ export function EditProjectButton(props) {
   const [github, setGithub] = useState(props.project.links[0])
   const [website, setWebsite] = useState(props.project.links[1])
   const [selectedTags, setSelectedTags] = useState(props.project.tags || [])
+  const [selectedState, setSelectedState] = useState(props.project.states || "In Progress")
 
   const [files, setFiles] = useState(null)
   const [imagePreview, setImagePreview] = useState(null)
@@ -74,6 +76,7 @@ export function EditProjectButton(props) {
         description: description,
         links: [github, website],
         tags: selectedTags,
+        states: selectedState,
       }
       await handleThumbnailUpload(props.project._id)
       await editProject(token, project);
@@ -133,6 +136,12 @@ export function EditProjectButton(props) {
                 selectedTags={selectedTags}
                 setSelectedTags={setSelectedTags}
                 />
+            </div>
+            <div className="grid gap-3">
+              <ProjectStates
+                selectedState={selectedState}
+                setSelectedState={setSelectedState}
+              />
             </div>
             <div className="flex gap-3 col-span-2">
               <div>

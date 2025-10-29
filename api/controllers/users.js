@@ -168,6 +168,7 @@ async function toggleVisibility(req, res) {
   }
 }
 
+
 async function getUserBadge(req, res) {
   const slug = req.params.slug;
     try {
