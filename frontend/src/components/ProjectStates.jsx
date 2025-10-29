@@ -1,114 +1,26 @@
-import { useState } from "react";
-import { Input } from "./ui/input";
-import { Badge } from "./ui/badge";
-import { X } from "lucide-react";
-import { Button } from "./ui/button";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-export function SimpleTagsInput({ selectedTags, setSelectedTags }) {
-  const [inputValue, setInputValue] = useState("");
-
-  const defaultTags = [
-    "React",
-    "TypeScript",
-    "JavaScript",
-    "Next.js",
-    "Node.js",
-    "Python",
-    "Java",
-    "Full Stack",
-    "Frontend",
-    "Backend",
-    "Mobile",
-    "Web",
-    "AI/ML",
-    "Database",
-    "API",
-    "Cloud",
+export function ProjectStates({ selectedState, setSelectedState }) {
+  const states = [
+    { id: "in-progress", label: "In Progress", value: "In Progress" },
+    { id: "completed-not-deployed", label: "Completed (Not Deployed)", value: "Completed (Not Deployed)" },
+    { id: "completed-deployed", label: "Completed & Deployed", value: "Completed & Deployed" },
   ];
 
-  function handleKeyDown(e) {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      addTag();
-    } else if (
-      e.key === "Backspace" &&
-      inputValue === "" &&
-      selectedTags.length > 0
-    ) {
-      removeTag(selectedTags.length - 1);
-    }
-  }
-
-  function addTag() {
-    const trimmedValue = inputValue.trim();
-    if (trimmedValue && !selectedTags.includes(trimmedValue)) {
-      setSelectedTags([...selectedTags, trimmedValue]);
-      setInputValue("");
-    }
-  }
-
-  function removeTag(indexToRemove) {
-    setSelectedTags(selectedTags.filter((_, index) => index !== indexToRemove));
-  }
-
-  function addPredefinedTag(tag) {
-    if (!selectedTags.includes(tag)) {
-      setSelectedTags([...selectedTags, tag]);
-    }
-  }
-
   return (
-    <div className="space-y-3">
-      {/* Input for custom tags */}
-      <div className="flex flex-wrap gap-2 p-2 border rounded-md min-h-[42px] bg-background">
-        {selectedTags.map((tag, index) => (
-          <Badge
-            key={index}
-            variant="secondary"
-            className="flex items-center gap-1 px-2 py-1"
-          >
-            {tag}
-            <button
-              type="button"
-              onClick={() => removeTag(index)}
-              className="ml-1 hover:text-destructive"
-            >
-              <X size={14} />
-            </button>
-          </Badge>
+    <div className="grid gap-3">
+      <Label>Project State *</Label>
+      <RadioGroup value={selectedState} onValueChange={setSelectedState} required>
+        {states.map((state) => (
+          <div key={state.id} className="flex items-center space-x-2">
+            <RadioGroupItem value={state.value} id={state.id} />
+            <Label htmlFor={state.id} className="font-normal cursor-pointer">
+              {state.label}
+            </Label>
+          </div>
         ))}
-        <Input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={handleKeyDown}
-          onBlur={addTag}
-          placeholder={
-            selectedTags.length === 0 ? "Type and press Enter..." : ""
-          }
-          className="flex-1 border-none shadow-none focus-visible:ring-0 min-w-[120px] p-0 h-auto"
-        />
-      </div>
-
-      {/* Quick select buttons */}
-      <div className="flex flex-wrap gap-2">
-        {defaultTags.map((tag) => (
-          <Button
-            key={tag}
-            type="button"
-            variant={selectedTags.includes(tag) ? "default" : "outline"}
-            size="sm"
-            onClick={() => addPredefinedTag(tag)}
-            className="text-xs"
-          >
-            {tag}
-          </Button>
-        ))}
-      </div>
-
-      <p className="text-xs text-muted-foreground">
-        Click a button to add common tags, or type your own and press Enter
-      </p>
+      </RadioGroup>
     </div>
   );
 }
