@@ -23,7 +23,9 @@ describe("Home Page", () => {
       </BrowserRouter>
     );
 
-    const signupLink = screen.getByText("Sign Up");
+    const signupLinks = screen.getAllByText("Sign Up");
+    const signupLink = signupLinks.find(link => link.getAttribute("href") === "/signup");
+    expect(signupLink).toBeTruthy();
     expect(signupLink.getAttribute("href")).toEqual("/signup");
   });
 
@@ -34,7 +36,9 @@ describe("Home Page", () => {
       </BrowserRouter>
     );
 
-    const loginLink = screen.getByText("Log In");
+    const loginLinks = screen.getAllByText("Log In");
+    const loginLink = loginLinks.find(link => link.getAttribute("href") === "/login");
+    expect(loginLink).toBeTruthy();
     expect(loginLink.getAttribute("href")).toEqual("/login");
   });
 });
