@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/ca
 import { Badge } from "../../components/ui/badge";
 import { capitalise } from "../../utils/capitalise";
 import { MapPin } from "lucide-react";
+import { PublicNavbar } from "../../components/PublicNavbar";
 
 export function SearchPage() {
   const [results, setResults] = useState([]);
@@ -64,6 +65,9 @@ export function SearchPage() {
   }
 
   return (
+    <>
+    <PublicNavbar />
+    <div className="home px-6 pt-15 pb-1"> </div> 
     <div className="w-screen min-h-screen p-6">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header */}
@@ -166,5 +170,6 @@ export function SearchPage() {
         )}
       </div>
     </div>
+    </>
   );
 }
