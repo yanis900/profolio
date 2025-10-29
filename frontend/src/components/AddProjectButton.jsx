@@ -23,6 +23,7 @@ import {
 import { uploadThumbnail } from "../services/upload";
 import { toast } from "sonner";
 import { SimpleTagsInput } from "./SimpleTagsInput";
+import { ProjectStates } from "./ProjectStates";
 
 export function AddProjectButton(props) {
   const [open, setOpen] = useState(false);
@@ -35,6 +36,7 @@ export function AddProjectButton(props) {
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef();
   const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedState, setSelectedState] = useState("In Progress");
   const token = localStorage.getItem("token");
 
   function handleDrop(files) {
@@ -73,6 +75,7 @@ export function AddProjectButton(props) {
         description: description,
         links: [github, website],
         tags: selectedTags,
+        states: selectedState,
       };
       console.log("project", project);
 
@@ -144,6 +147,10 @@ export function AddProjectButton(props) {
                 setSelectedTags={setSelectedTags}
               />
             </div>
+            <ProjectStates
+              selectedState={selectedState}
+              setSelectedState={setSelectedState}
+            />
             <div className="flex gap-3">
               <div>
                 <Label htmlFor="github">Github</Label>

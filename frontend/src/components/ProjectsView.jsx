@@ -1,7 +1,7 @@
 import { AddProjectButton } from "./AddProjectButton";
 import { EditProjectButton } from "./EditProjectButton";
 import { DeleteProjectButton } from "./DeleteProjectButton";
-import { AppWindow, Folder, Github } from "lucide-react";
+import { AppWindow, Folder, Github, Loader2, CheckCircle2, Rocket } from "lucide-react";
 import { TabsContent } from "./ui/tabs";
 import {
   Card,
@@ -14,6 +14,43 @@ import {
 } from "./ui/card";
 import { NoProjects } from "./NoProjects";
 import { Button } from "./ui/button";
+
+function getStateConfig(state) {
+  switch (state) {
+    case "In Progress":
+      return {
+        icon: Loader2,
+        bgColor: "bg-blue-50",
+        textColor: "text-blue-700",
+        ringColor: "ring-blue-700/10",
+        label: "In Progress"
+      };
+    case "Completed (Not Deployed)":
+      return {
+        icon: CheckCircle2,
+        bgColor: "bg-green-50",
+        textColor: "text-green-700",
+        ringColor: "ring-green-700/10",
+        label: "Completed (Not Deployed)"
+      };
+    case "Completed & Deployed":
+      return {
+        icon: Rocket,
+        bgColor: "bg-purple-50",
+        textColor: "text-purple-700",
+        ringColor: "ring-purple-700/10",
+        label: "Completed & Deployed"
+      };
+    default:
+      return {
+        icon: Loader2,
+        bgColor: "bg-gray-50",
+        textColor: "text-gray-700",
+        ringColor: "ring-gray-700/10",
+        label: state
+      };
+  }
+}
 
 export function ProjectsView(props) {
   return (
@@ -53,6 +90,22 @@ export function ProjectsView(props) {
                           <CardDescription>
                             {project.description}
                           </CardDescription>
+                          {project.states && (
+                            <div className="pt-2">
+                              {(() => {
+                                const stateConfig = getStateConfig(project.states);
+                                const StateIcon = stateConfig.icon;
+                                return (
+                                  <span
+                                    className={`inline-flex items-center gap-1 rounded-md ${stateConfig.bgColor} px-2 py-1 text-xs font-medium ${stateConfig.textColor} ring-1 ring-inset ${stateConfig.ringColor}`}
+                                  >
+                                    <StateIcon className="w-3 h-3" />
+                                    {stateConfig.label}
+                                  </span>
+                                );
+                              })()}
+                            </div>
+                          )}
                           {project.tags && project.tags.length > 0 && (
                             <div className="flex flex-wrap gap-1 pt-2">
                               {project.tags.map((tag, index) => (
