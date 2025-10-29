@@ -16,7 +16,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 export function SearchPage() {
   const [results, setResults] = useState([]);
@@ -36,26 +36,28 @@ export function SearchPage() {
 
   useEffect(() => {
     if (query) {
-      setTagResults([])
+      setTagResults([]);
+      setSelectedTags([])
       setSearchQuery(query);
       fetchSearchResults(query);
     }
   }, [query]);
-  
-  useEffect(() => {
-    if (searchType === 'tags') {
-      setResults([])
-      getProjectByTags(selectedTags)
-      .then((data) => {
-        console.log(data.projects)
-        setTagResults(data.projects)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-    }
 
-  }, [selectedTags, searchType]);
+  useEffect(() => {
+    if (searchType === "tags") {
+      setResults([]);
+      setSearchQuery('')
+      navigate("/search");
+      getProjectByTags(selectedTags)
+        .then((data) => {
+          console.log(data.projects);
+          setTagResults(data.projects);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [selectedTags, searchType, navigate]);
 
   async function fetchSearchResults(searchTerm) {
     setLoading(true);
@@ -93,62 +95,68 @@ export function SearchPage() {
 
   return (
     <>
-    <PublicNavbar />
-    <div className="home px-6 pt-15 pb-1"> </div> 
-    <div className="w-screen min-h-screen p-6">
-      <div className="max-w-4xl mx-auto space-y-8">
-        {/* Header */}
-        
-        <div className="flex items-center justify-between mt-20">
-          <BackButton />
-          <h2 className="scroll-m-20 text-3xl font-bold tracking-tight">
-            Search
-          </h2>
-          {isLoggedIn && <LogoutButton />}
-        </div>
+      <PublicNavbar />
+      <div className="home px-6 pt-15 pb-1"> </div>
+      <div className="w-screen min-h-screen p-6">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Header */}
 
-        <div className="flex justify-center gap-2">
-          <Select onValueChange={setSearchType}>
-      <SelectTrigger className="w-[180px] min-h-[42px]">
-        <SelectValue placeholder="Search type"/>
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          {/* <SelectLabel>Search By</SelectLabel> */}
-          <SelectItem value="tags" >Projects by tags</SelectItem>
-          <SelectItem value="name">Users by name</SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-    { searchType === 'tags' ? (
-       <SimpleTagsInput
-              selectedTags={selectedTags}
-              setSelectedTags={setSelectedTags}
-              /> 
-    ) : ''
-    }
-    { searchType === 'name' ? (
-       <SearchForm
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            handleSearch={handleSearch}
-          /> 
-    ) : ''
-    }
-    {/* <ProjectSearch */}
-                </div>
-    <ProjectSearchResults results={tagResults} />
-        {/* Results Section */}
-        {query && (
-          <div className="space-y-4">
-            <h3 className="text-xl font-semibold text-muted-foreground">
-              Search Results for &quot;{query}&quot;
-            </h3>
-              <UserSearchResults results={results} handleUserClick={handleUserClick}/>
+          <div className="flex items-center justify-between mt-20">
+            <BackButton />
+            <h2 className="scroll-m-20 text-3xl font-bold tracking-tight">
+              Search
+            </h2>
+            {isLoggedIn && <LogoutButton />}
           </div>
-        )}
+
+          <div className="flex justify-center gap-2">
+            <Select onValueChange={setSearchType}>
+              <SelectTrigger className="w-[180px] min-h-[42px]">
+                <SelectValue placeholder="Search type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {/* <SelectLabel>Search By</SelectLabel> */}
+                  <SelectItem value="tags">Projects by tags</SelectItem>
+                  <SelectItem value="name">Users by name</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            {searchType === "tags" ? (
+              <SimpleTagsInput
+                selectedTags={selectedTags}
+                setSelectedTags={setSelectedTags}
+              />
+            ) : (
+              ""
+            )}
+            {searchType === "name" ? (
+              <SearchForm
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                handleSearch={handleSearch}
+              />
+            ) : (
+              ""
+            )}
+            {/* <ProjectSearch */}
+          </div>
+          {searchType === "tags" && <ProjectSearchResults results={tagResults} 
+           />}
+          {/* Results Section */}
+          {query && (
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold text-muted-foreground">
+                Search Results for &quot;{query}&quot;
+              </h3>
+              <UserSearchResults
+                results={results}
+                handleUserClick={handleUserClick}
+              />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
     </>
   );
 }
