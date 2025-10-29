@@ -23,6 +23,7 @@ function getStateConfig(state) {
         bgColor: "bg-blue-50",
         textColor: "text-blue-700",
         ringColor: "ring-blue-700/10",
+        shadowColor: "#FFD300",
         label: "In Progress"
       };
     case "Completed (Not Deployed)":
@@ -31,6 +32,7 @@ function getStateConfig(state) {
         bgColor: "bg-green-50",
         textColor: "text-green-700",
         ringColor: "ring-green-700/10",
+        shadowColor: "#3B82F6",
         label: "Completed (Not Deployed)"
       };
     case "Completed & Deployed":
@@ -39,6 +41,7 @@ function getStateConfig(state) {
         bgColor: "bg-purple-50",
         textColor: "text-purple-700",
         ringColor: "ring-purple-700/10",
+        shadowColor: "#10B981",
         label: "Completed & Deployed"
       };
     default:
@@ -47,6 +50,7 @@ function getStateConfig(state) {
         bgColor: "bg-gray-50",
         textColor: "text-gray-700",
         ringColor: "ring-gray-700/10",
+        shadowColor: "#6B7280",
         label: state
       };
   }
@@ -73,9 +77,17 @@ export function ProjectsView(props) {
         <CardContent className="grid gap-6">
           {props.projects && props.projects.length !== 0 ? (
             props.projects.map((project) => {
+              const stateConfig = getStateConfig(project.states);
               return (
                 <>
-                  <Card key={project._id} style={{ boxShadow: 'rgba(0, 0, 0, 1) 5px 5px' }}>
+                  <Card
+                    key={project._id}
+                    style={{
+                      boxShadow: 'rgba(0, 0, 0, 1) 5px 5px',
+                      borderLeft: `4px solid ${stateConfig.shadowColor}`,
+                      borderTop: `4px solid ${stateConfig.shadowColor}`
+                    }}
+                  >
                     <CardHeader>
                       <div className="flex gap-3">
                         <img
@@ -92,18 +104,12 @@ export function ProjectsView(props) {
                           </CardDescription>
                           {project.states && (
                             <div className="pt-2">
-                              {(() => {
-                                const stateConfig = getStateConfig(project.states);
-                                const StateIcon = stateConfig.icon;
-                                return (
-                                  <span
-                                    className={`inline-flex items-center gap-1 rounded-md ${stateConfig.bgColor} px-2 py-1 text-xs font-medium ${stateConfig.textColor} ring-1 ring-inset ${stateConfig.ringColor}`}
-                                  >
-                                    <StateIcon className="w-3 h-3" />
-                                    {stateConfig.label}
-                                  </span>
-                                );
-                              })()}
+                              <span
+                                className={`inline-flex items-center gap-1 rounded-md ${stateConfig.bgColor} px-2 py-1 text-xs font-medium ${stateConfig.textColor} ring-1 ring-inset ${stateConfig.ringColor}`}
+                              >
+                                <stateConfig.icon className="w-3 h-3" />
+                                {stateConfig.label}
+                              </span>
                             </div>
                           )}
                           {project.tags && project.tags.length > 0 && (

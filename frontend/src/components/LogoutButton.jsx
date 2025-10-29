@@ -7,6 +7,7 @@ function LogoutButton() {
   function logOut() {
     localStorage.removeItem("token");
     navigate("/");
+    window.location.reload();
   }
 
   return <Button variant={'link'} onClick={logOut}>Log out</Button>;
