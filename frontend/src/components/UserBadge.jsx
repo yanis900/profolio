@@ -119,7 +119,7 @@ function Badge({
             sizeClasses[size],
             rarityConfig.borderColor,
             unlocked
-              ? `bg-gradient-to-br ${config.gradient} shadow-lg ${config.glowColor} group-hover:scale-110 group-hover:shadow-xl`
+              ? `bg-linear-to-br ${config.gradient} shadow-lg ${config.glowColor} group-hover:scale-110 group-hover:shadow-xl`
               : "bg-gray-200 opacity-40 grayscale dark:bg-gray-800"
           )}
         >
@@ -231,7 +231,7 @@ export function UserBadge({ user }) {
 
   if (badges.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed p-8 text-center">
+      <div className="flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed p-8 text-center ">
         <Trophy className="h-8 w-8 text-muted-foreground" />
         <p className="text-sm text-muted-foreground">No badges earned yet</p>
         <p className="text-xs text-muted-foreground">
@@ -242,17 +242,20 @@ export function UserBadge({ user }) {
   }
 
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <div className="w-[490px] flex flex-col gap-4 border-t border-gray-300 pt-5 text-[oklch(0.556_0_0)] text-sm items-start">
+      <p>Achievements:</p>
+      <div className="flex flex-row gap-2">
       {allBadges.map((badgeType) => (
-        <Badge
+        <Badge 
           key={badgeType}
           type={badgeType}
-          size="md"
+          size="sm"
           showLabel={false}
           unlocked={badges.includes(badgeType)}
           unlockedDate={badges.includes(badgeType) ? new Date() : undefined}
         />
       ))}
+    </div>
     </div>
   );
 }

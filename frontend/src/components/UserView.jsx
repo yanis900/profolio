@@ -31,7 +31,7 @@ export function UserView(props) {
         <CardHeader>
           <CardTitle>
             <div className="flex items-center space-x-4">
-              <div className="w-[150px] h-[150px] rounded-full border overflow-hidden">
+              <div className="w-[170px] h-[170px] rounded-full border overflow-hidden">
                 <img
                   src={props.user.image}
                   alt=""
@@ -48,7 +48,7 @@ export function UserView(props) {
             </div>
           </CardTitle>
           <CardDescription>
-            <div className="mt-2 space-y-4 text-left">
+            <div className="mt-6 space-y-6 text-left">
               {props.user.opentowork ? (
                 <Badge variant={"outline"} className="border-2 border-blue-500">
                   open to work
@@ -61,12 +61,11 @@ export function UserView(props) {
                 <MapPin />
                 {props.user.location}
               </p>
-              <div>
+              <div className="w-[490px] border-t border-gray-300 ">
                 {props.contributions ? (
-                  <div className="flex flex-col gap-2">
-                  Github Contributions:
-                   {/* <ContributionsButton contributions={props.contributions} /> */}
-                              <GithubContributions contributions={props.contributions} />
+                  <div className="flex flex-col gap-2 mt-5 -mb-5">
+                    Github Contributions:
+                    <GithubContributions contributions={props.contributions} />
                   </div>
                   
 
