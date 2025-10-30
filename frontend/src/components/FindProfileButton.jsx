@@ -8,7 +8,7 @@ function FindProfileButton() {
     navigate("/search");
   }
 
-  return <Button variant={'link'} onClick={FindProfile}>Find A Profile</Button>;
+  return <Button variant={'link'} onClick={FindProfile} className={'text-white'}>Find A Profile</Button>;
 }
 
 export default FindProfileButton;

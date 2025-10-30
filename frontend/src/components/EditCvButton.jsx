@@ -54,7 +54,7 @@ export function EditCvButton(props) {
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline" className="flex flex-col gap-4">
+          <Button variant="outline" className="flex flex-col gap-4 text-[#0A2243] hover:bg-[#FFD300]">
             <FileUser />
           </Button>
         </DialogTrigger>

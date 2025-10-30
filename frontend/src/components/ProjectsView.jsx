@@ -83,9 +83,9 @@ export function ProjectsView(props) {
                   <Card
                     key={project._id}
                     style={{
-                      boxShadow: 'rgba(0, 0, 0, 1) 5px 5px',
-                      borderLeft: `4px solid ${stateConfig.shadowColor}`,
-                      borderTop: `4px solid ${stateConfig.shadowColor}`
+                      boxShadow: '#0A2243 10px 10px',
+                      // borderLeft: `4px solid ${stateConfig.shadowColor}`,
+                      // borderTop: `4px solid ${stateConfig.shadowColor}`
                     }}
                   >
                     <CardHeader>

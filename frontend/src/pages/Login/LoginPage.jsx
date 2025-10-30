@@ -51,15 +51,12 @@ export function LoginPage() {
 
   return (
     <>
-      <div className="w-screen h-screen flex items-center justify-center background">
-        <div className="max-w-3xl w-full relative z-0">
-          <div className="absolute -left-2 -top-2 w-full h-full border rounded-xl bg-[#FFD300] z-0"></div>
-
+      <div className="w-screen h-screen flex items-center justify-center bg-[#0A2243]">
+        <div className="max-w-3xl w-full relative">
           <Card
             style={{
-              boxShadow: "10px 10px 0 #043368",
+              boxShadow: "10px 10px 0 #FFD300",
             }}
-            className='z-10 relative'
           >
             <CardHeader>
               <CardTitle>Login to your account</CardTitle>
@@ -101,7 +98,7 @@ export function LoginPage() {
                         id="submit"
                         type="submit"
                         value="Submit"
-                        className='bg-[#043368] hover:opacity-90 hover:bg-[#043368]'
+                      className='bg-[#FFD300] text-[#0A2243] hover:bg-[#0A2243] hover:text-[#FFD300]'
                       >
                         Login
                       </Button>
@@ -110,6 +107,7 @@ export function LoginPage() {
                         <Button
                           variant={"link"}
                           onClick={() => navigate("/signup")}
+                          
                         >
                           Sign in
                         </Button>

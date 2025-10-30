@@ -96,14 +96,12 @@ export function SearchPage() {
   return (
     <>
       <PublicNavbar />
-      <div className="home px-6 pt-15 pb-1"> </div>
-      <div className="w-screen min-h-screen p-6">
+      <div className="w-screen min-h-screen p-6 bg-[#FFFCEC]">
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Header */}
 
-          <div className="flex items-center justify-between mt-20">
-            <BackButton />
-            <h2 className="scroll-m-20 text-3xl font-bold tracking-tight">
+          <div className="flex items-center justify-center mt-20">
+            <h2 className="scroll-m-20 text-3xl font-bold tracking-tight text-[#0A2243]">
               Search
             </h2>
             {isLoggedIn && <LogoutButton />}

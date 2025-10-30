@@ -48,7 +48,7 @@ export function Chart(props) {
     },
   };
   return (
-    <Card className="flex flex-col">
+    <Card className="flex flex-col" style={{ boxShadow: '#0A2243 10px 10px' }}>
       <CardHeader className="items-center pb-0">
         <CardTitle>Total Views</CardTitle>
         <CardDescription>Desktop/Mobile</CardDescription>

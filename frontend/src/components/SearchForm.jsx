@@ -22,7 +22,7 @@ export function SearchForm({ searchQuery, setSearchQuery, handleSearch }) {
       <Button
         type="submit"
         disabled={!searchQuery.trim()}
-        className="flex gap-2 items-center min-h-[42px]"
+        className="flex gap-2 items-center min-h-[42px] bg-[#FFD300] text-[#0A2243] hover:bg-[#0A2243] hover:text-[#FFD300]"
       >
         <Search size={18} />
         Search

@@ -10,7 +10,7 @@ function LogoutButton() {
     window.location.reload();
   }
 
-  return <Button variant={'link'} onClick={logOut}>Log out</Button>;
+  return <Button variant={'link'} onClick={logOut} className={'text-white'}>Log out</Button>;
 }
 
 export default LogoutButton;

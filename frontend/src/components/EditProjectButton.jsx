@@ -143,7 +143,7 @@ export function EditProjectButton(props) {
                 setSelectedState={setSelectedState}
               />
             </div>
-            <div className="flex gap-3 col-span-2">
+            <div className="flex gap-3">
               <div>
               <Label htmlFor="github">Github</Label>
               <Input id="github" name="github" value={github} onChange={handleGithubChange}/>
@@ -154,7 +154,7 @@ export function EditProjectButton(props) {
               </div>
             </div>
 
-            <div className="grid gap-3 col-span-2">
+            <div className="grid gap-3">
               <Label>Project Thumbnail</Label>
               <div className="flex children:flex-1">
 

@@ -152,7 +152,7 @@ export const DropzoneEmptyState = ({
         <UploadIcon size={16} />
       </div>
       <p className="my-2 w-full truncate text-wrap font-medium text-sm">
-        Upload CV
+        Upload Picture
       </p>
       <p className="w-full truncate text-wrap text-muted-foreground text-xs">
         Drag and drop or click to upload
