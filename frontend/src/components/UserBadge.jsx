@@ -242,7 +242,7 @@ export function UserBadge({ user }) {
   }
 
   return (
-    <div className="w-[490px] flex flex-col gap-4 border-t border-gray-300 pt-5 text-[oklch(0.556_0_0)] text-sm items-start">
+    <div className="w-[460px] flex flex-col gap-4 border-t border-gray-300 pt-5 text-[oklch(0.556_0_0)] text-sm items-start">
       <p>Achievements:</p>
       <div className="flex flex-row gap-2">
       {allBadges.map((badgeType) => (
