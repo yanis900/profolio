@@ -69,6 +69,11 @@ export function PublicNavbar() {
           )}
           {isLoggedIn && !isPortfolioPage && <MyPortfolioButton />}
           {isLoggedIn && <LogoutButton />}
+           {isLoggedIn && (
+            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#FFD300]">
+              <img src={me.image} alt=""/>
+            </div>
+          )}
         </div>
       </div>
     </nav>
