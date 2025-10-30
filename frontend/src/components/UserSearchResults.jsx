@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Badge } from "./ui/badge";
 import { capitalise } from "../utils/capitalise";
 import { Briefcase, MapPin } from "lucide-react";
 

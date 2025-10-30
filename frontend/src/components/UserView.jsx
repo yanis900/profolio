@@ -17,7 +17,6 @@ import {
   MapPin,
 } from "lucide-react";
 import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
 import { EditUserButton } from "./EditUserButton";
 import { EditProfilePictureButton } from "./EditProfilePictureButton";
 import { SendEmailButton } from "./SendEmailButton";

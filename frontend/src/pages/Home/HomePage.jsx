@@ -3,6 +3,7 @@ import { PublicNavbar } from "../../components/PublicNavbar";
 import { Safari } from "@/components/ui/shadcn-io/safari";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import hero from '../../assets/hero.png';
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export function HomePage() {
               <Safari
                 url="aihorseimages.com"
                 className="size-full"
-                imageSrc='https://d3m8mk7e1mf7xn.cloudfront.net/64283e45e3e7f553ef549c41/1686624632931avatar-color-2.webp'
+                imageSrc={hero}
               />
             </div>
           </div>
