@@ -51,6 +51,7 @@ export function PublicNavbar() {
           href="/"
           className="flex items-center gap-2 text-[#4DBCDB] hover:opacity-80 transition-all duration-300"
         >
+          <img src="https://files.slack.com/files-pri/T03ALA7H4-F09PKKN46J1/chatgpt_image_oct_30__2025__11_41_12_am.png" alt="" className="w-10 h-10"/>
           <span className="font-bold text-2xl tracking-tight drop-shadow-sm hover:scale-105 transition-transform duration-200">
             Profolio
           </span>
