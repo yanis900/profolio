@@ -74,7 +74,7 @@ function Badge({
   const config = BADGE_CONFIG[type];
 
   const badgeContent = (
-    <div className={cn("group flex flex-col items-center gap-3", className)}>
+    <div className={cn("group flex flex-col items-center gap-3 w-15 h-15", className)}>
       <div className="relative">
         <div
           className={cn(
