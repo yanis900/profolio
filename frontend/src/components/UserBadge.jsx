@@ -4,12 +4,12 @@ import { getUserBadge } from "../services/user";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
 import { useParams } from "react-router-dom";
 
-import views_50 from "/50_views_badge.png"
-import views_100 from "/100_views_badge.png"
-import projects_5 from "/5_projects_badge.png"
-import emails_10 from "/10_emails_badge.png"
-import CV_uploaded from "/CV_uploaded_badge.png"
-import no_badge from "/no_badge.png"
+import views_50 from "../assets/50_views_badge.png"
+import views_100 from "../assets/100_views_badge.png"
+import projects_5 from "../assets/5_projects_badge.png"
+import emails_10 from "../assets/10_emails_badge.png"
+import CV_uploaded from "../assets/CV_uploaded_badge.png"
+import no_badge from "../assets/no_badge.png"
 
 export const BADGE_CONFIG = {
   "50_views": {
