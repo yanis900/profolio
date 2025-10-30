@@ -22,7 +22,7 @@ export function UserSearchResults({ results, handleUserClick }) {
           {results.map((user) => (
             <Card
               key={user._id}
-              className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-purple-500"
+              className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-[#FFD300] "
               onClick={() => handleUserClick(user)}
             >
               <CardHeader>
@@ -31,7 +31,7 @@ export function UserSearchResults({ results, handleUserClick }) {
                     <img
                       src={user.image}
                       alt={`${user.firstname} ${user.lastname}`}
-                      className="w-30 h-30 rounded-full border-2 border-purple-300 object-cover"
+                      className="w-30 h-30 rounded-full object-cover"
                     />
 
                     <div className="flex-1 text-left">

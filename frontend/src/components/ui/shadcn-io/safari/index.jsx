@@ -28,7 +28,7 @@ export function Safari({
           fillRule="evenodd"
           clipRule="evenodd"
           d="M1.06738 12C1.06738 5.92487 5.99225 1 12.0674 1H1189.93C1196.01 1 1200.93 5.92487 1200.93 12V51H1.06738V12Z"
-          className="fill-white dark:fill-[#262626]" />
+          className="fill-[#FFFCEC] dark:fill-[#262626]" />
         <circle cx="27" cy="25" r="6" className="fill-[#E5E5E5] dark:fill-[#404040]" />
         <circle cx="47" cy="25" r="6" className="fill-[#E5E5E5] dark:fill-[#404040]" />
         <circle cx="67" cy="25" r="6" className="fill-[#E5E5E5] dark:fill-[#404040]" />
@@ -135,12 +135,12 @@ export function Safari({
       </g>
       <defs>
         <clipPath id="path0">
-          <rect width={width} height={height} fill="white" />
+          <rect width={width} height={height} fill="[#FFFCEC]" />
         </clipPath>
         <clipPath id="roundedBottom">
           <path
             d={`M1 52H${width - 1}V${height - 12}C${width - 1} ${height - 5.925} ${width - 6.08} ${height} ${width - 12} ${height}H12C5.92486 ${height} 1 ${height - 5.925} 1 ${height - 12}V52Z`}
-            fill="white" />
+            fill="[#FFFCEC]" />
         </clipPath>
       </defs>
     </svg>

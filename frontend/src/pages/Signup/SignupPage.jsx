@@ -65,11 +65,11 @@ export function SignupPage() {
 
   return (
     <>
-      <div className="w-screen h-screen flex items-center justify-center background">
+      <div className="w-screen h-screen flex items-center justify-center bg-[#0A2243]">
         <div className="max-w-3xl w-full relative">
           <div className="absolute -left-2 -top-2 w-full h-full border rounded-xl bg-[#AEE938] -z-10"></div>
 
-        <Card style={{ boxShadow: 'rgba(0, 0, 0, 1) 10px 10px' }}>
+        <Card style={{ boxShadow: '#FFD300 10px 10px' }}>
           <CardHeader>
             <CardTitle>Create an account</CardTitle>
             <CardDescription>
@@ -158,6 +158,7 @@ export function SignupPage() {
                       id="submit"
                       type="submit"
                       value="Submit"
+                      className='bg-[#FFD300] text-[#0A2243] hover:bg-[#0A2243] hover:text-[#FFD300]'
                     >
                       Create Account
                     </Button>

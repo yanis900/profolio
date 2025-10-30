@@ -108,11 +108,11 @@ export function AddProjectButton(props) {
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline">
+          <Button variant="outline" className='text-[#0A2243] hover:bg-[#FFD300]'>
             <Plus />
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-4xl">
           <DialogHeader>
             <DialogTitle>Add Project</DialogTitle>
             <DialogDescription>
@@ -120,7 +120,7 @@ export function AddProjectButton(props) {
               you&apos;re done.
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4">
+          <div className="grid grid-cols-2 gap-6">
             <div className="grid gap-3">
               <Label htmlFor="title">Title</Label>
               <Input

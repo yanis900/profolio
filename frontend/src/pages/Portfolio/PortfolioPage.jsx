@@ -6,7 +6,6 @@ import {
   getUserBySlug,
 } from "../../services/user";
 import { TabsDemo } from "@/components/TabsDemo";
-import BackButton from "@/components/BackButton";
 import { UserView } from "@/components/UserView";
 import { updateViewCount } from "@/services/analytics";
 import { getViewCount } from "@/services/analytics";
@@ -94,19 +93,11 @@ export function PortfolioPage() {
     <>
     <PublicNavbar />
     <div className="home px-6 pt-15 pb-1"> </div> 
-    <div className="w-screen h-screen flex flex-col gap-8 p-6">
+    <div className="w-screen h-screen flex flex-col gap-8 p-6 bg-[#FFFCEC]">
     <div className="flex items-center justify-between">
-      <div className="flex items-center gap-2">
-        <BackButton />
-      </div>
-
-      <h2 className="text-center text-3xl font-bold tracking-tight text-balance flex-1">
+      <h2 className="text-center text-3xl font-bold tracking-tight text-balance mt-3 flex-1 text-[#0A2243] leading-tight">
         {isOwner ? "My Portfolio" : `${user?.firstname}'s Portfolio`}
       </h2>
-
-      <div className="flex items-center gap-2">
-        {/* Right buttons, e.g., Logout */}
-      </div>
     </div>
       <div className="flex gap-5">
         <div className="w-[31vw]">

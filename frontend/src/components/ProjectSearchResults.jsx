@@ -37,7 +37,7 @@ export function ProjectSearchResults({ results }) {
           {results.map((project) => (
             <Card
               key={project.project._id}
-              className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-purple-500"
+              className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-[#FFD300]"
               onClick={() => handleUserClick(project)}
 
             >
@@ -54,7 +54,7 @@ export function ProjectSearchResults({ results }) {
                     <img
                       src={project.project.thumbnail}
                       alt={project.project.title}
-                      className="w-30 h-30 rounded-xl border-2 border-purple-300 object-cover"
+                      className="w-30 h-30 rounded-xl object-cover"
                     />
 
                     {/* Project Info */}
