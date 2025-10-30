@@ -27,7 +27,7 @@ import { GithubContributions } from "./GithubContributions";
 export function UserView(props) {
   return (
     props.user && (
-      <Card className="rounded-xl max-w-lg">
+      <Card className="rounded-xl">
         <CardHeader>
           <CardTitle>
             <div className="flex items-center space-x-4">
