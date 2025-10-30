@@ -10,6 +10,7 @@ import { CardAction } from "./ui/card";
 import { capitalise } from "../utils/capitalise";
 import {
   AppWindow,
+  Briefcase,
   ChevronRight,
   Github,
   Linkedin,
@@ -50,9 +51,11 @@ export function UserView(props) {
           <CardDescription>
             <div className="mt-6 space-y-6 text-left">
               {props.user.opentowork ? (
-                <Badge variant={"outline"} className="border-2 border-blue-500">
-                  open to work
-                </Badge>
+                  
+                  <p className="flex gap-2 items-center">
+                <Briefcase />
+                Open to Work
+              </p>
               ) : (
                 ""
               )}

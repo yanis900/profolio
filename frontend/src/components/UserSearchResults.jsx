@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { capitalise } from "../utils/capitalise";
-import { MapPin } from "lucide-react";
+import { Briefcase, MapPin } from "lucide-react";
 
 export function UserSearchResults({ results, handleUserClick }) {
   return (
@@ -47,12 +47,10 @@ export function UserSearchResults({ results, handleUserClick }) {
 
                       <div className="flex gap-2 mt-2 items-center flex-wrap">
                         {user.opentowork && (
-                          <Badge
-                            variant="outline"
-                            className="border-2 border-blue-500 text-blue-600"
-                          >
-                            Open to work
-                          </Badge>
+                          <p className="flex gap-2 items-center text-sm text-muted-foreground">
+                            <Briefcase size={14} />
+                            Open to Work
+                          </p>
                         )}
                         {user.location && (
                           <span className="text-sm text-muted-foreground flex items-center gap-1">
