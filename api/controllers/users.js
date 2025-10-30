@@ -200,8 +200,8 @@ async function getUserBadge(req, res) {
     const totalEmails = user.analytics.emails.length;
     const badges = [];
 
+    if (totalViews >= 50) badges.push("50_views");
     if (totalViews >= 100) badges.push("100_views");
-    if (totalViews >= 200) badges.push("200_views");
     if (totalEmails >= 10) badges.push("10_emails");
     if (user.projects.length >= 5) badges.push("5_projects");
     if (user.cv) badges.push("cv_uploaded");

@@ -108,8 +108,8 @@ export function PortfolioPage() {
         {/* Right buttons, e.g., Logout */}
       </div>
     </div>
-      <div className="flex gap-6">
-        <div className="w-1/3">
+      <div className="flex gap-5">
+        <div className="w-[31vw]">
           <UserView
             user={user}
             refreshUser={refreshUser}
