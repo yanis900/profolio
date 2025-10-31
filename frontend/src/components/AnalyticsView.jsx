@@ -15,7 +15,7 @@ export function AnalyticsView(props) {
   console.log(props.views)
     return (
         <TabsContent value="analytics">
-          <Card className="rounded-tl-none">
+          <Card className="rounded-tl-none" style={{ boxShadow: '#0A2243 10px 10px' }}>
             <CardHeader>
               <CardTitle></CardTitle>
               <CardDescription></CardDescription>

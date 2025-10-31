@@ -59,7 +59,7 @@ function getStateConfig(state) {
 export function ProjectsView(props) {
   return (
     <TabsContent value="portfolio">
-      <Card className="rounded-tl-none">
+      <Card className="rounded-tl-none" style={{ boxShadow: '#0A2243 10px 10px' }}>
         <CardHeader>
           <CardTitle>
             <div className="flex gap-3 items-center justify-start">
