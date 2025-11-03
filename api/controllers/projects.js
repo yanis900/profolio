@@ -48,7 +48,6 @@ async function deleteProject(req, res) {
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
-  console.log(user.projects);
   res.status(200).json({
     project: user.projects,
     message: "Project deleted successfully!",
@@ -82,7 +81,6 @@ async function editProject(req, res) {
     return res.status(404).json({ message: "User not found" });
   }
 
-  console.log(user.projects);
   res.status(200).json({
     project: user.projects,
     message: "Project edited successfully!",
@@ -91,22 +89,21 @@ async function editProject(req, res) {
 
 async function getProjectByTags(req, res) {
   const tags = req.query.tags.split(",");
-  console.log(tags)
-const projects = await User.aggregate([
-  { $match: { visibility: true } },           // only visible users
-  { $unwind: "$projects" },                   // flatten the projects array
-  { $match: { "projects.tags": { $in: tags } } }, // keep only projects with tags
-  {
-    $project: {
-      _id: 0,
-      userId: "$_id",
-      firstname: 1,
-      lastname: 1,
-      email: 1,
-      project: "$projects"
-    }
-  }
-]);
+  const projects = await User.aggregate([
+    { $match: { visibility: true } }, // only visible users
+    { $unwind: "$projects" }, // flatten the projects array
+    { $match: { "projects.tags": { $in: tags } } }, // keep only projects with tags
+    {
+      $project: {
+        _id: 0,
+        userId: "$_id",
+        firstname: 1,
+        lastname: 1,
+        email: 1,
+        project: "$projects",
+      },
+    },
+  ]);
   if (projects.length === 0) {
     return res.status(404).json({ message: "No project found with this tag" });
   }
@@ -115,10 +112,10 @@ const projects = await User.aggregate([
 }
 
 const ProjectsController = {
-  createProject: createProject,
-  deleteProject: deleteProject,
-  editProject: editProject,
-    getProjectByTags: getProjectByTags,
+  createProject,
+  deleteProject,
+  editProject,
+  getProjectByTags,
 };
 
 module.exports = ProjectsController;

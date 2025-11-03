@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getUserByName } from "../../services/user";
 import { getProjectByTags } from "../../services/projects";
 import { SearchForm } from "../../components/SearchForm";
-import BackButton from "../../components/BackButton";
 import LogoutButton from "../../components/LogoutButton";
 import { PublicNavbar } from "../../components/PublicNavbar";
 import { UserSearchResults } from "../../components/UserSearchResults";
@@ -50,7 +49,6 @@ export function SearchPage() {
       navigate("/search");
       getProjectByTags(selectedTags)
         .then((data) => {
-          console.log(data.projects);
           setTagResults(data.projects);
         })
         .catch((error) => {

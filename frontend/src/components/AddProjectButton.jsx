@@ -58,9 +58,7 @@ export function AddProjectButton(props) {
       const image = files[0];
       const formData = new FormData();
       formData.append("image", image);
-
       await uploadThumbnail(token, projectId, formData);
-      console.log("Thumbnail uploaded successfully!");
     } catch (err) {
       console.error("Error uploading thumbnail:", err);
     }
@@ -69,7 +67,6 @@ export function AddProjectButton(props) {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      console.log("heeloo");
       const project = {
         title: title,
         description: description,
@@ -77,9 +74,7 @@ export function AddProjectButton(props) {
         tags: selectedTags,
         states: selectedState,
       };
-      console.log("project", project);
 
-      // console.log(props?.project?._id ?? 'no project id');
       const data = await createProject(token, project);
       await handleThumbnailUpload(data.project._id);
       toast.success("Project Added successfully");

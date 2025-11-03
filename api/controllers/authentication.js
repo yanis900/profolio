@@ -12,17 +12,15 @@ async function createToken(req, res) {
   } else if (user.password !== password) {
     console.log("Auth Error: Passwords do not match");
     res.status(401).json({ message: "Password incorrect" });
-  } else if (user.email === 'admin@profolio'){
-    const token = generateToken(user.id, true);
-    res.status(201).json({ token: token, message: "OK" });
   } else {
     const token = generateToken(user.id);
+    console.log("Auth Success: Login successful");
     res.status(201).json({ token: token, message: "OK" });
   }
 }
 
 const AuthenticationController = {
-  createToken: createToken,
+  createToken,
 };
 
 module.exports = AuthenticationController;

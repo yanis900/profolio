@@ -35,7 +35,6 @@ export function EditProfilePictureButton(props) {
   }
 
   const handleDrop = (files) => {
-    console.log(files);
     setFiles(files);
     if (files.length > 0) {
       const reader = new FileReader();
@@ -52,7 +51,6 @@ export function EditProfilePictureButton(props) {
     event.preventDefault();
     try {
       const file = files?.[0];
-      console.log(file)
       if (!file) return;
 
       const formData = new FormData();

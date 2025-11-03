@@ -1,5 +1,4 @@
 const User = require("../models/user");
-const { link, get } = require("../routes/users");
 const { Resend } = require("resend");
 const { EmailUser } = require("../emails/email-user.js");
 const { render } = require("@react-email/render");
@@ -32,7 +31,7 @@ async function editUser(req, res) {
   const opentowork = req.body.opentowork;
   const location = req.body.location;
   const links = req.body.links;
-  const github = req.body.github
+  const github = req.body.github;
 
   const user = await User.findOneAndUpdate(
     { _id: userId },
@@ -45,12 +44,12 @@ async function editUser(req, res) {
         opentowork: opentowork,
         location: location,
         links: links,
-        github: github
+        github: github,
       },
     },
     { new: true }
   );
-  console.log(user);
+
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
@@ -62,13 +61,13 @@ async function editUser(req, res) {
 
 async function getUserById(req, res) {
   const userId = req.user_id;
-  console.log(userId);
+
   if (!userId) {
     return res.status(401).json({ message: "Not authenticated" });
   }
 
   const user = await User.findById(userId).select("-password");
-  console.log(user);
+  
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
@@ -94,35 +93,8 @@ async function getUserByEmail(req, res) {
 }
 
 async function getUserBySlug(req, res) {
-  const slug = req.params.slug;
-  if (!slug) {
-    return res.status(401).json({ message: "Not authenticated" });
-  }
-  const query = slug.split("-");
-  const partialId = query[2].slice(-6);
-
-  const user = await User.findOne({
-    $and: [
-      { firstname: { $regex: query[0], $options: "i" } },
-      { lastname: { $regex: query[1], $options: "i" } },
-      {
-        $expr: {
-          $regexMatch: { input: { $toString: "$_id" }, regex: `${partialId}$` },
-        },
-      },
-    ],
-  }).select("-password");
-
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-
-  if (query[2].length === 6 && user.id.endsWith(query[2])) {
-    res.status(200).json({ user: user });
-
-  } else {
-    return res.status(404).json({ message: "Id doesn't match" });
-  }
+  const user = req.user;
+  res.status(200).json({ user: user });
 }
 
 async function getUserByName(req, res) {
@@ -168,34 +140,9 @@ async function toggleVisibility(req, res) {
   }
 }
 
-
 async function getUserBadge(req, res) {
-  const slug = req.params.slug;
-    try {
-
-  if (!slug) {
-    return res.status(401).json({ message: "Not authenticated" });
-  }
-  const query = slug.split("-");
-  const partialId = query[2].slice(-6);
-
-  const user = await User.findOne({
-    $and: [
-      { firstname: { $regex: query[0], $options: "i" } },
-      { lastname: { $regex: query[1], $options: "i" } },
-      {
-        $expr: {
-          $regexMatch: { input: { $toString: "$_id" }, regex: `${partialId}$` },
-        },
-      },
-    ],
-  }).select("-password");
-
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-  
-    // Compute badges on the fly
+  const user = req.user;
+  try {
     const totalViews = user.analytics.views.length;
     const totalEmails = user.analytics.emails.length;
     const badges = [];
@@ -206,7 +153,6 @@ async function getUserBadge(req, res) {
     if (user.projects.length >= 5) badges.push("5_projects");
     if (user.cv) badges.push("cv_uploaded");
 
-    // Return badges
     res.status(200).json({ badges });
   } catch (error) {
     console.error(error);
@@ -214,33 +160,10 @@ async function getUserBadge(req, res) {
   }
 }
 
-    async function sendEmail(req, res) {
+async function sendEmail(req, res) {
   try {
-    const slug = req.params.slug;
-    const { name, subject, message } = req.body
-    
-    if (!slug) {
-      return res.status(404).json({ message: "Portfolio does not exist" });
-    }
-
-    const query = slug.split("-");
-    const partialId = query[2]?.slice(-6);
-
-    const user = await User.findOne({
-      $and: [
-        { firstname: { $regex: query[0], $options: "i" } },
-        { lastname: { $regex: query[1], $options: "i" } },
-        {
-          $expr: {
-            $regexMatch: { input: { $toString: "$_id" }, regex: `${partialId}$` },
-          },
-        },
-      ],
-    }).select("-password");
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    const user = req.user;
+    const { name, subject, message } = req.body;
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -251,7 +174,7 @@ async function getUserBadge(req, res) {
     };
 
     const emailHtml = render(EmailUser({ user, email: emailData }));
-    const data = await emailHtml
+    const data = await emailHtml;
 
     await resend.emails.send({
       from: "noreply@yanait.com",
@@ -267,17 +190,16 @@ async function getUserBadge(req, res) {
   }
 }
 
-
 const UsersController = {
-  create: create,
-  editUser: editUser,
-  getUserById: getUserById,
-  getUserBySlug: getUserBySlug,
-  getUserByEmail: getUserByEmail,
-  getUserByName: getUserByName,
-  toggleVisibility: toggleVisibility,
-  getUserBadge: getUserBadge,
-  sendEmail: sendEmail
+  create,
+  editUser,
+  getUserById,
+  getUserBySlug,
+  getUserByEmail,
+  getUserByName,
+  toggleVisibility,
+  getUserBadge,
+  sendEmail,
 };
 
 module.exports = UsersController;

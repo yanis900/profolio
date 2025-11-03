@@ -36,8 +36,6 @@ export function SendEmailButton() {
         subject,
         message
       };
-      console.log(emailData)
-      console.log(userSlug)
       await sendEmail(userSlug , emailData);
       await updateEmailCount(token, userSlug)
       toast.success('Email sent successfully')

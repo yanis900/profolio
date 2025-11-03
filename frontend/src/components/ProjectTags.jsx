@@ -47,17 +47,12 @@ export function ProjectTags({ selectedTags, setSelectedTags }) {
   };
 
   const handleSelect = (value) => {
-    console.log('handleSelect called with:', value);
-    console.log('Current selectedTags:', selectedTags);
     if (selectedTags.includes(value)) {
-      console.log('Tag already selected, removing...');
       handleRemove(value);
       return;
     }
-    console.log('Adding tag...');
     setSelectedTags((prev) => {
       const newTags = [...prev, value];
-      console.log('New tags:', newTags);
       return newTags;
     });
   };
