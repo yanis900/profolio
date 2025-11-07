@@ -8,6 +8,7 @@ const authenticationRouter = require("./routes/authentication");
 const uploadRouter = require("./routes/upload");
 const analyticsRouter = require("./routes/analytics");
 const tokenChecker = require("./middleware/tokenChecker");
+const optionalTokenChecker = require("./middleware/optionalTokenChecker");
 
 
 const app = express();
@@ -26,7 +27,7 @@ app.use("/projects", projectsRouter);
 app.use("/users", usersRouter);
 app.use("/tokens", authenticationRouter);
 app.use("/upload", tokenChecker, uploadRouter);
-app.use("/analytics", tokenChecker, analyticsRouter);
+app.use("/analytics", optionalTokenChecker, analyticsRouter);
 
 // 404 Handler
 app.use((_req, res) => {

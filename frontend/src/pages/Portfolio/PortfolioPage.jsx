@@ -36,7 +36,10 @@ export function PortfolioPage() {
       .catch((err) => {
         console.error(err);
       });
-
+    updateViewCount(token, userSlug)
+      .catch((err) => {
+      console.error(err);
+    });
     if (loggedIn) {
       getUserById(token)
         .then((data) => {
@@ -45,10 +48,7 @@ export function PortfolioPage() {
         .catch((err) => {
           console.error(err);
         });
-      updateViewCount(token, userSlug)
-        .catch((err) => {
-          console.error(err);
-        });
+
       getViewCount(token, userSlug)
         .then((data) => {
           setViews(data);
@@ -56,13 +56,13 @@ export function PortfolioPage() {
         .catch((err) => {
           console.error(err);
         });
-        getEmailCount(token, userSlug)
+      getEmailCount(token, userSlug)
         .then((data) => {
-          setEmails(data)
+          setEmails(data);
         })
         .catch((err) => {
           console.error(err);
-        })
+        });
     }
   }, [userSlug]);
 
@@ -88,36 +88,36 @@ export function PortfolioPage() {
 
   return (
     <>
-    <PublicNavbar />
-    <div className="home px-6 pt-15 pb-1"> </div> 
-    <div className="w-screen min-h-screen flex flex-col gap-8 p-6 bg-[#FFFCEC]">
-    <div className="flex items-center justify-between">
-      <h2 className="text-center text-3xl font-bold tracking-tight text-balance mt-3 flex-1 text-[#0A2243] leading-tight">
-        {isOwner ? "My Portfolio" : `${user?.firstname}'s Portfolio`}
-      </h2>
-    </div>
-      <div className="flex gap-5">
-        <div className="w-[31vw]">
-          <UserView
-            user={user}
-            refreshUser={refreshUser}
-            isOwner={isOwner}
-            contributions={contributions}
-            token={token}
-          />
+      <PublicNavbar />
+      <div className="home px-6 pt-15 pb-1"> </div>
+      <div className="w-screen min-h-screen flex flex-col gap-8 p-6 bg-[#FFFCEC]">
+        <div className="flex items-center justify-between">
+          <h2 className="text-center text-3xl font-bold tracking-tight text-balance mt-3 flex-1 text-[#0A2243] leading-tight">
+            {isOwner ? "My Portfolio" : `${user?.firstname}'s Portfolio`}
+          </h2>
         </div>
-        <div className="w-2/3">
-          <TabsDemo
-            user={user}
-            projects={user?.projects}
-            views={views}
-            emails={emails}
-            refreshUser={refreshUser}
-            isOwner={isOwner}
-          />
+        <div className="flex gap-5">
+          <div className="w-[31vw]">
+            <UserView
+              user={user}
+              refreshUser={refreshUser}
+              isOwner={isOwner}
+              contributions={contributions}
+              token={token}
+            />
+          </div>
+          <div className="w-2/3">
+            <TabsDemo
+              user={user}
+              projects={user?.projects}
+              views={views}
+              emails={emails}
+              refreshUser={refreshUser}
+              isOwner={isOwner}
+            />
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 }
