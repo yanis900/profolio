@@ -3,6 +3,7 @@ import { PublicNavbar } from "../../components/PublicNavbar";
 import { Hero } from "@/components/Hero";
 import { useEffect, useState } from "react";
 import { getUserById } from "@/services/user";
+import { Footer } from "@/components/Footer";
 
 export function HomePage() {
     const [me, setMe] = useState(null);
@@ -118,6 +119,7 @@ export function HomePage() {
             </div>
           </div>
         </section>
+        <Footer />
       </div>
     </>
   );
