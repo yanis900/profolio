@@ -1,7 +1,8 @@
 import { AddProjectButton } from "./AddProjectButton";
 import { EditProjectButton } from "./EditProjectButton";
 import { DeleteProjectButton } from "./DeleteProjectButton";
-import { AppWindow, Folder, Github, Loader2, CheckCircle2, Rocket } from "lucide-react";
+import { Folder, Loader2, CheckCircle2, Rocket
+ } from "lucide-react";
 import { TabsContent } from "./ui/tabs";
 import {
   Card,
@@ -14,6 +15,8 @@ import {
 } from "./ui/card";
 import { NoProjects } from "./NoProjects";
 import { Button } from "./ui/button";
+import { ImageZoom } from "./ui/shadcn-io/image-zoom";
+import { Badge } from "./ui/badge";
 
 function getStateConfig(state) {
   switch (state) {
@@ -24,7 +27,7 @@ function getStateConfig(state) {
         textColor: "text-blue-700",
         ringColor: "ring-blue-700/10",
         shadowColor: "#FFD300",
-        label: "In Progress"
+        label: "In Progress",
       };
     case "Completed (Not Deployed)":
       return {
@@ -33,7 +36,7 @@ function getStateConfig(state) {
         textColor: "text-green-700",
         ringColor: "ring-green-700/10",
         shadowColor: "#3B82F6",
-        label: "Completed (Not Deployed)"
+        label: "Completed (Not Deployed)",
       };
     case "Completed & Deployed":
       return {
@@ -42,7 +45,7 @@ function getStateConfig(state) {
         textColor: "text-purple-700",
         ringColor: "ring-purple-700/10",
         shadowColor: "#10B981",
-        label: "Completed & Deployed"
+        label: "Completed & Deployed",
       };
     default:
       return {
@@ -51,7 +54,7 @@ function getStateConfig(state) {
         textColor: "text-gray-700",
         ringColor: "ring-gray-700/10",
         shadowColor: "#6B7280",
-        label: state
+        label: state,
       };
   }
 }
@@ -59,7 +62,10 @@ function getStateConfig(state) {
 export function ProjectsView(props) {
   return (
     <TabsContent value="portfolio">
-      <Card className="rounded-tl-none" style={{ boxShadow: '#0A2243 10px 10px' }}>
+      <Card
+        className="rounded-tl-none"
+        style={{ boxShadow: "#0A2243 10px 10px" }}
+      >
         <CardHeader>
           <CardTitle>
             <div className="flex gap-3 items-center justify-start">
@@ -74,7 +80,7 @@ export function ProjectsView(props) {
             </CardAction>
           )}
         </CardHeader>
-        <CardContent className="grid gap-6">
+        <CardContent className="grid grid-cols-3 gap-6">
           {props.projects && props.projects.length !== 0 ? (
             props.projects.map((project) => {
               const stateConfig = getStateConfig(project.states);
@@ -83,74 +89,75 @@ export function ProjectsView(props) {
                   <Card
                     key={project._id}
                     style={{
-                      boxShadow: '#0A2243 10px 10px',
+                      boxShadow: "#0A2243 10px 10px",
                       // borderLeft: `4px solid ${stateConfig.shadowColor}`,
                       // borderTop: `4px solid ${stateConfig.shadowColor}`
                     }}
+                    className="pt-0 overflow-hidden"
                   >
-                    <CardHeader>
-                      <div className="flex gap-3">
-                        <img
-                          width={150}
-                          height={150}
-                          src={project.thumbnail}
-                          // alt={project.title}
-                          className="w-32 h-32 rounded-xl border object-cover"
-                        />
-                        <div className="text-left space-y-1">
-                          <CardTitle>{project.title}</CardTitle>
-                          <CardDescription>
-                            {project.description}
-                          </CardDescription>
-                          {project.states && (
-                            <div className="pt-2">
-                              <span
-                                className={`inline-flex items-center gap-1 rounded-md ${stateConfig.bgColor} px-2 py-1 text-xs font-medium ${stateConfig.textColor} ring-1 ring-inset ${stateConfig.ringColor}`}
-                              >
-                                <stateConfig.icon className="w-3 h-3" />
-                                {stateConfig.label}
-                              </span>
-                            </div>
-                          )}
-                          {project.tags && project.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-1 pt-2">
-                              {project.tags.map((tag, index) => (
-                                <span
-                                  key={index}
-                                  className="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10"
-                                >
-                                  {tag}
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                          <div className="space-x-2">
-                            <Button size={"icon"} variant={"link"}>
-                              <a href={project.links[0]}>
-                                <Github />
-                              </a>
-                            </Button>
-                            <Button size={"icon"} variant={"link"}>
-                              <a href={project.links[1]}>
-                                <AppWindow />
-                              </a>
-                            </Button>
-                          </div>
+                      <ImageZoom>
+                      <img
+                        width={150}
+                        height={150}
+                        src={project.thumbnail}
+                        // alt={project.title}
+                        className="w-full object-cover h-[200px] object-center"
+                      />
+                      </ImageZoom>
+
+                    {/* <div className="flex gap-3"> */}
+                    {/* <div className="text-left space-y-1"> */}
+                    <CardContent className="text-left space-y-2">
+                      <CardTitle>{project.title}</CardTitle>
+                      {project.states && (
+                        <div className="pt-2">
+                          <span
+                            className={`inline-flex items-center gap-1 rounded-md ${stateConfig.bgColor} px-2 py-1 text-xs font-medium ${stateConfig.textColor} ring-1 ring-inset ${stateConfig.ringColor}`}
+                          >
+                            <stateConfig.icon className="w-3 h-3" />
+                            {stateConfig.label}
+                          </span>
                         </div>
-                      </div>
-                      {props.isOwner && (
-                        <CardAction className="flex gap-2">
-                          <EditProjectButton
-                            project={project}
-                            refreshUser={props.refreshUser}
-                          />
-                          <DeleteProjectButton
-                            project={project}
-                            refreshUser={props.refreshUser}
-                          />
-                        </CardAction>
                       )}
-                    </CardHeader>
+                      {project.tags && project.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 pt-2">
+                          {project.tags.map((tag, index) => (
+                            <Badge key={index} variant={"secondary"}>
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                      <CardDescription>{project.description}</CardDescription>
+                      <div className="space-x-2">
+                        <Button variant={"outline"}>
+                          <a href={project.links[0]}>Github</a>
+                        </Button>
+                        <Button>
+                          <a
+                            href={project.links[1]}
+                            className="flex items-center gap-1 text-"
+                          >
+                            Live Demo
+                          </a>
+                        </Button>
+                      </div>
+                    {props.isOwner && (
+                      <CardAction className="flex gap-2">
+                        <EditProjectButton
+                          project={project}
+                          refreshUser={props.refreshUser}
+                        />
+                        <DeleteProjectButton
+                          project={project}
+                          refreshUser={props.refreshUser}
+                        />
+                      </CardAction>
+                    )}
+                    </CardContent>
+
+                    {/* </div> */}
+                    {/* </div> */}
                   </Card>
                 </>
               );

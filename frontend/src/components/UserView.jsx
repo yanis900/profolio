@@ -27,16 +27,23 @@ import { GithubContributions } from "./GithubContributions";
 export function UserView(props) {
   return (
     props.user && (
-      <Card className="rounded-xl" style={{ boxShadow: '#0A2243 10px 10px' }}>
+      <Card className="rounded-xl" style={{ boxShadow: "#0A2243 10px 10px" }}>
         <CardHeader>
           <CardTitle>
             <div className="flex items-center space-x-4">
-              <div className="w-[170px] h-[170px] rounded-full border overflow-hidden">
-                <img
-                  src={props.user.image}
-                  alt=""
-                  className="w-full h-full object-cover"
-                />
+              <div className="w-[170px] h-[170px] rounded-full border overflow-hidden relative">
+                {props.isOwner ? (
+                  <EditProfilePictureButton
+                    user={props.user}
+                    refreshUser={props.refreshUser}
+                    />
+                ) : (
+                  <img
+                    src={props.user.image}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
+                )}
               </div>
               <div className="text-left">
                 <h3 className="text-xl">
@@ -50,11 +57,10 @@ export function UserView(props) {
           <CardDescription>
             <div className="mt-6 space-y-6 text-left">
               {props.user.opentowork ? (
-                  
-                  <p className="flex gap-2 items-center">
-                <Briefcase />
-                Open to Work
-              </p>
+                <p className="flex gap-2 items-center">
+                  <Briefcase />
+                  Open to Work
+                </p>
               ) : (
                 ""
               )}
@@ -69,8 +75,6 @@ export function UserView(props) {
                     Github Contributions:
                     <GithubContributions contributions={props.contributions} />
                   </div>
-                  
-
                 ) : (
                   ""
                 )}
@@ -78,15 +82,9 @@ export function UserView(props) {
             </div>
           </CardDescription>
           {props.isOwner && (
-            <CardAction className={"grid grid-cols-2 gap-2 -ml-25"}>
-              <EditProfilePictureButton
-                user={props.user}
-                refreshUser={props.refreshUser}
-              />
+            <CardAction className='flex gap-2'>
               <EditUserButton user={props.user} />
-              <div className="col-start-2 -mt-1">
                 <EditCvButton refreshUser={props.refreshUser} />
-              </div>
             </CardAction>
           )}
         </CardHeader>
