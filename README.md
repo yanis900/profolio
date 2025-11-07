@@ -11,6 +11,8 @@ A backend API server (using Node.js, Express, and MongoDB)
 These two applications communicate through HTTP requests and need to be run separately.
 
 ## Project Structure
+
+```
 ProFolioSept2025/
 ├── profolio/
 │   ├── api/                    # Backend API
@@ -46,11 +48,12 @@ ProFolioSept2025/
 │       └── package.json
 │
 └── README.md
+```
 
 ## Documentation
 
 ## Architecture
-
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │                         USER BROWSER                            │
 │                   (http://localhost:5173)                       │
@@ -129,7 +132,7 @@ ProFolioSept2025/
 │                      AWS S3 STORAGE                             │
 │  • Profile Images  • CVs/Resumes  • Project Thumbnails          │
 └─────────────────────────────────────────────────────────────────┘
-
+```
 ## Data Flow
 1. **User Request** → Frontend sends HTTP request to backend API
 2. **Authentication** → JWT token validated by middleware
@@ -192,9 +195,6 @@ ProFolioSept2025/
 - `404` - Not Found
 - `500` - Server Error
 
-## Card wall
-* Trello Board: https://trello.com/b/jagXZiO1/profolio
-
 ## Key Features
 # Authentication
 - JWT-based authentication with 365-day token expiration (suitable for development)
@@ -243,19 +243,21 @@ ProFolioSept2025/
 If you haven't already, make sure you have node and NVM installed.
 
 1. Install Node Version Manager (NVM)
-
+```
 Bash:
 
 brew install nvm
 Then follow the instructions to update your ~/.zshrc.
+```
 
 2. Open a new terminal
 
 3. Install the latest version of Node.js, (20.5.0 at time of writing).
-
+```
 Bash:
 
 nvm install 20
+```
 
 ## Set up your project
 1. Have one team member fork this repository
@@ -265,30 +267,33 @@ nvm install 20
 3. Every team member clone the fork to their local machine
 
 4. Install dependencies for both the frontend and api applications:
-
+```
 Bash:
 
 cd frontend
 npm install
 cd ../api
 npm install
+```
 
 5. Install an ESLint plugin for your editor, for example ESLint for VSCode
 
 6. Install MongoDB
-
+```
 Bash:
 
 brew tap mongodb/brew
 brew install mongodb-community@6.0
+```
 
 * Note: If you see a message that says If you need to have mongodb-community@6.0 first in your PATH, run:, follow the instruction. Restart your terminal after this.
 
 7. Start MongoDB
-
+```
 Bash:
 
 brew services start mongodb-community@6.0
+```
 
 ## Setting up environment variables
 We need to create two .env files, one in the frontend and one in the api.
@@ -309,20 +314,22 @@ JWT_SECRET="secret"
 
 ## How to run the server and use the app
 1. Start the server application (in the api directory) in dev mode:
-
+```
 Bash:
 
 cd api
 npm run dev
+```
 
 2. Start the front end application (in the frontend directory)
 
 In a new terminal session...
-
+```
 Bash
 
 cd frontend
 npm run dev
+```
 
 You should now be able to open your browser and go to http://localhost:5173/signup to create a new user.
 
