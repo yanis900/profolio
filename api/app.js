@@ -17,7 +17,26 @@ app.use(useragent.express());
 // Allow requests from any client
 // docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
 // docs: https://expressjs.com/en/resources/middleware/cors.html
-app.use(cors());
+
+// Your new allowed origins list
+const allowedOrigins = [
+  'https://profolio.uk',
+  'https://www.profolio.uk', // Good to add 'www' version too
+  'http://localhost:3000'   // Keep your local dev environment
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
+
+// Make sure you use the options
+app.use(cors(corsOptions));
 
 // Parse JSON request bodies, made available on `req.body`
 app.use(bodyParser.json());
