@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import "../../App.css";
+import { toast } from "sonner";
 
 export function LoginPage() {
   const [email, setEmail] = useState("");
@@ -28,6 +29,7 @@ export function LoginPage() {
     event.preventDefault();
     try {
       const token = await login(email, password);
+      console.log(token)
       const data = await getUserByEmail(email);
       localStorage.setItem("token", token);
       navigate(
@@ -36,7 +38,7 @@ export function LoginPage() {
         }-${data.user._id.slice(-6)}`
       );
     } catch (err) {
-      console.error(err);
+      toast.error(err.message);
       navigate("/login");
     }
   }

@@ -42,12 +42,11 @@ export async function editUser(token, user) {
     },
     body: JSON.stringify(user),
   };
-  console.log(user);
+
   let response = await fetch(`${BACKEND_URL}/users/edit`, requestOptions);
-  console.log(response);
+
   if (response.status === 200) {
     const data = await response.json();
-    console.log(data);
     return data;
   } else {
     throw new Error(
@@ -137,7 +136,7 @@ export async function getGithubContributions(username) {
 
   if (response.status === 200) {
     const data = await response.json();
-    console.log(data)
+
     return data.data.user.contributionsCollection.contributionCalendar
   } else {
     throw new Error(

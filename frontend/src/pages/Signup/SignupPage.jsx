@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import '../../App.css'
+import { toast } from "sonner";
 
 export function SignupPage() {
   const [firstname, setFirstname] = useState("");
@@ -34,12 +35,11 @@ export function SignupPage() {
       if (password !== confirmPassword) {
         throw new Error("Passwords Do Not Match");
       }
-
       validatePassword(password);
       await signup(firstname, lastname, email, password);
       navigate("/login");
     } catch (err) {
-      console.error(err);
+      toast.error(err.message);
       navigate("/signup");
     }
   }
@@ -111,10 +111,6 @@ export function SignupPage() {
                     onChange={handleEmailChange}
                     required
                   />
-                  <FieldDescription>
-                    {/* We&apos;ll use this to contact you. We will not share your
-                    email with anyone else. */}
-                  </FieldDescription>
                 </Field>
                 <Field>
                   <FieldLabel htmlFor="password">Password</FieldLabel>
@@ -128,12 +124,12 @@ export function SignupPage() {
                     maxLength={16}
                     required
                   />
-                  <FieldDescription className="grid">
-                    {/* <p>Minimum 8 characters, maximum 16 characters.</p>
+                  {/* <FieldDescription className="grid">
+                    <p>Minimum 8 characters, maximum 16 characters.</p>
                     <p>At least 1 capital letter.</p>
                     <p>At least 1 number.</p>
-                    <p>At least 1 special character.</p> */}
-                  </FieldDescription>
+                    <p>At least 1 special character.</p>
+                  </FieldDescription> */}
                 </Field>
                 <Field>
                   <FieldLabel htmlFor="confirm-password">

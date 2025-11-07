@@ -46,9 +46,6 @@ export function PortfolioPage() {
           console.error(err);
         });
       updateViewCount(token, userSlug)
-        .then((data) => {
-          console.log(data);
-        })
         .catch((err) => {
           console.error(err);
         });

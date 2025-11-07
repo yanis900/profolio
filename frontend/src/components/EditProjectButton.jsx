@@ -61,7 +61,6 @@ export function EditProjectButton(props) {
       formData.append("image", image);
 
       await uploadThumbnail(token, projectId, formData)
-      console.log("Thumbnail uploaded successfully!")
     } catch (err) {
       console.error("Error uploading thumbnail:", err)
     }
