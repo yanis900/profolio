@@ -2,6 +2,7 @@ const User = require("../models/user");
 
 async function updateViewCount(req, res) {
   const viewerId = req.user_id || req.ip;
+  console.log(viewerId)
   const user = req.user
 
   const deviceType = req.useragent.isMobile
