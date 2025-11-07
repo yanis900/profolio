@@ -11,7 +11,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { updateProfileImage } from "../services/upload";
-import { Camera } from "lucide-react";
 import {
   Dropzone,
   DropzoneContent,
@@ -56,9 +55,9 @@ export function EditProfilePictureButton(props) {
       const formData = new FormData();
       formData.append("image", file);
 
-    await updateProfileImage(token, formData); 
+      await updateProfileImage(token, formData);
       setImagePreview(null);
-      setFiles(null); 
+      setFiles(null);
       setOpen(false);
       props.refreshUser();
     } catch (err) {
@@ -70,16 +69,17 @@ export function EditProfilePictureButton(props) {
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline" className="flex flex-col gap-4 text-[#0A2243] hover:bg-[#FFD300]">
-            <Camera />
-          </Button>
+          <img
+            src={props.user.image}
+            alt=""
+            className="w-full h-full object-cover hover:opacity-30"
+          />
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Update Profile Picture</DialogTitle>
             <DialogDescription>
-              Add your profile picture. Click save when
-              you&apos;re done.
+              Add your profile picture. Click save when you&apos;re done.
             </DialogDescription>
           </DialogHeader>
           <div className="flex items-center justify-center gap-4">

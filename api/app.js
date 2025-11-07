@@ -21,6 +21,7 @@ app.use(useragent.express());
 // Your new allowed origins list
 const allowedOrigins = [
   'https://profolio.uk',
+  'http://localhost:5173',
   'https://www.profolio.uk', // Good to add 'www' version too
   'http://localhost:3000'   // Keep your local dev environment
 ];
