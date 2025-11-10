@@ -70,9 +70,11 @@ export function EditProfilePictureButton(props) {
       <form>
         <DialogTrigger asChild>
           <img
+           width={120}
+              height={120}
             src={props.user.image}
             alt=""
-            className="w-full h-full object-cover hover:opacity-30"
+            className="object-cover rounded-full hover:opacity-30"
           />
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">

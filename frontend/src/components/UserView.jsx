@@ -17,58 +17,82 @@ import {
   MapPin,
 } from "lucide-react";
 import { Button } from "./ui/button";
-import { EditUserButton } from "./EditUserButton";
 import { EditProfilePictureButton } from "./EditProfilePictureButton";
 import { SendEmailButton } from "./SendEmailButton";
-import { EditCvButton } from "./EditCvButton";
 import { UserBadge } from "./UserBadge";
 import { GithubContributions } from "./GithubContributions";
+import { EditProfileBannerButton } from "./EditProfileBannerButton";
+import { Badge } from "./ui/badge";
+import TestDropdown from "./TestDropdown";
 
 export function UserView(props) {
   return (
     props.user && (
-      <Card className="rounded-xl" style={{ boxShadow: "#0A2243 10px 10px" }}>
-        <CardHeader>
+      <Card
+        className="rounded-xl pt-0 overflow-hidden"
+        style={{ boxShadow: "#0A2243 10px 10px" }}
+      >
+        <div className="relative">
+          <div className=" h-20vh p-1">
+            {props.isOwner ? (
+              <EditProfileBannerButton
+                user={props.user}
+                refreshUser={props.refreshUser}
+              />
+            ) : (
+              <img
+                src={props.user.banner}
+                alt=""
+                className="w-full h-[200px] object-center rounded-t-lg"
+              />
+            )}
+            <TestDropdown user={props.user}/>
+          </div>
+          <div className="absolute -bottom-15 left-5 border p-0.5 rounded-full bg-white">
+            {props.isOwner ? (
+              <EditProfilePictureButton
+                user={props.user}
+                refreshUser={props.refreshUser}
+              />
+            ) : (
+              <img
+                width={120}
+                height={120}
+                src={props.user.image}
+                alt=""
+                className="object-cover rounded-full"
+              />
+            )}
+          </div>
+        </div>
+        <CardHeader className="mt-12 space-y-1">
           <CardTitle>
-            <div className="flex items-center space-x-4">
-              <div className="w-[170px] h-[170px] rounded-full border overflow-hidden relative">
-                {props.isOwner ? (
-                  <EditProfilePictureButton
-                    user={props.user}
-                    refreshUser={props.refreshUser}
-                    />
-                ) : (
-                  <img
-                    src={props.user.image}
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                )}
-              </div>
-              <div className="text-left">
-                <h3 className="text-xl">
-                  {capitalise(props.user.firstname)}{" "}
-                  {capitalise(props.user.lastname)}
-                </h3>
-                <p className="font-light">{capitalise(props.user.jobtitle)}</p>
-              </div>
+            <div className="text-left">
+              <h3 className="text-xl">
+                {capitalise(props.user.firstname)}{" "}
+                {capitalise(props.user.lastname)}
+              </h3>
+              <p className="font-light">{capitalise(props.user.jobtitle)}</p>
             </div>
           </CardTitle>
           <CardDescription>
-            <div className="mt-6 space-y-6 text-left">
+            <div className="space-y-2 text-left">
+              <p className="flex gap-1 items-center">
+                <MapPin className="w-5 h-5" />
+                {props.user.location}
+              </p>
               {props.user.opentowork ? (
-                <p className="flex gap-2 items-center">
-                  <Briefcase />
+                <Badge
+                  variant={"outline"}
+                  className="flex gap-2 items-center bg-[#FFD300]"
+                >
+                  <Briefcase className="w-5 h-5" />
                   Open to Work
-                </p>
+                </Badge>
               ) : (
                 ""
               )}
               <p>{props.user.bio}</p>
-              <p className="flex gap-1 items-center">
-                <MapPin />
-                {props.user.location}
-              </p>
               <div className="w-[460px] border-t border-gray-300 ">
                 {props.contributions ? (
                   <div className="flex flex-col gap-2 mt-5 -mb-5">
@@ -81,12 +105,6 @@ export function UserView(props) {
               </div>
             </div>
           </CardDescription>
-          {props.isOwner && (
-            <CardAction className='flex gap-2'>
-              <EditUserButton user={props.user} />
-                <EditCvButton refreshUser={props.refreshUser} />
-            </CardAction>
-          )}
         </CardHeader>
         <CardContent className="grid place-items-center gap-6">
           <div className="flex gap-3 mt-2">

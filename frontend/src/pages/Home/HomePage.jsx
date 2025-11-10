@@ -5,26 +5,25 @@ import { useEffect, useState } from "react";
 import { getUserById } from "@/services/user";
 
 export function HomePage() {
-    const [me, setMe] = useState(null);
-  
-    useEffect(() => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        getUserById(token)
-          .then((data) => setMe(data.user))
-          .catch(() => setMe(null));
-      } else {
-        setMe(null);
-      }
-    }, []);
-  
-    const isLoggedIn = !!me;
+  const [me, setMe] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      getUserById(token)
+        .then((data) => setMe(data.user))
+        .catch(() => setMe(null));
+    } else {
+      setMe(null);
+    }
+  }, []);
+
+  const isLoggedIn = !!me;
   return (
     <>
       <PublicNavbar />
       <div className="w-screen h-screen flex flex-col justify-center items-center bg-[#FFFCEC]">
-        {isLoggedIn ? '' : <Hero />}
-        
+        {isLoggedIn ? "" : <Hero />}
         <section className="bg-base-100 p-6 py-16 bg-[#FFFCEC] w-screen">
           <div className="-mx-6 space-y-4 overflow-scroll px-6">
             {/* Row 1 */}

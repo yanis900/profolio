@@ -73,6 +73,55 @@ async function uploadProfileImage(req, res) {
   }
 }
 
+async function uploadProfileBanner(req, res) {
+  try {
+    const userId = req.user_id;
+
+    const file = req.file;
+    if (!file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    if (!process.env.AWS_S3_BUCKET) {
+      return res.status(500).json({ message: "Server misconfigured" });
+    }
+
+    const key = `${userId}/profile-banner`;
+    const uploadParams = {
+      Bucket: process.env.AWS_S3_BUCKET,
+      Key: key,
+      Body: file.buffer,
+      ContentType: file.mimetype,
+    };
+
+    const parallelUpload = new Upload({
+      client: s3,
+      params: uploadParams,
+    });
+
+    const result = await parallelUpload.done();
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { banner: result.Location },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({
+      message: "Profile banner uploaded successfully!",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error uploading banner",
+      error: error.message,
+    });
+  }
+}
+
 async function uploadCV(req, res) {
   try {
     const userId = req.user_id;
@@ -182,6 +231,7 @@ async function uploadThumbnail(req, res) {
 const UploadController = {
   upload,
   uploadProfileImage,
+  uploadProfileBanner,
   uploadCV,
   uploadThumbnail,
 };

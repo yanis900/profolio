@@ -3,6 +3,7 @@ const router = express.Router();
 const UploadController = require("../controllers/upload");
 
 router.put("/profile-image", UploadController.upload.single("image"), UploadController.uploadProfileImage);
+router.put("/profile-banner", UploadController.upload.single("image"), UploadController.uploadProfileBanner);
 router.post("/cv", UploadController.upload.single("file"), UploadController.uploadCV);
 router.post("/thumbnail/:id", UploadController.upload.single("image"), UploadController.uploadThumbnail);
 
