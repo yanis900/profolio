@@ -23,6 +23,29 @@ export async function updateProfileImage(token, formData) {
   }
 }
 
+export async function updateProfileBanner(token, formData) {
+
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+    Authorization: `Bearer ${token}`,
+    },
+    body: formData
+  };
+
+  let response = await fetch(`${BACKEND_URL}/upload/profile-banner`, requestOptions);
+
+  if (response.status === 200) {
+    const data = await response.json()
+    console.log(data)
+    return data
+  } else {
+    throw new Error(
+      `Received status ${response.status} when uploading banner. Expected 200`
+    );
+  }
+}
+
 export async function uploadCV(token, formData) {
 
   const requestOptions = {

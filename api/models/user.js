@@ -17,6 +17,11 @@ const UserSchema = new mongoose.Schema({
     default:
       "https://profolio-project-dev-project-3.s3.eu-west-2.amazonaws.com/default+profile.png",
   },
+  banner: {
+    type: String,
+    default:
+      "https://framerusercontent.com/images/1gBFbUcTKBSH00veTJrErj8iJQ.jpg",
+  },
   cv: { type: String },
   projects: [
     {

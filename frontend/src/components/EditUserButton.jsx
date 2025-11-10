@@ -90,8 +90,9 @@ export function EditUserButton(props) {
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline" className="flex flex-col gap-4 text-[#0A2243] hover:bg-[#FFD300]">
-            <UserRoundPen />
+          <Button variant="ghost" className="gap-2">
+            <UserRoundPen className="h-4 w-4" />
+            <span>Edit Profile</span>
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">

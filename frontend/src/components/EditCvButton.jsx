@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { FileUser } from "lucide-react";
+import { FileText } from "lucide-react";
 import {
   Dropzone,
   DropzoneContent,
@@ -54,8 +54,9 @@ export function EditCvButton(props) {
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline" className="flex flex-col gap-4 text-[#0A2243] hover:bg-[#FFD300]">
-            <FileUser />
+          <Button variant="ghost" className="gap-2">
+            <FileText className="h-4 w-4" />
+            <span>Update CV</span>
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
