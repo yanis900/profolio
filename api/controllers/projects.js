@@ -21,6 +21,7 @@ async function createProject(req, res) {
           states: states,
         },
       },
+      $set: { lastUpdated: Date.now() },
     },
     { new: true }
   );
@@ -41,7 +42,11 @@ async function deleteProject(req, res) {
 
   const user = await User.findByIdAndUpdate(
     userId,
-    { $pull: { projects: { _id: projectId } } },
+    {
+      $pull: { projects: { _id: projectId } },
+      $set: { lastUpdated: Date.now() },
+    },
+
     { new: true }
   );
 
@@ -72,6 +77,7 @@ async function editProject(req, res) {
         "projects.$.links": links,
         "projects.$.tags": tags || [],
         "projects.$.states": states || "In Progress",
+        lastUpdated: Date.now(),
       },
     },
     { new: true }

@@ -50,9 +50,9 @@ export function VisibilitySwitch({ user, refreshUser }) {
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger className="flex items-center space-x-2 mr-2 p-2 rounded">
-        <Switch id="visibility" checked={isVisible} />
-        <Label htmlFor="visibility" className='text-[#0A2243]'>Visibility</Label>
+      <AlertDialogTrigger className="flex items-center space-x-2 mr-2 p-2 rounded cursor-pointer">
+        <Switch id="visibility" checked={isVisible} className='cursor-pointer' />
+        <Label htmlFor="visibility" className='text-[#0A2243] cursor-pointer'>Visibility</Label>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

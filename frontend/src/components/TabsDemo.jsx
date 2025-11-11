@@ -2,6 +2,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VisibilitySwitch } from "./VisibiltySwitch";
 import { ProjectsView } from "./ProjectsView";
 import { AnalyticsView } from "./AnalyticsView";
+import { TimerReset } from "lucide-react";
 
 export function TabsDemo(props) {
   return (
@@ -14,10 +15,30 @@ export function TabsDemo(props) {
               <TabsTrigger value="analytics">Analytics</TabsTrigger>
             )}
           </TabsList>
-          {props.isOwner && <VisibilitySwitch user={props.user} refreshUser={props.refreshUser} />}
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 text-sm text-[#0A2243]">
+              <TimerReset className="w-4 h-4" />
+              Last updated:{" "}
+              {props.user?.lastUpdated
+                ? new Date(props.user.lastUpdated).toLocaleString()
+                : "N/A"}
+            </div>
+            {props.isOwner && (
+              <VisibilitySwitch
+                user={props.user}
+                refreshUser={props.refreshUser}
+              />
+            )}
+          </div>
         </div>
-        <ProjectsView refreshUser={props.refreshUser} projects={props.projects} isOwner={props.isOwner} />
-        {props.isOwner && <AnalyticsView views={props.views} emails={props.emails}/>}
+        <ProjectsView
+          refreshUser={props.refreshUser}
+          projects={props.projects}
+          isOwner={props.isOwner}
+        />
+        {props.isOwner && (
+          <AnalyticsView views={props.views} emails={props.emails} />
+        )}
       </Tabs>
     </div>
   );

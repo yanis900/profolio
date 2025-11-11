@@ -2,7 +2,6 @@ const User = require("../models/user");
 
 async function updateViewCount(req, res) {
   const viewerId = req.user_id || req.ip;
-  console.log(viewerId)
   const user = req.user
 
   const deviceType = req.useragent.isMobile
@@ -27,16 +26,24 @@ async function updateViewCount(req, res) {
       .json({ message: "User already viewed", viewed: true });
   }
 
-  user.analytics.views.push({
-    userId: viewerId,
-    viewedAt: new Date(),
-    device: deviceType,
-  });
-  await user.save();
+  await User.updateOne(
+    { _id: user._id },
+    {
+      $push: {
+        "analytics.views": {
+          userId: viewerId,
+          viewedAt: new Date(),
+          device: deviceType,
+        },
+      },
+    }
+  );
+
+  const updatedUser = await User.findById(user._id).select("analytics.views");
 
   res.status(200).json({
     message: "View recorded",
-    totalViews: user.analytics.views.length,
+    totalViews: updatedUser.analytics.views.length,
   });
 }
 
@@ -57,15 +64,23 @@ async function updateEmailCount(req, res) {
     return res.status(400).json({ message: "You can't email yourself." });
   }
 
-  user.analytics.emails.push({
-    userId: senderId,
-    sentAt: new Date(),
-  });
-  await user.save();
+  await User.updateOne(
+    { _id: user._id },
+    {
+      $push: {
+        "analytics.emails": {
+          userId: senderId,
+          sentAt: new Date(),
+        },
+      },
+    }
+  );
+
+  const updatedUser = await User.findById(user._id).select("analytics.emails");
 
   res.status(200).json({
     message: "Email sent logged",
-    totalEmails: user.analytics.emails.length,
+    totalEmails: updatedUser.analytics.emails.length,
   });
 }
 

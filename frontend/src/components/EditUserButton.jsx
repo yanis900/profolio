@@ -90,7 +90,7 @@ export function EditUserButton(props) {
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="ghost" className="gap-2">
+          <Button variant="ghost" className="gap-2 cursor-pointer">
             <UserRoundPen className="h-4 w-4" />
             <span>Edit Profile</span>
           </Button>

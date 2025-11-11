@@ -1,8 +1,7 @@
 import { AddProjectButton } from "./AddProjectButton";
 import { EditProjectButton } from "./EditProjectButton";
 import { DeleteProjectButton } from "./DeleteProjectButton";
-import { Folder, Loader2, CheckCircle2, Rocket
- } from "lucide-react";
+import { Folder, Loader2, CheckCircle2, Rocket } from "lucide-react";
 import { TabsContent } from "./ui/tabs";
 import {
   Card,
@@ -88,14 +87,18 @@ export function ProjectsView(props) {
                 <>
                   <Card
                     key={project._id}
+                    className="pt-0 overflow-hidden hover:translate-x-2.5 hover:translate-y-2.5 transition-all duration-200 ease-in-out"
                     style={{
                       boxShadow: "#0A2243 10px 10px",
-                      // borderLeft: `4px solid ${stateConfig.shadowColor}`,
-                      // borderTop: `4px solid ${stateConfig.shadowColor}`
                     }}
-                    className="pt-0 overflow-hidden"
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.boxShadow = "none")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.boxShadow = "#0A2243 10px 10px")
+                    }
                   >
-                      <ImageZoom>
+                    <ImageZoom>
                       <img
                         width={150}
                         height={150}
@@ -103,7 +106,7 @@ export function ProjectsView(props) {
                         // alt={project.title}
                         className="w-full object-cover h-[200px] object-center"
                       />
-                      </ImageZoom>
+                    </ImageZoom>
 
                     {/* <div className="flex gap-3"> */}
                     {/* <div className="text-left space-y-1"> */}
@@ -129,31 +132,49 @@ export function ProjectsView(props) {
                         </div>
                       )}
                       <CardDescription>{project.description}</CardDescription>
-                      <div className="space-x-2">
-                        <Button variant={"outline"}>
-                          <a href={project.links[0]}>Github</a>
-                        </Button>
-                        <Button>
-                          <a
-                            href={project.links[1]}
-                            className="flex items-center gap-1 text-"
-                          >
-                            Live Demo
-                          </a>
-                        </Button>
-                      </div>
-                    {props.isOwner && (
-                      <CardAction className="flex gap-2">
-                        <EditProjectButton
-                          project={project}
-                          refreshUser={props.refreshUser}
-                        />
-                        <DeleteProjectButton
-                          project={project}
-                          refreshUser={props.refreshUser}
-                        />
-                      </CardAction>
-                    )}
+                      {project.links.length > 0 && (
+                        <div className="flex gap-2">
+                          {project.links[0] && (
+                            <Button asChild variant="outline">
+                              <a
+                                href={project.links[0]}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="no-underline hover:no-underline focus:no-underline"
+                              >
+                                Github
+                              </a>
+                            </Button>
+                          )}
+                          {project.links[1] && (
+                            <Button
+                              asChild
+                              className="bg-[#FFD300] text-[#0A2243] hover:bg-[#0A2243] hover:text-[#FFD300]"
+                            >
+                              <a
+                                href={project.links[1]}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="no-underline hover:no-underline focus:no-underline"
+                              >
+                                Live Demo
+                              </a>
+                            </Button>
+                          )}
+                        </div>
+                      )}
+                      {props.isOwner && (
+                        <CardAction className="flex gap-2">
+                          <EditProjectButton
+                            project={project}
+                            refreshUser={props.refreshUser}
+                          />
+                          <DeleteProjectButton
+                            project={project}
+                            refreshUser={props.refreshUser}
+                          />
+                        </CardAction>
+                      )}
                     </CardContent>
 
                     {/* </div> */}

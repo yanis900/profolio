@@ -8,7 +8,7 @@ function LoginButton() {
     navigate("/login");
   }
 
-  return <Button variant={'link'} onClick={logIn} className={'text-white'}>Log In</Button>;
+  return <Button variant={'link'} onClick={logIn} className={'text-[#FFFCEC] cursor-pointer'}>Log In</Button>;
 }
 
 export default LoginButton;

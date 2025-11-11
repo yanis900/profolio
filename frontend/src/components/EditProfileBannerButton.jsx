@@ -72,7 +72,7 @@ export function EditProfileBannerButton(props){
              <img
               src={props.user.banner}
               alt=""
-              className="w-full h-[200px] object-center rounded-t-lg hover:opacity-30"
+              className="w-full h-[200px] object-center rounded-t-lg hover:opacity-30 cursor-pointer"
             />
            </DialogTrigger>
            <DialogContent className="sm:max-w-[425px]">

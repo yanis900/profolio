@@ -12,6 +12,7 @@ import {
   AppWindow,
   Briefcase,
   ChevronRight,
+  File,
   Github,
   Linkedin,
   MapPin,
@@ -33,7 +34,7 @@ export function UserView(props) {
         style={{ boxShadow: "#0A2243 10px 10px" }}
       >
         <div className="relative">
-          <div className=" h-20vh p-1">
+          <div className="h-20vh p-1">
             {props.isOwner ? (
               <EditProfileBannerButton
                 user={props.user}
@@ -46,9 +47,9 @@ export function UserView(props) {
                 className="w-full h-[200px] object-center rounded-t-lg"
               />
             )}
-            <TestDropdown user={props.user}/>
+            {props.isOwner && <TestDropdown user={props.user} />}
           </div>
-          <div className="absolute -bottom-15 left-5 border p-0.5 rounded-full bg-white">
+          <div className="absolute -bottom-15 left-5 p-1 rounded-full bg-white shadow-xl">
             {props.isOwner ? (
               <EditProfilePictureButton
                 user={props.user}
@@ -71,8 +72,19 @@ export function UserView(props) {
               <h3 className="text-xl">
                 {capitalise(props.user.firstname)}{" "}
                 {capitalise(props.user.lastname)}
+                {props.user.opentowork ? (
+                  <Badge
+                    variant={"outline"}
+                    className="flex gap-1 items-center bg-[#FFD300] float-right mt-1"
+                  >
+                    <Briefcase />
+                    Open to Work
+                  </Badge>
+                ) : (
+                  ""
+                )}
               </h3>
-              <p className="font-light">{capitalise(props.user.jobtitle)}</p>
+              <p className="font-light">{props.user.jobtitle}</p>
             </div>
           </CardTitle>
           <CardDescription>
@@ -81,23 +93,26 @@ export function UserView(props) {
                 <MapPin className="w-5 h-5" />
                 {props.user.location}
               </p>
-              {props.user.opentowork ? (
-                <Badge
-                  variant={"outline"}
-                  className="flex gap-2 items-center bg-[#FFD300]"
-                >
-                  <Briefcase className="w-5 h-5" />
-                  Open to Work
-                </Badge>
-              ) : (
-                ""
-              )}
-              <p>{props.user.bio}</p>
-              <div className="w-[460px] border-t border-gray-300 ">
+              <p className="max-w-sm">{props.user.bio}</p>
+                {props.user.cv && (
+                  <Button
+                    variant={"outline"}
+                    onClick={() => window.open(props.user.cv, "_blank")}
+                    className={'cursor-pointer'}
+                  >
+                    <File />
+                    {props.isOwner ? "My CV" : `${props.user.firstname}'s CV`}
+                  </Button>
+                )}
+              <div>
                 {props.contributions ? (
-                  <div className="flex flex-col gap-2 mt-5 -mb-5">
-                    Github Contributions:
-                    <GithubContributions contributions={props.contributions} />
+                  <div className="flex flex-col gap-2">
+                    <p>Github contributions:</p>
+                    <div className="flex gap-2">
+                      <GithubContributions
+                        contributions={props.contributions}
+                      />
+                    </div>
                   </div>
                 ) : (
                   ""
@@ -106,37 +121,44 @@ export function UserView(props) {
             </div>
           </CardDescription>
         </CardHeader>
-        <CardContent className="grid place-items-center gap-6">
-          <div className="flex gap-3 mt-2">
-            {props.user.cv && (
+        <CardContent className="space-y-2">
+          <UserBadge token={props.token} user={props.user} />
+          <div className="flex gap-3 justify-end">
+            {props.user.links[0] && (
               <Button
                 variant="outline"
-                size="sm"
-                onClick={() => window.open(props.user.cv, "_blank")}
+                size="icon"
+                className="text-[#0A2243] hover:bg-[#FFD300] rounded-full shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
               >
-                View CV
+                <a href={props.user.links[0]} target="_blank" rel="noreferrer">
+                  <Linkedin />
+                </a>
               </Button>
             )}
-          </div>
-          <div>
-            <UserBadge token={props.token} user={props.user} />
-          </div>
-          <div className="flex gap-3">
-            <Button variant={"outline"} size={"icon"}>
-              <a href={props.user.links[0]} target="_blank" rel="noreferrer">
-                <Linkedin />
-              </a>
-            </Button>
-            <Button variant={"outline"} size={"icon"}>
-              <a href={props.user.links[1]} target="_blank" rel="noreferrer">
-                <Github />
-              </a>
-            </Button>
-            <Button variant={"outline"} size={"icon"}>
-              <a href={props.user.links[2]} target="_blank" rel="noreferrer">
-                <AppWindow />
-              </a>
-            </Button>
+
+            {props.user.links[1] && (
+              <Button
+                variant="outline"
+                size="icon"
+                className="text-[#0A2243] hover:bg-[#FFD300] rounded-full shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+              >
+                <a href={props.user.links[1]} target="_blank" rel="noreferrer">
+                  <Github />
+                </a>
+              </Button>
+            )}
+
+            {props.user.links[2] && (
+              <Button
+                variant="outline"
+                size="icon"
+                className="text-[#0A2243] hover:bg-[#FFD300] rounded-full shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+              >
+                <a href={props.user.links[2]} target="_blank" rel="noreferrer">
+                  <AppWindow />
+                </a>
+              </Button>
+            )}
           </div>
         </CardContent>
         <CardFooter className="justify-end flex items-center gap-3">
