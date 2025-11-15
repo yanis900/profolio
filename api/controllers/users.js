@@ -2,14 +2,18 @@ const User = require("../models/user");
 const { Resend } = require("resend");
 const { EmailUser } = require("../emails/email-user.js");
 const { render } = require("@react-email/render");
+const bcrypt = require('bcryptjs');
 
-function create(req, res) {
+async function create(req, res) {
   const firstname = req.body.firstname;
   const lastname = req.body.lastname;
   const email = req.body.email;
   const password = req.body.password;
 
-  const user = new User({ firstname, lastname, email, password });
+  const saltRounds = 12;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  const user = new User({ firstname, lastname, email, password: hashedPassword });
+
   user
     .save()
     .then((user) => {
