@@ -32,8 +32,12 @@ const UserSchema = new mongoose.Schema({
       states: {
         type: String,
         required: true,
-        enum: ["In Progress", "Completed (Not Deployed)", "Completed & Deployed"],
-        default: "In Progress"
+        enum: [
+          "In Progress",
+          "Completed (Not Deployed)",
+          "Completed & Deployed",
+        ],
+        default: "In Progress",
       },
       thumbnail: {
         type: String,
@@ -42,6 +46,7 @@ const UserSchema = new mongoose.Schema({
       },
     },
   ],
+  lastUpdated: { type: Date, default: Date.now },
   analytics: {
     views: [
       {

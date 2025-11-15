@@ -16,7 +16,7 @@ export default function TestDropdown(props) {
           <Button
             variant="outline"
             size="icon"
-            className="text-[#0A2243] hover:bg-[#FFD300] rounded-full shadow-lg hover:shadow-xl transition-shadow"
+            className="text-[#0A2243] hover:bg-[#FFD300] rounded-full shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
           >
             <Edit className="h-5 w-5" />
           </Button>

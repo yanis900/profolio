@@ -50,7 +50,7 @@ export function PublicNavbar() {
         {/* Logo */}
         <a
           href="/"
-          className="flex items-center gap-2 text-[#4DBCDB] hover:opacity-80 transition-all duration-300"
+          className="flex items-center gap-2 hover:opacity-80 transition-all duration-300"
         >
           <img src={logo} alt="" className="h-10"/>
           {/* <span className="font-bold text-2xl tracking-tight drop-shadow-sm hover:scale-105 transition-transform duration-200">

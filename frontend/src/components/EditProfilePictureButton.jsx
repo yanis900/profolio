@@ -74,7 +74,7 @@ export function EditProfilePictureButton(props) {
               height={120}
             src={props.user.image}
             alt=""
-            className="object-cover rounded-full hover:opacity-30"
+            className="object-cover rounded-full hover:opacity-30 cursor-pointer"
           />
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">

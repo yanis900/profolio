@@ -54,7 +54,7 @@ export function EditCvButton(props) {
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="ghost" className="gap-2">
+          <Button variant="ghost" className="gap-2 cursor-pointer">
             <FileText className="h-4 w-4" />
             <span>Update CV</span>
           </Button>

@@ -8,7 +8,7 @@ function SignupButton() {
     navigate("/signup");
   }
 
-  return <Button variant={'link'} onClick={signUp} className={'text-white'}>Sign Up</Button>;
+  return <Button variant={'link'} onClick={signUp} className={'text-[#FFFCEC] cursor-pointer'}>Sign Up</Button>;
 }
 
 export default SignupButton;

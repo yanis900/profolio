@@ -26,7 +26,7 @@ function MyPortfolioButton() {
     }
   }
 
-  return <Button variant={'link'} onClick={myportfolio} className={'text-white'}>My Portfolio</Button>;
+  return <Button variant={'link'} onClick={myportfolio} className={'text-[#FFFCEC] cursor-pointer'}>My Portfolio</Button>;
 }
 
 export default MyPortfolioButton;

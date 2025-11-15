@@ -92,7 +92,7 @@ export function PortfolioPage() {
       <div className="home px-6 pt-15 pb-1"> </div>
       <div className="w-screen min-h-screen flex flex-col gap-8 p-6 bg-[#FFFCEC]">
         <div className="flex items-center justify-between">
-          <h2 className="text-center text-3xl font-bold tracking-tight text-balance mt-3 flex-1 text-[#0A2243] leading-tight">
+          <h2 className="text-center text-3xl font-bold tracking-tight text-balance mt-3 flex-1 text-[#0A2243] leading-tight hidden">
             {isOwner ? "My Portfolio" : `${user?.firstname}'s Portfolio`}
           </h2>
         </div>
